@@ -4,9 +4,66 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
-    <.live_title default="TriviaAdvisor" suffix=" · Phoenix Framework">
-      {assigns[:page_title]}
+
+    <.live_title suffix=" · Trivia Advisor">
+      <%= assigns[:page_title] || "Find Trivia Nights Near You" %>
     </.live_title>
+
+    <!-- Favicon with quiz/trivia emoji -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50' y='65' font-size='85' text-anchor='middle' alignment-baseline='central'%3E🎯%3C/text%3E%3C/svg%3E"
+    />
+    <!-- Canonical URL -->
+    <%= if assigns[:canonical_url] do %>
+      <link rel="canonical" href={assigns[:canonical_url]} />
+    <% end %>
+    <!-- JSON-LD Structured Data -->
+    <%= if assigns[:json_ld] do %>
+      <script type="application/ld+json">
+        <%= Phoenix.HTML.raw(assigns[:json_ld]) %>
+      </script>
+    <% end %>
+    <!-- Open Graph and Twitter Card meta tags -->
+    <%= if assigns[:meta_title] do %>
+      <!-- Open Graph tags -->
+      <meta property="og:title" content={assigns[:meta_title]} />
+      <meta property="og:description" content={assigns[:meta_description] || ""} />
+      <%= if assigns[:meta_image] do %>
+        <meta property="og:image" content={assigns[:meta_image]} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+      <% end %>
+      <meta
+        property="og:type"
+        content={assigns[:meta_type] || "website"}
+      />
+      <meta property="og:url" content={assigns[:canonical_url] || ""} />
+      <meta property="og:site_name" content="Trivia Advisor" />
+      <!-- Twitter Card tags -->
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={assigns[:meta_title]} />
+      <meta name="twitter:description" content={assigns[:meta_description] || ""} />
+      <%= if assigns[:meta_image] do %>
+        <meta name="twitter:image" content={assigns[:meta_image]} />
+      <% end %>
+      <!-- Standard meta description for SEO -->
+      <meta name="description" content={assigns[:meta_description] || ""} />
+    <% else %>
+      <!-- Default meta tags -->
+      <meta
+        name="description"
+        content="Find trivia nights, pub quizzes, and quiz events near you. Discover the best trivia venues in your city."
+      />
+      <meta property="og:title" content="Trivia Advisor" />
+      <meta
+        property="og:description"
+        content="Find trivia nights, pub quizzes, and quiz events near you. Discover the best trivia venues in your city."
+      />
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content="Trivia Advisor" />
+    <% end %>
+
     <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}>
     </script>
@@ -25,7 +82,7 @@
           setTheme(localStorage.getItem("phx:theme") || "system");
         }
         window.addEventListener("storage", (e) => e.key === "phx:theme" && setTheme(e.newValue || "system"));
-        
+
         window.addEventListener("phx:set-theme", (e) => setTheme(e.target.dataset.phxTheme));
       })();
     </script>
