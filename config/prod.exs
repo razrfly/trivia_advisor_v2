@@ -6,7 +6,11 @@ import Config
 # which you should run after static files are built and
 # before starting your production server.
 config :trivia_advisor, TriviaAdvisorWeb.Endpoint,
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  # Force SSL in production with HSTS
+  force_ssl: [hsts: true, rewrite_on: [:x_forwarded_proto]],
+  # Enable gzip compression
+  http: [compress: true]
 
 # Configures Swoosh API Client
 config :swoosh, api_client: Swoosh.ApiClient.Req
@@ -16,6 +20,15 @@ config :swoosh, local: false
 
 # Do not print debug messages in production
 config :logger, level: :info
+
+# Configure JSON library
+config :phoenix, :json_library, Jason
+
+# Disable LiveView debug heex annotations in production
+config :phoenix_live_view,
+  debug_heex_annotations: false,
+  debug_attributes: false,
+  enable_expensive_runtime_checks: false
 
 # Runtime production configuration, including reading
 # of environment variables, is done on config/runtime.exs.

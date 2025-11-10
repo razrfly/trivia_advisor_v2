@@ -1,5 +1,15 @@
 import Config
 
+# Override base URL for development
+config :trivia_advisor,
+  base_url: "http://localhost:4003"
+
+# Configure database for development
+config :trivia_advisor, TriviaAdvisor.Repo,
+  # Database URL loaded from .env via Repo.init/2
+  pool_size: 10,
+  show_sensitive_data_on_connection_error: true
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
@@ -9,7 +19,7 @@ import Config
 config :trivia_advisor, TriviaAdvisorWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
-  http: [ip: {127, 0, 0, 1}, port: String.to_integer(System.get_env("PORT") || "4000")],
+  http: [ip: {127, 0, 0, 1}, port: String.to_integer(System.get_env("PORT") || "4003")],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,

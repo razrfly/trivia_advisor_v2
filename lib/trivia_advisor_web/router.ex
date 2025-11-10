@@ -17,13 +17,39 @@ defmodule TriviaAdvisorWeb.Router do
   scope "/", TriviaAdvisorWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    # Home page
+    live "/", HomeLive, :index
+
+    # About page (static)
+    live "/about", AboutLive, :index
+
+    # Cities index
+    live "/cities", CitiesIndexLive, :index
+
+    # Search
+    live "/search", SearchLive, :index
+
+    # SEO files (sitemap and robots.txt)
+    get "/sitemap.xml", SitemapController, :sitemap
+    get "/robots.txt", SitemapController, :robots
+
+    # Dynamic routes matching V1 patterns for SEO preservation
+    # Pattern: /{country-slug}/{city-slug}/{venue-slug}/
+    live "/:country_slug/:city_slug/:venue_slug", VenueShowLive, :show
+
+    # Pattern: /{country-slug}/{city-slug}/
+    live "/:country_slug/:city_slug", CityShowLive, :show
+
+    # Pattern: /{country-slug}/
+    live "/:country_slug", CountryShowLive, :show
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", TriviaAdvisorWeb do
-  #   pipe_through :api
-  # end
+  # Health check endpoint (no authentication required for load balancers)
+  scope "/", TriviaAdvisorWeb do
+    pipe_through :api
+
+    get "/health", HealthController, :check
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:trivia_advisor, :dev_routes) do
