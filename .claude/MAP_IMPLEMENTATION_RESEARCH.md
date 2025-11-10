@@ -9,7 +9,7 @@
 **What's Used**:
 1. **Google Maps Embed API** - Static iframe embed showing venue location
    - Lines 182-192: `<iframe>` with Google Maps Embed v1 API
-   - API Key: `AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8`
+   - API Key: `[REDACTED - was exposed, now using Mapbox instead]`
    - Endpoint: `https://www.google.com/maps/embed/v1/place`
    - Parameters: `key`, `q` (coordinates), `zoom` (15)
 
@@ -28,7 +28,7 @@
       frameborder="0"
       style="border:0"
       referrerpolicy="no-referrer-when-downgrade"
-      src={"https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=#{@venue.latitude},#{@venue.longitude}&zoom=15"}
+      src={"https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_KEY&q=#{@venue.latitude},#{@venue.longitude}&zoom=15"}
       allowfullscreen
       class="rounded-lg shadow-md"
     >
@@ -47,8 +47,8 @@
 
 ### Critical Issues
 
-**API Key Exposure** ⚠️ **CRITICAL SECURITY ISSUE**
-- The Google Maps API key is **hardcoded in the source code**: `AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8`
+**API Key Exposure** ⚠️ **CRITICAL SECURITY ISSUE** (NOW RESOLVED)
+- The Google Maps API key was **hardcoded in the source code** (now redacted and replaced with Mapbox)
 - This key is **publicly visible** in:
   - GitHub repository (if public)
   - Browser network requests

@@ -1,7 +1,7 @@
 defmodule TriviaAdvisorWeb.CityShowLive do
   @moduledoc """
   City page LiveView - displays all venues in a city.
-  Matches V1 route pattern: /{country-slug}/{city-slug}/
+  Supports both flat (/cities/{slug}) and hierarchical patterns for backward compatibility.
   """
   use TriviaAdvisorWeb, :live_view
 
@@ -14,51 +14,30 @@ defmodule TriviaAdvisorWeb.CityShowLive do
   alias TriviaAdvisorWeb.Components.UI.EmptyState
 
   @impl true
+  # Flat URL pattern: /cities/{city-slug} or /cities/{city-slug-country-slug}
+  def mount(%{"city_slug" => city_slug} = params, _session, socket)
+      when not is_map_key(params, "country_slug") do
+    case Locations.get_city_by_url_slug(city_slug) do
+      %{country: country} = city when not is_nil(country) ->
+        # City found with country preloaded
+        load_city_page(city, country, socket)
+
+      _ ->
+        # City not found or missing country association
+        {:ok,
+         socket
+         |> put_flash(:error, "City not found")
+         |> redirect(to: "/")}
+    end
+  end
+
+  # Hierarchical URL pattern: /{country-slug}/{city-slug}
   def mount(%{"country_slug" => country_slug, "city_slug" => city_slug}, _session, socket) do
     with country when not is_nil(country) <- Locations.get_country_by_slug(country_slug),
          city when not is_nil(city) <- Locations.get_city_by_slug(city_slug),
          true <- city.country_id == country.id do
-      base_url = get_base_url()
-
-      # Load venues to get count for SEO
-      venues = Locations.list_venues_for_city(city.id, [])
-      venue_count = length(venues)
-
-      # Generate JSON-LD structured data
-      city_json_ld = CitySchema.generate(city, %{venue_count: venue_count})
-      breadcrumbs = BreadcrumbListSchema.build_city_breadcrumbs(city, base_url)
-      breadcrumbs_json_ld = BreadcrumbListSchema.generate(breadcrumbs)
-      combined_json_ld = "[#{city_json_ld},#{breadcrumbs_json_ld}]"
-
-      # Build meta description
-      description =
-        if venue_count > 0 do
-          "Discover #{venue_count} trivia venues in #{city.name}, #{country.name}. Find trivia nights, pub quizzes, and quiz events."
-        else
-          "Find trivia nights, pub quizzes, and quiz events in #{city.name}, #{country.name}."
-        end
-
-      # Get hero image
-      hero_image_url = HeroImageHelpers.city_hero_image_url(city)
-
-      socket =
-        socket
-        |> assign(:country, country)
-        |> assign(:city, city)
-        |> assign(:base_url, base_url)
-        |> assign(:selected_weekday, nil)
-        |> assign(:venues, venues)
-        |> assign(:hero_image_url, hero_image_url)
-        |> SEOHelpers.assign_meta_tags(
-          title: "Trivia Nights in #{city.name}, #{country.name}",
-          description: description,
-          image: hero_image_url,
-          type: "website",
-          canonical_path: "/#{country.slug}/#{city.slug}",
-          json_ld: combined_json_ld
-        )
-
-      {:ok, socket}
+      # Use common helper to load city page
+      load_city_page(city, country, socket)
     else
       _ ->
         {:ok,
@@ -66,6 +45,55 @@ defmodule TriviaAdvisorWeb.CityShowLive do
          |> put_flash(:error, "City not found")
          |> redirect(to: "/")}
     end
+  end
+
+  # Common helper to load city page data (used by both flat and hierarchical routes)
+  defp load_city_page(city, country, socket) do
+    base_url = get_base_url()
+
+    # Load venues to get count for SEO
+    venues = Locations.list_venues_for_city(city.id, [])
+    venue_count = length(venues)
+
+    # Generate JSON-LD structured data
+    city_json_ld = CitySchema.generate(city, %{venue_count: venue_count})
+    breadcrumbs = BreadcrumbListSchema.build_city_breadcrumbs(city, base_url)
+    breadcrumbs_json_ld = BreadcrumbListSchema.generate(breadcrumbs)
+    combined_json_ld = "[#{city_json_ld},#{breadcrumbs_json_ld}]"
+
+    # Build meta description
+    description =
+      if venue_count > 0 do
+        "Discover #{venue_count} trivia venues in #{city.name}, #{country.name}. Find trivia nights, pub quizzes, and quiz events."
+      else
+        "Find trivia nights, pub quizzes, and quiz events in #{city.name}, #{country.name}."
+      end
+
+    # Get hero image
+    hero_image_url = HeroImageHelpers.city_hero_image_url(city)
+
+    # Generate flat URL slug for canonical path
+    city_url_slug = Locations.city_url_slug(city)
+
+    socket =
+      socket
+      |> assign(:country, country)
+      |> assign(:city, city)
+      |> assign(:base_url, base_url)
+      |> assign(:selected_weekday, nil)
+      |> assign(:venues, venues)
+      |> assign(:hero_image_url, hero_image_url)
+      |> assign(:city_url_slug, city_url_slug)
+      |> SEOHelpers.assign_meta_tags(
+        title: "Trivia Nights in #{city.name}, #{country.name}",
+        description: description,
+        image: hero_image_url,
+        type: "website",
+        canonical_path: "/cities/#{city_url_slug}",
+        json_ld: combined_json_ld
+      )
+
+    {:ok, socket}
   end
 
   @impl true
@@ -108,7 +136,7 @@ defmodule TriviaAdvisorWeb.CityShowLive do
     ~H"""
     <div class="flex flex-col min-h-screen bg-gray-50">
       <!-- Header -->
-      <Header.site_header current_path={"#{@base_url}/#{@country.slug}/#{@city.slug}"} />
+      <Header.site_header current_path={"/cities/#{@city_url_slug}"} />
 
       <!-- Main Content -->
       <main class="flex-1">
@@ -144,7 +172,7 @@ defmodule TriviaAdvisorWeb.CityShowLive do
             <h3 class="text-sm font-semibold text-gray-700 mb-3">Filter by Day:</h3>
             <div class="flex flex-wrap gap-2">
               <.link
-                patch={"#{@base_url}/#{@country.slug}/#{@city.slug}"}
+                patch={"/cities/#{@city_url_slug}"}
                 class={[
                   "px-4 py-2 rounded-lg font-medium transition-colors",
                   if(@selected_weekday == nil,
@@ -166,7 +194,7 @@ defmodule TriviaAdvisorWeb.CityShowLive do
                 {"Sunday", 7}
               ] do %>
                 <.link
-                  patch={"#{@base_url}/#{@country.slug}/#{@city.slug}?day=#{String.downcase(day_name)}"}
+                  patch={"/cities/#{@city_url_slug}?day=#{String.downcase(day_name)}"}
                   class={[
                     "px-4 py-2 rounded-lg font-medium transition-colors",
                     if(@selected_weekday == day_num,
@@ -195,12 +223,7 @@ defmodule TriviaAdvisorWeb.CityShowLive do
           <% else %>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <%= for venue <- @venues do %>
-                <VenueCard.venue_card
-                  venue={venue}
-                  country_slug={@country.slug}
-                  city_slug={@city.slug}
-                  base_url={@base_url}
-                />
+                <VenueCard.venue_card venue={venue} />
               <% end %>
             </div>
           <% end %>

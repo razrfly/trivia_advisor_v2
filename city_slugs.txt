@@ -1,0 +1,2657 @@
+59	#59	United States	united-states
+abbey-wood	Abbey Wood	United Kingdom	united-kingdom
+abbotsford-vic-3067	Abbotsford VIC 3067	Australia	australia
+abbots-langley	Abbots Langley	United Kingdom	united-kingdom
+aberdeen	Aberdeen	United Kingdom	united-kingdom
+aberdeen	Aberdeen	United States	united-states
+aberystwyth	Aberystwyth	United Kingdom	united-kingdom
+abington	Abington	United States	united-states
+abu-dhabi	Abu Dhabi	United Kingdom	united-kingdom
+abu-dhabi	Abu Dhabi	United Arab Emirates	united-arab-emirates
+accrington	Accrington	United Kingdom	united-kingdom
+acocks-green	Acocks Green	United Kingdom	united-kingdom
+acomb	Acomb	United Kingdom	united-kingdom
+acres-green	Acres Green	United States	united-states
+acton	Acton	United Kingdom	united-kingdom
+acton	Acton	United States	united-states
+acton-trussell	Acton Trussell	United Kingdom	united-kingdom
+acworth	Acworth	United States	united-states
+adams-morgan	Adams Morgan	United States	united-states
+addison	Addison	United States	united-states
+addlestone	Addlestone	United Kingdom	united-kingdom
+adelaide	Adelaide	Australia	australia
+adelaide-city-centre	Adelaide city centre	Australia	australia
+adelaide-sa-5000	Adelaide SA 5000	Australia	australia
+adlington	Adlington	United Kingdom	united-kingdom
+adwick-le-street	Adwick le Street	United Kingdom	united-kingdom
+aeroport-dorly	Aeroport d'Orly	France	france
+agua-fria	Agua Fria	United States	united-states
+ahwatukee-foothills	Ahwatukee Foothills	United States	united-states
+aiken	Aiken	United States	united-states
+akron	Akron	United States	united-states
+akrotiri	Akrotiri	United Kingdom	united-kingdom
+alachua	Alachua	United States	united-states
+albany	Albany	United States	united-states
+albion	Albion	United Kingdom	united-kingdom
+albuquerque	Albuquerque	United States	united-states
+alderley-edge	Alderley Edge	United Kingdom	united-kingdom
+aldershot	Aldershot	United Kingdom	united-kingdom
+aldridge	Aldridge	United Kingdom	united-kingdom
+alexandria	Alexandria	United States	united-states
+alexandria-nsw-2015	Alexandria NSW 2015	Australia	australia
+alfortville	Alfortville	France	france
+alicante	Alicante	United States	united-states
+allentown	Allentown	United States	united-states
+allhallows	Allhallows	United Kingdom	united-kingdom
+al-maryah-island	AL Maryah Island	United Arab Emirates	united-arab-emirates
+almoradi	Almoradí	United States	united-states
+alpharetta	Alpharetta	United States	united-states
+alsager	Alsager	United Kingdom	united-kingdom
+altoona	Altoona	United States	united-states
+altrincham	Altrincham	United Kingdom	united-kingdom
+amarillo	Amarillo	United States	united-states
+ambleside	ambleside	United Kingdom	united-kingdom
+amherst	Amherst	United States	united-states
+anaheim	Anaheim	United States	united-states
+anchorage	Anchorage	United States	united-states
+ancoats	Ancoats	United Kingdom	united-kingdom
+anderson-mill	Anderson Mill	United States	united-states
+andover	Andover	United Kingdom	united-kingdom
+andover	Andover	United States	united-states
+anfield	Anfield	United Kingdom	united-kingdom
+annandale	Annandale	United States	united-states
+ann-arbor	Ann Arbor	United States	united-states
+antony	Antony	France	france
+apache-junction	Apache Junction	United States	united-states
+apex	Apex	United States	united-states
+apperley-bridge	Apperley Bridge	United Kingdom	united-kingdom
+appleton-thorn	Appleton Thorn	United Kingdom	united-kingdom
+applewood	Applewood	United States	united-states
+apt-b	Apt B	United States	united-states
+arcadia-hall	Arcadia Hall	United Kingdom	united-kingdom
+archway	Archway	United Kingdom	united-kingdom
+arcola	Arcola	United States	united-states
+arcueil	Arcueil	France	france
+ardaravan	Ardaravan	United Kingdom	united-kingdom
+ardfallen-lodge	Ardfallen Lodge	United Kingdom	united-kingdom
+argenteuil	Argenteuil	France	france
+argenton	Argenton	Australia	australia
+arlington	Arlington	United States	united-states
+armadale	Armadale	Australia	australia
+armadale-vic-3143	Armadale VIC 3143	Australia	australia
+armidale	Armidale	Australia	australia
+armidale-nsw-2350	Armidale NSW 2350	Australia	australia
+armthorpe	Armthorpe	United Kingdom	united-kingdom
+artarmon	Artarmon	Australia	australia
+artesia	Artesia	United States	united-states
+arvada	Arvada	United States	united-states
+asbury	Asbury	United States	united-states
+ash	Ash	United Kingdom	united-kingdom
+ashbourne	Ashbourne	United Kingdom	united-kingdom
+asheville	Asheville	United States	united-states
+ashford	Ashford	United Kingdom	united-kingdom
+ashland	Ashland	United States	united-states
+ashton-on-ribble	Ashton-on-Ribble	United Kingdom	united-kingdom
+ashton-under-lyne	Ashton-under-Lyne	United Kingdom	united-kingdom
+ashwaubenon	Ashwaubenon	United States	united-states
+askern	Askern	United Kingdom	united-kingdom
+asnieres-sur-oise	Asnieres sur Oise	France	france
+asnieres-sur-seine	Asnieres sur Seine	France	france
+aspen-park	Aspen Park	United States	united-states
+aspley	Aspley	Australia	australia
+astley	Astley	United Kingdom	united-kingdom
+aston-fields	Aston Fields	United Kingdom	united-kingdom
+aston-on-trent	Aston-on-Trent	United Kingdom	united-kingdom
+aston-student-villages	Aston Student Villages	United Kingdom	united-kingdom
+astoria	Astoria	United States	united-states
+astwood-bank	Astwood Bank	United Kingdom	united-kingdom
+atascocita	Atascocita	United States	united-states
+atco	Atco	United States	united-states
+atherton	Atherton	United Kingdom	united-kingdom
+athlone	Athlone	United Kingdom	united-kingdom
+athol	Athol	United States	united-states
+atlanta	Atlanta	United States	united-states
+atyrau	Atyrau	United Kingdom	united-kingdom
+aubergenville	Aubergenville	France	france
+aubervilliers	Aubervilliers	France	france
+auchenflower	Auchenflower	Australia	australia
+auckley	Auckley	United Kingdom	united-kingdom
+audenshaw	Audenshaw	United Kingdom	united-kingdom
+aurora	Aurora	United States	united-states
+austin	Austin	United States	united-states
+auvers-sur-oise	Auvers sur Oise	France	france
+av-antonio-pedrera-soler	Av. Antonio Pedrera Soler	United States	united-states
+ave-maria	Ave Maria	United States	united-states
+avon	Avon	United States	united-states
+aylesbury	Aylesbury	United Kingdom	united-kingdom
+aylesford	Aylesford	United Kingdom	united-kingdom
+ayr	Ayr	United Kingdom	united-kingdom
+azattyq-avenue-40a	Azattyq Avenue 40A	United Kingdom	united-kingdom
+babice	Babice	Poland	poland
+bagneux	Bagneux	France	france
+bagnolet	Bagnolet	France	france
+baildon	Baildon	United Kingdom	united-kingdom
+baillieston	Baillieston	United Kingdom	united-kingdom
+bakersfield	Bakersfield	United States	united-states
+bala-cynwyd	Bala-Cynwyd	United States	united-states
+balboa-park	Balboa Park	United States	united-states
+balderton	Balderton	United Kingdom	united-kingdom
+balham	Balham	United Kingdom	united-kingdom
+ballina	Ballina	United Kingdom	united-kingdom
+balloch	Balloch	United Kingdom	united-kingdom
+ballyboden-house	Ballyboden House	United Kingdom	united-kingdom
+ballybofey	Ballybofey	United Kingdom	united-kingdom
+ballyconnell	Ballyconnell	United Kingdom	united-kingdom
+ballygall	Ballygall	United Kingdom	united-kingdom
+ballyheigue	Ballyheigue	United Kingdom	united-kingdom
+baltimore-house	Baltimore House	United Kingdom	united-kingdom
+bamber-bridge	Bamber Bridge	United Kingdom	united-kingdom
+bangor	Bangor	United Kingdom	united-kingdom
+banksia	Banksia	Australia	australia
+banksia-nsw-2216	Banksia NSW 2216	Australia	australia
+banyo-qld-4014	Banyo QLD 4014	Australia	australia
+barbican	Barbican	United Kingdom	united-kingdom
+barbizon	Barbizon	France	france
+bardejov	Bardejov	United Kingdom	united-kingdom
+bardejov	Bardejov	United States	united-states
+bargeddie	Bargeddie	United Kingdom	united-kingdom
+barking	Barking	United Kingdom	united-kingdom
+barlaston	Barlaston	United Kingdom	united-kingdom
+barnburgh	Barnburgh	United Kingdom	united-kingdom
+barnsley	Barnsley	United Kingdom	united-kingdom
+barrow	Barrow	United Kingdom	united-kingdom
+barsha	barsha	United States	united-states
+barsha-heights	Barsha Heights	United States	united-states
+bartley-green	Bartley Green	United Kingdom	united-kingdom
+barton-mills	Barton Mills	United Kingdom	united-kingdom
+barton-upon-irwell	Barton upon Irwell	United Kingdom	united-kingdom
+basford	Basford	United Kingdom	united-kingdom
+basford-stoke-on-trent	Basford, Stoke-on-Trent	United Kingdom	united-kingdom
+bath	Bath	United Kingdom	united-kingdom
+bath	Bath	United States	united-states
+battersea	Battersea	United Kingdom	united-kingdom
+battery-point	Battery Point	Australia	australia
+baulkham-hills	Baulkham Hills	Australia	australia
+baulkham-hills-nsw-2153	Baulkham Hills NSW 2153	Australia	australia
+bayou-cane	Bayou Cane	United States	united-states
+bayside	Bayside	United Kingdom	united-kingdom
+bayswater	Bayswater	United Kingdom	united-kingdom
+bayswater	Bayswater	Australia	australia
+bazoches-sur-guyonne	Bazoches sur Guyonne	France	france
+beacon	Beacon	United States	united-states
+beaconsfield	Beaconsfield	United Kingdom	united-kingdom
+beaumont	Beaumont	United Kingdom	united-kingdom
+beaumont-sur-oise	Beaumont sur Oise	France	france
+beaverton	Beaverton	United States	united-states
+bebington	Bebington	United Kingdom	united-kingdom
+beckenham	Beckenham	United Kingdom	united-kingdom
+bedford	Bedford	United Kingdom	united-kingdom
+beeston	Beeston	United Kingdom	united-kingdom
+beighton	Beighton	United Kingdom	united-kingdom
+belfast	Belfast	United Kingdom	united-kingdom
+belfield	Belfield	United Kingdom	united-kingdom
+bellefonte	Bellefonte	United States	united-states
+belleville	Belleville	United States	united-states
+bellevue	Bellevue	United States	united-states
+bellingham	Bellingham	United States	united-states
+belmar	Belmar	United States	united-states
+belmont	Belmont	Australia	australia
+belmont-south	Belmont South	Australia	australia
+belmullet	Belmullet	United Kingdom	united-kingdom
+belper	Belper	United Kingdom	united-kingdom
+belsize-park	Belsize Park	United Kingdom	united-kingdom
+bendigo	Bendigo	Australia	australia
+bendigo-vic-3550	Bendigo VIC 3550	Australia	australia
+bent-creek	Bent Creek	United States	united-states
+bentleigh	Bentleigh	Australia	australia
+bentley	Bentley	United Kingdom	united-kingdom
+benton	Benton	United States	united-states
+berkeley	Berkeley	United States	united-states
+berkhamsted	Berkhamsted	United Kingdom	united-kingdom
+bethesda	Bethesda	United States	united-states
+bethnal-green	Bethnal Green	United Kingdom	united-kingdom
+bettsville	Bettsville	United States	united-states
+beverley	Beverley	United Kingdom	united-kingdom
+beverley	Beverley	Australia	australia
+beverly	Beverly	United States	united-states
+bewdley	Bewdley	United Kingdom	united-kingdom
+bexley	Bexley	United Kingdom	united-kingdom
+bexleyheath	Bexleyheath	United Kingdom	united-kingdom
+bicester	Bicester	United Kingdom	united-kingdom
+bidford-on-avon	Bidford-on-Avon	United Kingdom	united-kingdom
+bielsko-biala	Bielsko-Biała	Poland	poland
+biggleswade	Biggleswade	United Kingdom	united-kingdom
+bilingurr	Bilingurr	Australia	australia
+billericay	Billericay	United Kingdom	united-kingdom
+billingborough	Billingborough	United Kingdom	united-kingdom
+billings	Billings	United States	united-states
+bingley	Bingley	United Kingdom	united-kingdom
+birkenhead	Birkenhead	United Kingdom	united-kingdom
+birmingham	Birmingham	United Kingdom	united-kingdom
+birmingham	Birmingham	United States	united-states
+birtinya	Birtinya	Australia	australia
+birtinya-qld-4575	Birtinya QLD 4575	Australia	australia
+bishop-auckland	Bishop Auckland	United Kingdom	united-kingdom
+bishops-stortford	Bishop's Stortford	United Kingdom	united-kingdom
+black-forest	Black Forest	United States	united-states
+blackheath	Blackheath	United Kingdom	united-kingdom
+blackley	Blackley	United Kingdom	united-kingdom
+blackpool	Blackpool	United Kingdom	united-kingdom
+blackrock	Blackrock	United Kingdom	united-kingdom
+blackwood-sa-5051	Blackwood SA 5051	Australia	australia
+blandy	Blandy	France	france
+blarney	Blarney	United Kingdom	united-kingdom
+blaxton	Blaxton	United Kingdom	united-kingdom
+blenman-elm-historic-district	Blenman-Elm Historic District	United States	united-states
+blindley-heath	Blindley Heath	United Kingdom	united-kingdom
+bloomfield	Bloomfield	United States	united-states
+bloomingdale	Bloomingdale	United States	united-states
+bloxwich	Bloxwich	United Kingdom	united-kingdom
+bobigny	Bobigny	France	france
+bobrowniki	Bobrowniki	Poland	poland
+bochnia	Bochnia	Poland	poland
+bognor-regis	Bognor Regis	United Kingdom	united-kingdom
+boise	Boise	United States	united-states
+bollington	Bollington	United Kingdom	united-kingdom
+bolton	Bolton	United Kingdom	united-kingdom
+bondi-junction	Bondi Junction	Australia	australia
+bondy	Bondy	France	france
+boothstown	Boothstown	United Kingdom	united-kingdom
+booval	Booval	Australia	australia
+borough-green	Borough Green	United Kingdom	united-kingdom
+borough-of-runnymede	Borough of Runnymede	United Kingdom	united-kingdom
+borrowash	Borrowash	United Kingdom	united-kingdom
+boston	Boston	United States	united-states
+boston-spa	Boston Spa	United Kingdom	united-kingdom
+bougival	Bougival	France	france
+boulder	Boulder	United States	united-states
+boulder-city	Boulder City	United States	united-states
+boulogne-billancourt	Boulogne Billancourt	France	france
+bourget-le	Bourget (Le)	France	france
+bourg-la-reine	Bourg la Reine	France	france
+bourne-end	Bourne End	United Kingdom	united-kingdom
+bournemouth	Bournemouth	United Kingdom	united-kingdom
+bourron-marlotte	Bourron Marlotte	France	france
+bouville	Bouville	France	france
+bowden	Bowden	Australia	australia
+bowden-sa-5008	Bowden SA 5008	Australia	australia
+bowdon	Bowdon	United Kingdom	united-kingdom
+bow-mar	Bow Mar	United States	united-states
+boxmoor	Boxmoor	United Kingdom	united-kingdom
+boys-town	Boys Town	United States	united-states
+bozeman	Bozeman	United States	united-states
+bracebridge-heath	Bracebridge Heath	United Kingdom	united-kingdom
+bracklesham-bay	Bracklesham Bay	United Kingdom	united-kingdom
+braddon	Braddon	Australia	australia
+braddon-act-2612	Braddon ACT 2612	Australia	australia
+bradenton	Bradenton	United States	united-states
+bradford	Bradford	United Kingdom	united-kingdom
+bradford-woods	Bradford Woods	United States	united-states
+bradley-lane	Bradley Lane	United Kingdom	united-kingdom
+bradwell	bradwell	United Kingdom	united-kingdom
+braintree	Braintree	United States	united-states
+bramford	Bramford	United Kingdom	united-kingdom
+bramhall	Bramhall	United Kingdom	united-kingdom
+branchport	Branchport	United States	united-states
+brandermill	Brandermill	United States	united-states
+bransgore	Bransgore	United Kingdom	united-kingdom
+bray	Bray	United Kingdom	united-kingdom
+bredbury	Bredbury	United Kingdom	united-kingdom
+bredon	Bredon	United Kingdom	united-kingdom
+breidholt	Breiðholt	United Kingdom	united-kingdom
+bremerton	Bremerton	United States	united-states
+brent	Brent	United Kingdom	united-kingdom
+brentford	Brentford	United Kingdom	united-kingdom
+bretigny-sur-orge	Bretigny sur Orge	France	france
+brezno	Brezno	United Kingdom	united-kingdom
+briarcliffe-acres	Briarcliffe Acres	United States	united-states
+briargate	Briargate	United States	united-states
+bridgewater	Bridgewater	United States	united-states
+bridgton	Bridgton	United States	united-states
+bridgwater	Bridgwater	United Kingdom	united-kingdom
+bridlington	Bridlington	United Kingdom	united-kingdom
+brie-comte-robert	Brie Comte Robert	France	france
+brighouse	Brighouse	United Kingdom	united-kingdom
+brighton	Brighton	United Kingdom	united-kingdom
+brighton	Brighton	United States	united-states
+brighton-and-hove	Brighton and Hove	United Kingdom	united-kingdom
+brisbane	Brisbane	Australia	australia
+brisbane-city-qld-4000	Brisbane City QLD 4000	Australia	australia
+bristol	Bristol	United Kingdom	united-kingdom
+brixham	Brixham	United Kingdom	united-kingdom
+brixton	Brixton,	United Kingdom	united-kingdom
+brixton-hill	Brixton Hill	United Kingdom	united-kingdom
+broad-ripple	Broad Ripple	United States	united-states
+broadstone	Broadstone	United Kingdom	united-kingdom
+broadway	Broadway	United Kingdom	united-kingdom
+brockton	Brockton	United States	united-states
+bromborough	Bromborough	United Kingdom	united-kingdom
+bromley	Bromley	United Kingdom	united-kingdom
+bromley-cross	Bromley Cross	United Kingdom	united-kingdom
+brompton	Brompton	Australia	australia
+brompton-sa-5007	Brompton SA 5007	Australia	australia
+bromsgrove	Bromsgrove	United Kingdom	united-kingdom
+bronxville	Bronxville	United States	united-states
+brookfield	Brookfield	United States	united-states
+brookhaven	Brookhaven	United States	united-states
+brookline	Brookline	United States	united-states
+brooklyn	Brooklyn	Australia	australia
+brooklyn-heights	Brooklyn Heights	United States	united-states
+broom	Broom	United Kingdom	united-kingdom
+broomfield	Broomfield	United States	united-states
+brownhills	Brownhills	United Kingdom	united-kingdom
+brownwood	Brownwood	United States	united-states
+brunoy	Brunoy	France	france
+brunswick	Brunswick	Australia	australia
+brunswick	Brunswick	United States	united-states
+brushy-creek	Brushy Creek	United States	united-states
+bruyeres-le-chatel	Bruyeres le Chatel	France	france
+brzeszcze	Brzeszcze	Poland	poland
+bucharest	Bucharest	United Kingdom	united-kingdom
+buckinghamshire	Buckinghamshire	United Kingdom	united-kingdom
+buckshaw-village	Buckshaw Village	United Kingdom	united-kingdom
+buczkowice	Buczkowice	Poland	poland
+buda	Buda	United States	united-states
+buderim	Buderim	Australia	australia
+buena-vista	Buena Vista	United States	united-states
+buffalo	Buffalo	United States	united-states
+bulimba	Bulimba	Australia	australia
+bundoran	Bundoran	United Kingdom	united-kingdom
+buntingford	Buntingford	United Kingdom	united-kingdom
+burbank	Burbank	United States	united-states
+burgess-hill	Burgess Hill	United Kingdom	united-kingdom
+burham	Burham	United Kingdom	united-kingdom
+burleigh-waters-qld-4220	Burleigh Waters QLD 4220	Australia	australia
+burley-in-wharfedale	Burley in Wharfedale	United Kingdom	united-kingdom
+burnley	Burnley	United Kingdom	united-kingdom
+burntwood	Burntwood	United Kingdom	united-kingdom
+burscough	Burscough	United Kingdom	united-kingdom
+burswood	Burswood	Australia	australia
+burton-on-trent	Burton-on-Trent	United Kingdom	united-kingdom
+burton-upon-trent	Burton upon Trent	United Kingdom	united-kingdom
+bury	Bury	United Kingdom	united-kingdom
+bury-st-edmunds	Bury St Edmunds	United Kingdom	united-kingdom
+bushwick	Bushwick	United States	united-states
+business-bay	Business Bay	United States	united-states
+busko-zdroj	Busko-Zdrój	Poland	poland
+bussy-saint-georges	Bussy Saint Georges	France	france
+bussy-saint-martin	Bussy Saint Martin	France	france
+buthiers	Buthiers	France	france
+buxton	Buxton	United Kingdom	united-kingdom
+bydgoszcz	Bydgoszcz	Poland	poland
+byron-center	Byron Center	United States	united-states
+bystra	Bystrá	United Kingdom	united-kingdom
+bytom	Bytom	Poland	poland
+cable-beach-wa-6726	Cable Beach WA 6726	Australia	australia
+cachan	Cachan	France	france
+cadca	Čadca	United States	united-states
+cadillac	Cadillac	United States	united-states
+cadishead	Cadishead	United Kingdom	united-kingdom
+caersws	Caersws	United Kingdom	united-kingdom
+calle-limon	Calle Limón	United States	united-states
+callow-hill	Callow Hill	United Kingdom	united-kingdom
+cambridge	Cambridge	United Kingdom	united-kingdom
+cambridge	Cambridge	United States	united-states
+camden	Camden	United Kingdom	united-kingdom
+camden-lock-place	Camden Lock Place	United Kingdom	united-kingdom
+camden-town	Camden Town	United Kingdom	united-kingdom
+cameron	Cameron	United States	united-states
+campsall	Campsall	United Kingdom	united-kingdom
+campus-club	Campus Club	United Kingdom	united-kingdom
+cams-wharf	Cams Wharf	Australia	australia
+canandaigua	Canandaigua	United States	united-states
+canary-wharf	Canary Wharf	United Kingdom	united-kingdom
+cannock	Cannock	United Kingdom	united-kingdom
+canoga-park	Canoga Park	United States	united-states
+canterbury	Canterbury	United Kingdom	united-kingdom
+canton	Canton	United States	united-states
+capalaba	Capalaba	Australia	australia
+capalaba-qld-4157	Capalaba QLD 4157	Australia	australia
+carcroft	Carcroft	United Kingdom	united-kingdom
+cardiff	Cardiff	United Kingdom	united-kingdom
+carina-qld-4152	Carina QLD 4152	Australia	australia
+carindale	Carindale	Australia	australia
+carindale-qld-4152	Carindale QLD 4152	Australia	australia
+carlisle	Carlisle	United Kingdom	united-kingdom
+carlton-colville	Carlton Colville	United Kingdom	united-kingdom
+carmel	Carmel	United States	united-states
+carmel-hamlet	Carmel Hamlet	United States	united-states
+carnetin	Carnetin	France	france
+carnmoney	Carnmoney	United Kingdom	united-kingdom
+carrick-on-shannon	Carrick-on-Shannon	United Kingdom	united-kingdom
+carrieres-sous-poissy	Carrieres Sous Poissy	France	france
+carrigaline	Carrigaline	United Kingdom	united-kingdom
+carrollton	Carrollton	United States	united-states
+carseldine-qld-4034	Carseldine QLD 4034	Australia	australia
+carysfort-ave	Carysfort Ave	United Kingdom	united-kingdom
+casco	Casco	United States	united-states
+casper	Casper	United States	united-states
+cassopolis	Cassopolis	United States	united-states
+castle-hills	Castle Hills	United States	united-states
+castleknock	Castleknock	United Kingdom	united-kingdom
+castleknock-part-of-phoenix-park	Castleknock (part of Phoenix Park)	United Kingdom	united-kingdom
+castlereagh	Castlereagh	United Kingdom	united-kingdom
+castle-rock	Castle Rock	United States	united-states
+caterham	Caterham	United Kingdom	united-kingdom
+caversham	Caversham	United Kingdom	united-kingdom
+cawthorne	Cawthorne	United Kingdom	united-kingdom
+cazenovia	Cazenovia	United States	united-states
+centenary-sq	Centenary Sq	United Kingdom	united-kingdom
+centennial	Centennial	United States	united-states
+central-lawrenceville	Central Lawrenceville	United States	united-states
+central-square	Central Square	United States	united-states
+centre	Centre	United Kingdom	united-kingdom
+century-city	Century City	United States	united-states
+cercoux	Cercoux	France	france
+cergy	Cergy	France	france
+cernay-la-ville	Cernay la Ville	France	france
+cessnock	Cessnock	Australia	australia
+chadderton	Chadderton	United Kingdom	united-kingdom
+chadstone	Chadstone	Australia	australia
+chadstone-vic-3148	Chadstone VIC 3148	Australia	australia
+chalfont-st-peter	Chalfont St. Peter	United Kingdom	united-kingdom
+chamarande	Chamarande	France	france
+chambourcy	Chambourcy	France	france
+champigny-sur-marne	Champigny sur Marne	France	france
+champs-sur-marne	Champs sur Marne	France	france
+chandlers-ford	Chandlers Ford	United Kingdom	united-kingdom
+chantilly	Chantilly	France	france
+chapel-allerton	Chapel Allerton	United Kingdom	united-kingdom
+chapel-hill	Chapel Hill	Australia	australia
+chapelizod	Chapelizod	United Kingdom	united-kingdom
+charenton-le-pont	Charenton le Pont	France	france
+charlottesville	Charlottesville	United States	united-states
+chartrettes	Chartrettes	France	france
+chasseneuil-du-poitou	Chasseneuil du Poitou	France	france
+chateau-landon	Chateau Landon	France	france
+chatenay-malabry	Chatenay Malabry	France	france
+chatham	Chatham	United Kingdom	united-kingdom
+chatillon	Chatillon	France	france
+chatou	Chatou	France	france
+chaussy	Chaussy	France	france
+cheadle	Cheadle	United Kingdom	united-kingdom
+cheadle-heath	Cheadle Heath	United Kingdom	united-kingdom
+cheadle-hulme	Cheadle Hulme	United Kingdom	united-kingdom
+chelles	Chelles	France	france
+chelmsford	Chelmsford	United Kingdom	united-kingdom
+chelmsford	Chelmsford	United States	united-states
+chelmsley-wood	Chelmsley Wood	United Kingdom	united-kingdom
+chelsea	Chelsea	United Kingdom	united-kingdom
+cheltenham	Cheltenham	United Kingdom	united-kingdom
+chennevieres-sur-marne	Chennevieres sur Marne	France	france
+cherry-creek	Cherry Creek	United States	united-states
+cherwell-district	Cherwell District	United Kingdom	united-kingdom
+cheshire	Cheshire	United Kingdom	united-kingdom
+chessington	Chessington	United Kingdom	united-kingdom
+chessy	Chessy	France	france
+chester	Chester	United Kingdom	united-kingdom
+chesterfield	Chesterfield	United Kingdom	united-kingdom
+chesterland	Chesterland	United States	united-states
+chester-le-street	Chester-le-Street	United Kingdom	united-kingdom
+chesterton	Chesterton	United Kingdom	united-kingdom
+cheverny	Cheverny	France	france
+cheviot	Cheviot	United States	united-states
+chevreuse	Chevreuse	France	france
+chicago-loop	Chicago Loop	United States	united-states
+chichester	Chichester	United Kingdom	united-kingdom
+chickerell	Chickerell	United Kingdom	united-kingdom
+chicopee	Chicopee	United States	united-states
+chiddinglye	Chiddinglye	United Kingdom	united-kingdom
+childer-thornton	Childer Thornton	United Kingdom	united-kingdom
+chilly-mazarin	Chilly Mazarin	France	france
+chinatown	Chinatown	United States	united-states
+chippewa-falls	Chippewa Falls	United States	united-states
+chippewa-lake	Chippewa Lake	United States	united-states
+choisy-le-roi	Choisy le Roi	France	france
+chorleywood	Chorleywood	United Kingdom	united-kingdom
+chorlton-cum-hardy	Chorlton cum Hardy	United Kingdom	united-kingdom
+chorzow	Chorzów	Poland	poland
+christchurch	Christchurch	United Kingdom	united-kingdom
+christie-downs	Christie Downs	Australia	australia
+church-laneham	Church Laneham	United Kingdom	united-kingdom
+churchtown-upper	Churchtown Upper	United Kingdom	united-kingdom
+churwell	Churwell	United Kingdom	united-kingdom
+cielmice	Cielmice	Poland	poland
+cill-airne	Cill Airne	United Kingdom	united-kingdom
+cimarron-hills	Cimarron Hills	United States	united-states
+cincinnati	Cincinnati	United States	united-states
+cinnaminson	Cinnaminson	United States	united-states
+city-of-boroondara	City of Boroondara	Australia	australia
+city-of-darebin	City of Darebin	Australia	australia
+city-of-glen-eira	City of Glen Eira	Australia	australia
+city-of-london	City of London	United Kingdom	united-kingdom
+city-of-maribyrnong	City of Maribyrnong	Australia	australia
+city-of-merri-bek	City of Merri-bek	Australia	australia
+city-of-westminster	City of Westminster	United Kingdom	united-kingdom
+clackamas	Clackamas	United States	united-states
+clairefontaine-en-yveline	Clairefontaine en Yveline	France	france
+clamart	Clamart	France	france
+clapham-junction	Clapham Junction	United Kingdom	united-kingdom
+clarborough	Clarborough	United Kingdom	united-kingdom
+claremont	Claremont	Australia	australia
+claremont-wa-6010	Claremont WA 6010	Australia	australia
+clarendon-arms	Clarendon Arms	United Kingdom	united-kingdom
+clarkson	Clarkson	Australia	australia
+clarkson-st	Clarkson St	Australia	australia
+clarkston	Clarkston	United States	united-states
+claycomo	Claycomo	United States	united-states
+claye-souilly	Claye Souilly	France	france
+clayes-sous-bois-les	Clayes Sous Bois (Les)	France	france
+claypole	Claypole	United Kingdom	united-kingdom
+clayton-brook	Clayton Brook	United Kingdom	united-kingdom
+clayton-le-woods	Clayton-le-Woods	United Kingdom	united-kingdom
+clear-lake-shores	Clear Lake Shores	United States	united-states
+clerkenwell	Clerkenwell	United Kingdom	united-kingdom
+cleveland	Cleveland	Australia	australia
+cleveland	Cleveland	United States	united-states
+cleveland-heights	Cleveland Heights	United States	united-states
+cleveleys	Cleveleys	United Kingdom	united-kingdom
+clichy	Clichy	France	france
+clinton	Clinton	United States	united-states
+clisson	Clisson	France	france
+clitheroe	Clitheroe	United Kingdom	united-kingdom
+clondalkin	Clondalkin	United Kingdom	united-kingdom
+clonskeagh	Clonskeagh	United Kingdom	united-kingdom
+clontarf-east	Clontarf East	United Kingdom	united-kingdom
+clyde	Clyde	United Kingdom	united-kingdom
+clyde	Clyde	United States	united-states
+clydebank	Clydebank	United Kingdom	united-kingdom
+coach-horses	Coach & Horses	United Kingdom	united-kingdom
+coburg	Coburg	Australia	australia
+coburg-north	Coburg North	Australia	australia
+coburg-vic-3058	Coburg VIC 3058	Australia	australia
+cochituate	Cochituate	United States	united-states
+cockfield	Cockfield	United Kingdom	united-kingdom
+cody	Cody	United States	united-states
+coffs-harbour	Coffs Harbour	Australia	australia
+coffs-harbour-nsw-2450	Coffs Harbour NSW 2450	Australia	australia
+colden-common	Colden Common	United Kingdom	united-kingdom
+coleraine	Coleraine	United Kingdom	united-kingdom
+coleshill	Coleshill	United Kingdom	united-kingdom
+collingwood	Collingwood	United Kingdom	united-kingdom
+collingwood	Collingwood	Australia	australia
+collingwood-vic-3066	Collingwood VIC 3066	Australia	australia
+colombes	Colombes	France	france
+colorado-springs	Colorado Springs	United States	united-states
+colton	Colton	United Kingdom	united-kingdom
+columbia	Columbia	United States	united-states
+columbia-city	Columbia City	United States	united-states
+columbine-valley	Columbine Valley	United States	united-states
+columbus	Columbus	United States	united-states
+commerce-city	Commerce City	United States	united-states
+compans	Compans	France	france
+compiegne	Compiegne	France	france
+comstock-northwest	Comstock Northwest	United States	united-states
+comstock-park	Comstock Park	United States	united-states
+concord	Concord	United States	united-states
+conflans-sainte-honorine	Conflans Sainte Honorine	France	france
+connahs-quay	Connahs quay	United Kingdom	united-kingdom
+conshohocken	Conshohocken	United States	united-states
+conway	Conway	United States	united-states
+cookstown	Cookstown	United Kingdom	united-kingdom
+coolock	Coolock	United Kingdom	united-kingdom
+coorparoo	Coorparoo	Australia	australia
+coorparoo-qld-4151	Coorparoo QLD 4151	Australia	australia
+copthorne	Copthorne	United Kingdom	united-kingdom
+copthorne-bank	Copthorne Bank	United Kingdom	united-kingdom
+corbeil-essonnes	Corbeil Essonnes	France	france
+corby	Corby	United Kingdom	united-kingdom
+cork	Cork	United Kingdom	united-kingdom
+corpus-christi	Corpus Christi	United States	united-states
+corralejo	Corralejo	United States	united-states
+cortland	Cortland	United States	united-states
+coseley	Coseley	United Kingdom	united-kingdom
+cosham	Cosham	United Kingdom	united-kingdom
+costa-mesa	Costa Mesa	United States	united-states
+coubert	Coubert	France	france
+county-hall	County Hall	United Kingdom	united-kingdom
+coupvray	Coupvray	France	france
+courbevoie	Courbevoie	France	france
+courdimanche	Courdimanche	France	france
+courneuve-la	Courneuve (La)	France	france
+coventry	Coventry	United Kingdom	united-kingdom
+covina	Covina	United States	united-states
+cowes	Cowes	United Kingdom	united-kingdom
+cranbourne-vic-3977	Cranbourne VIC 3977	Australia	australia
+cranbourne-west	Cranbourne West	Australia	australia
+cranston	Cranston	United States	united-states
+crawley	Crawley	United Kingdom	united-kingdom
+crecy-la-chapelle	Crecy la Chapelle	France	france
+cremorne	Cremorne	Australia	australia
+crested-butte	Crested Butte	United States	united-states
+crestwood	Crestwood	United States	united-states
+creteil	Creteil	France	france
+crewe	Crewe	United Kingdom	united-kingdom
+croft	Croft	United Kingdom	united-kingdom
+crosby	Crosby	United Kingdom	united-kingdom
+croston	Croston	United Kingdom	united-kingdom
+crouch-end	Crouch End	United Kingdom	united-kingdom
+crowle	Crowle	United Kingdom	united-kingdom
+croydon	Croydon	United Kingdom	united-kingdom
+crumlin	Crumlin	United Kingdom	united-kingdom
+crusaders-fc	Crusaders FC	United Kingdom	united-kingdom
+cullingworth	Cullingworth	United Kingdom	united-kingdom
+cumberland	Cumberland	United States	united-states
+cupertino	Cupertino	United States	united-states
+curdworth	Curdworth	United Kingdom	united-kingdom
+cuyahoga-falls	Cuyahoga Falls	United States	united-states
+czechowice-dziedzice	Czechowice-dziedzice	Poland	poland
+dabrowa-gornicza	Dąbrowa Górnicza	Poland	poland
+dakabin	Dakabin	Australia	australia
+dakabin-qld-4503	Dakabin QLD 4503	Australia	australia
+dalkeith	Dalkeith	United Kingdom	united-kingdom
+dallas	Dallas	United States	united-states
+dammarie-les-lys	Dammarie les Lys	France	france
+dammartin-en-goele	Dammartin en Goele	France	france
+dampierre-en-yvelines	Dampierre en Yvelines	France	france
+danbury	Danbury	United Kingdom	united-kingdom
+danderhall	Danderhall	United Kingdom	united-kingdom
+darfield	Darfield	United Kingdom	united-kingdom
+darlington	Darlington	United Kingdom	united-kingdom
+dartford	Dartford	United Kingdom	united-kingdom
+darton	Darton	United Kingdom	united-kingdom
+darwen	Darwen	United Kingdom	united-kingdom
+darwin	Darwin	Australia	australia
+darwin-city-nt-0800	Darwin City NT 0800	Australia	australia
+davenport	Davenport	United States	united-states
+davis	Davis	United States	united-states
+davison	Davison	United States	united-states
+deal	Deal	United Kingdom	united-kingdom
+dedham	Dedham	United States	united-states
+deer-park	Deer Park	United States	united-states
+deer-valley	Deer Valley	United States	united-states
+deeside	Deeside	United Kingdom	united-kingdom
+dekalb	DeKalb	United States	united-states
+delaware	Delaware	United States	united-states
+del-mar	Del Mar	United States	united-states
+denham	Denham	United Kingdom	united-kingdom
+dennison	Dennison	United States	united-states
+denton	Denton	United States	united-states
+denver	Denver	United States	united-states
+derby	Derby	United Kingdom	united-kingdom
+derby	Derby	Australia	australia
+derry	Derry	United Kingdom	united-kingdom
+derry-londonderry	Derry/Londonderry	United Kingdom	united-kingdom
+desert-hills	Desert Hills	United States	united-states
+des-moines	Des Moines	United States	united-states
+dickens-heath	Dickens Heath	United Kingdom	united-kingdom
+didsbury	Didsbury	United Kingdom	united-kingdom
+diggle	Diggle	United Kingdom	united-kingdom
+dingle	Dingle	United Kingdom	united-kingdom
+dinnington	Dinnington	United Kingdom	united-kingdom
+disley	Disley	United Kingdom	united-kingdom
+ditton-hill	Ditton Hill	United Kingdom	united-kingdom
+dobwalls	Dobwalls	United Kingdom	united-kingdom
+docklands-vic-3008	Docklands VIC 3008	Australia	australia
+dollar-corner	Dollar Corner	United States	united-states
+dollymount	Dollymount	United Kingdom	united-kingdom
+donabate	Donabate	United Kingdom	united-kingdom
+donaghadee	Donaghadee	United Kingdom	united-kingdom
+donaghmore	Donaghmore	United Kingdom	united-kingdom
+doncaster	Doncaster	United Kingdom	united-kingdom
+donegal	Donegal	United Kingdom	united-kingdom
+donegal-town-centre	Donegal Town Centre	United Kingdom	united-kingdom
+donnybrook	Donnybrook	United Kingdom	united-kingdom
+donvale	Donvale	Australia	australia
+donvale-vic-3109	Donvale VIC 3109	Australia	australia
+dooagh	Dooagh	United Kingdom	united-kingdom
+dorridge	Dorridge	United Kingdom	united-kingdom
+double-oak	Double Oak	United States	united-states
+doubletree-hilton-business-bay	DoubleTree Hilton Business Bay	United States	united-states
+dourdan	Dourdan	France	france
+dowagiac	Dowagiac	United States	united-states
+downer	Downer	Australia	australia
+downtown	Downtown	United States	united-states
+downtown	Downtown	United Arab Emirates	united-arab-emirates
+dracut	Dracut	United States	united-states
+drancy	Drancy	France	france
+draveil	Draveil	France	france
+drayton	Drayton	Australia	australia
+drayton-qld-4350	Drayton QLD 4350	Australia	australia
+drogheda	Drogheda	United Kingdom	united-kingdom
+dromore	Dromore	United Kingdom	united-kingdom
+dronfield	Dronfield	United Kingdom	united-kingdom
+droylsden	Droylsden	United Kingdom	united-kingdom
+drumcondra	Drumcondra	United Kingdom	united-kingdom
+dubai	Dubai	United Kingdom	united-kingdom
+dubai	Dubai	United States	united-states
+dubai	Dubai	United Arab Emirates	united-arab-emirates
+dubai-production-city	Dubai Production City	United States	united-states
+dublin	Dublin	United Kingdom	united-kingdom
+dublin	Dublin	United States	united-states
+dublin-09	Dublin 09	United Kingdom	united-kingdom
+dublin-2	Dublin 2	United Kingdom	united-kingdom
+dudley	Dudley	United Kingdom	united-kingdom
+dugny	Dugny	France	france
+dukinfield	Dukinfield	United Kingdom	united-kingdom
+dumbarton	Dumbarton	United Kingdom	united-kingdom
+dunboyne	Dunboyne	United Kingdom	united-kingdom
+dundee	Dundee	United Kingdom	united-kingdom
+dundee	Dundee	United States	united-states
+dundonald	Dundonald	United Kingdom	united-kingdom
+dundrum	Dundrum	United Kingdom	united-kingdom
+dungannon	Dungannon	United Kingdom	united-kingdom
+dunsborough	Dunsborough	Australia	australia
+dunsborough-wa-6281	Dunsborough WA 6281	Australia	australia
+dunswell	Dunswell	United Kingdom	united-kingdom
+durham	Durham	United Kingdom	united-kingdom
+durham	Durham	United States	united-states
+dyserth	Dyserth	United Kingdom	united-kingdom
+eagleby-qld-4207	Eagleby QLD 4207	Australia	australia
+eaglemont	Eaglemont	Australia	australia
+eagle-river	Eagle River	United States	united-states
+ealing	Ealing	United Kingdom	united-kingdom
+earlsfield	Earlsfield	United Kingdom	united-kingdom
+earlswood	Earlswood	United Kingdom	united-kingdom
+eastborough	Eastborough	United States	united-states
+east-brisbane	East Brisbane	Australia	australia
+east-brisbane-qld-4169	East Brisbane QLD 4169	Australia	australia
+east-cowes	East Cowes	United Kingdom	united-kingdom
+east-dubuque	East Dubuque	United States	united-states
+east-fremantle	East Fremantle	Australia	australia
+east-grand-rapids	East Grand Rapids	United States	united-states
+east-grinstead	East Grinstead	United Kingdom	united-kingdom
+east-hertfordshire	East Hertfordshire	United Kingdom	united-kingdom
+east-kilbride	East Kilbride	United Kingdom	united-kingdom
+east-lansing	East Lansing	United States	united-states
+eastleigh	Eastleigh	United Kingdom	united-kingdom
+east-longmeadow	East Longmeadow	United States	united-states
+east-malling	East Malling	United Kingdom	united-kingdom
+east-molesey	East Molesey	United Kingdom	united-kingdom
+east-renton-highlands	East Renton Highlands	United States	united-states
+east-rochester	East Rochester	United States	united-states
+east-springfield	East Springfield	United States	united-states
+east-village	East Village	Australia	australia
+east-windsor	East Windsor	United States	united-states
+east-wittering	East Wittering	United Kingdom	united-kingdom
+eatons-hill	Eatons Hill	Australia	australia
+eatons-hill-qld-4037	Eatons Hill QLD 4037	Australia	australia
+eaubonne	Eaubonne	France	france
+eccles	Eccles	United Kingdom	united-kingdom
+ecouen	Ecouen	France	france
+edale	Edale	United Kingdom	united-kingdom
+eddington	Eddington	United States	united-states
+edenbridge	Edenbridge	United Kingdom	united-kingdom
+edenmore	Edenmore	United Kingdom	united-kingdom
+edgemont-park	Edgemont Park	United States	united-states
+edgewater	Edgewater	United States	united-states
+edgeworth	Edgeworth	Australia	australia
+edinburgh	Edinburgh	United Kingdom	united-kingdom
+edmond	Edmond	United States	united-states
+effingham	Effingham	United Kingdom	united-kingdom
+eggborough	Eggborough	United Kingdom	united-kingdom
+egreville	Egreville	France	france
+eight-mile-plains	Eight Mile Plains	Australia	australia
+eight-mile-plains-qld-4113	Eight Mile Plains QLD 4113	Australia	australia
+elancourt	Elancourt	France	france
+eldorado-springs	Eldorado Springs	United States	united-states
+elermore-vale	Elermore Vale	Australia	australia
+el-granada	El Granada	United States	united-states
+elizabeth	Elizabeth	Australia	australia
+elizabeth-sa-5112	Elizabeth SA 5112	Australia	australia
+elizabethtown	Elizabethtown	United States	united-states
+elk-grove	Elk Grove	United States	united-states
+ellesmere-port	Ellesmere Port	United Kingdom	united-kingdom
+elmhurst	Elmhurst	United States	united-states
+el-paso	El Paso	United States	united-states
+el-prado-estates	El Prado Estates	United States	united-states
+el-presidio	El Presidio	United States	united-states
+elstead	Elstead	United Kingdom	united-kingdom
+elsternwick	Elsternwick	Australia	australia
+elsternwick-vic-3185	Elsternwick VIC 3185	Australia	australia
+elwood-vic-3184	Elwood VIC 3184	Australia	australia
+ely	Ely	United Kingdom	united-kingdom
+emance	Emance	France	france
+embleton	Embleton	Australia	australia
+emerainville	Emerainville	France	france
+emeryville	Emeryville	United States	united-states
+emsworth	Emsworth	United Kingdom	united-kingdom
+encanto	Encanto	United States	united-states
+endicott	Endicott	United States	united-states
+enfield	Enfield	United Kingdom	united-kingdom
+enfield	Enfield	United States	united-states
+enfield-town	Enfield Town	United Kingdom	united-kingdom
+enghien-les-bains	Enghien les Bains	France	france
+englewood	Englewood	United States	united-states
+epping	Epping	Australia	australia
+epping	Epping	United States	united-states
+epping-forest	Epping Forest	United Kingdom	united-kingdom
+epping-nsw-2121	Epping NSW 2121	Australia	australia
+epsom	Epsom	United Kingdom	united-kingdom
+epsom-and-ewell	Epsom and Ewell	United Kingdom	united-kingdom
+erie	Erie	United States	united-states
+erimi	Erími	United Kingdom	united-kingdom
+ermenonville	Ermenonville	France	france
+ermont	Ermont	France	france
+esther	Esther	United States	united-states
+etampes	Etampes	France	france
+euxton	Euxton	United Kingdom	united-kingdom
+evans	Evans	United States	united-states
+eveleigh	Eveleigh	Australia	australia
+everett	Everett	United States	united-states
+evergreen	Evergreen	United States	united-states
+evette-salbert	Evette Salbert	France	france
+evry	Evry	France	france
+exeter	Exeter	United Kingdom	united-kingdom
+exning	Exning	United Kingdom	united-kingdom
+eyre-square	Eyre Square	United Kingdom	united-kingdom
+failsworth	Failsworth	United Kingdom	united-kingdom
+fairgreen	Fairgreen	United Kingdom	united-kingdom
+fairhope	Fairhope	United States	united-states
+fairlands	Fairlands	United Kingdom	united-kingdom
+fairmont-bab-al-bahr-rabdan-rb2-ab	Fairmont Bab Al Bahr - Rabdan - RB2 - Ab	United Arab Emirates	united-arab-emirates
+fairmount	Fairmount	United States	united-states
+fair-oak	Fair Oak	United Kingdom	united-kingdom
+fairport	Fairport	United States	united-states
+fairview	Fairview	United Kingdom	united-kingdom
+fairview	Fairview	United States	united-states
+falcon	Falcon	United States	united-states
+falkirk	Falkirk	United Kingdom	united-kingdom
+fall-river	Fall River	United States	united-states
+farmers-arms	Farmers Arms	United Kingdom	united-kingdom
+farmington	Farmington	United States	united-states
+farnborough	Farnborough	United Kingdom	united-kingdom
+farnham	Farnham	United Kingdom	united-kingdom
+farnworth	Farnworth	United Kingdom	united-kingdom
+faversham	Faversham	United Kingdom	united-kingdom
+favieres	Favieres	France	france
+feeding-hills	Feeding Hills	United States	united-states
+fenton	Fenton	United States	united-states
+ferndown	Ferndown	United Kingdom	united-kingdom
+fernhill-heath	Fernhill Heath	United Kingdom	united-kingdom
+field-close	Field Close	United Kingdom	united-kingdom
+fife-lake	Fife Lake	United States	united-states
+fifth-street	Fifth Street	United States	united-states
+financial-district	Financial District	Australia	australia
+financial-district	Financial District	United States	united-states
+finchley	Finchley	United Kingdom	united-kingdom
+findon-sa-5023	Findon SA 5023	Australia	australia
+finningley	Finningley	United Kingdom	united-kingdom
+fishers-pond	Fisher's Pond	United Kingdom	united-kingdom
+fishersville	Fishersville	United States	united-states
+fishkill	Fishkill	United States	united-states
+fitzroy	Fitzroy	Australia	australia
+fitzroy-vic-3065	Fitzroy VIC 3065	Australia	australia
+fitzwilliam	Fitzwilliam	United Kingdom	united-kingdom
+five-points	Five Points	United States	united-states
+flagler-beach	Flagler Beach	United States	united-states
+flatbush	Flatbush	United States	united-states
+fleet	Fleet	United Kingdom	united-kingdom
+fleetwood	Fleetwood	United Kingdom	united-kingdom
+flixton	Flixton	United Kingdom	united-kingdom
+flockton	Flockton	United Kingdom	united-kingdom
+flossmoor	Flossmoor	United States	united-states
+fontainebleau	Fontainebleau	France	france
+fontenay-aux-roses	Fontenay Aux Roses	France	france
+footscray	Footscray	Australia	australia
+footscray-vic-3011	Footscray VIC 3011	Australia	australia
+formby	Formby	United Kingdom	united-kingdom
+fornham-all-saints	Fornham All Saints	United Kingdom	united-kingdom
+fort-bliss	Fort Bliss	United States	united-states
+fort-collins	Fort Collins	United States	united-states
+fortitude-valley	Fortitude Valley	Australia	australia
+fortitude-valley-qld-4006	Fortitude Valley QLD 4006	Australia	australia
+fort-thomas	Fort Thomas	United States	united-states
+fort-wayne	Fort Wayne	United States	united-states
+fort-worth	Fort Worth	United States	united-states
+four-corners	Four Corners	United States	united-states
+foxborough	Foxborough	United States	united-states
+foxfield	Foxfield	United States	united-states
+framingham	Framingham	United States	united-states
+franklin	Franklin	United States	united-states
+frankston	Frankston	Australia	australia
+frankston-vic-3199	Frankston VIC 3199	Australia	australia
+franktown	Franktown	United States	united-states
+fraser	Fraser	United States	united-states
+freckleton	Freckleton	United Kingdom	united-kingdom
+fremantle	Fremantle	Australia	australia
+freshney-place	Freshney Place	United Kingdom	united-kingdom
+fresno	Fresno	United States	united-states
+friendswood	Friendswood	United States	united-states
+fritton	Fritton	United Kingdom	united-kingdom
+frodsham	Frodsham	United Kingdom	united-kingdom
+fruitridge-pocket	Fruitridge Pocket	United States	united-states
+fulbourn	Fulbourn	United Kingdom	united-kingdom
+fulford	Fulford	United Kingdom	united-kingdom
+fullerton	Fullerton	United States	united-states
+fulshear	Fulshear	United States	united-states
+gadebridge	Gadebridge	United Kingdom	united-kingdom
+gaillimh	Gaillimh	United Kingdom	united-kingdom
+gainesville	Gainesville	United States	united-states
+gaithersburg	Gaithersburg	United States	united-states
+galway	Galway	United Kingdom	united-kingdom
+gambais	Gambais	France	france
+gamston	Gamston	United Kingdom	united-kingdom
+garenne-colombes-la	Garenne Colombes (La)	France	france
+gargenville	Gargenville	France	france
+garland	Garland	United States	united-states
+garston	Garston	United Kingdom	united-kingdom
+gastonia	Gastonia	United States	united-states
+gateway-plaza	Gateway Plaza	United Kingdom	united-kingdom
+gawler-city-centre	Gawler city centre	Australia	australia
+gawler-sa-5118	Gawler SA 5118	Australia	australia
+gazeley	Gazeley	United Kingdom	united-kingdom
+gdansk	Gdansk	Poland	poland
+gdynia	Gdynia	Poland	poland
+geelong-vic-3220	Geelong VIC 3220	Australia	australia
+geneva	Geneva	United Kingdom	united-kingdom
+geneva	Geneva	United States	united-states
+gennevilliers	Gennevilliers	France	france
+gentilly	Gentilly	France	france
+geraldton	Geraldton	Australia	australia
+geraldton-city-centre	Geraldton city centre	Australia	australia
+gerrards-cross	Gerrards Cross	United Kingdom	united-kingdom
+ghazni	Ghazni	United Arab Emirates	united-arab-emirates
+gibraltar	Gibraltar	United Kingdom	united-kingdom
+giffnock	Giffnock	United Kingdom	united-kingdom
+gilbert	Gilbert	United States	united-states
+gillingham	Gillingham	United Kingdom	united-kingdom
+giraltovce	Giraltovce	United Kingdom	united-kingdom
+glasgow	Glasgow	United Kingdom	united-kingdom
+glasnevin	Glasnevin	United Kingdom	united-kingdom
+glenalta	Glenalta	Australia	australia
+glenavy	Glenavy	United Kingdom	united-kingdom
+glendale	Glendale	United States	united-states
+gleneagle	Gleneagle	United States	united-states
+glenelg	Glenelg	Australia	australia
+glenelg-sa-5045	Glenelg SA 5045	Australia	australia
+glengowrie	Glengowrie	Australia	australia
+glengowrie-sa-5044	Glengowrie SA 5044	Australia	australia
+glen-iris	Glen Iris	Australia	australia
+glenn-heights	Glenn Heights	United States	united-states
+gliwice	Gliwice	Poland	poland
+glossop	Glossop	United Kingdom	united-kingdom
+gloucester	Gloucester	United Kingdom	united-kingdom
+gloucester	Gloucester	United States	united-states
+glynde	Glynde	Australia	australia
+glynde-sa-5070	Glynde SA 5070	Australia	australia
+golborne	Golborne	United Kingdom	united-kingdom
+golden	Golden	United States	united-states
+golden-plover	Golden Plover	United Kingdom	united-kingdom
+golden-valley	Golden Valley	United Kingdom	united-kingdom
+gomshall	Gomshall	United Kingdom	united-kingdom
+gonesse	Gonesse	France	france
+goodwood	Goodwood	Australia	australia
+goodwood-sa-5034	Goodwood SA 5034	Australia	australia
+googong	Googong	Australia	australia
+googong-nsw-2620	Googong NSW 2620	Australia	australia
+goole	Goole	United Kingdom	united-kingdom
+gosforth	Gosforth	United Kingdom	united-kingdom
+gosport	Gosport	United Kingdom	united-kingdom
+gournay-sur-marne	Gournay sur Marne	France	france
+gourock	Gourock	United Kingdom	united-kingdom
+goussainville	Goussainville	France	france
+gramercy-park	Gramercy Park	United States	united-states
+grand-lake	Grand Lake	United States	united-states
+grand-rapids	Grand Rapids	United States	united-states
+grandview	Grandview	United States	united-states
+grandview-heights	Grandview Heights	United States	united-states
+grange	Grange	Australia	australia
+grange-moor	Grange Moor	United Kingdom	united-kingdom
+granville	Granville	United States	united-states
+grapevine	Grapevine	United States	united-states
+gravesend	Gravesend	United Kingdom	united-kingdom
+grayling	Grayling	United States	united-states
+greasby	Greasby	United Kingdom	united-kingdom
+greater	Greater	United Kingdom	united-kingdom
+greater-london	Greater London	United Kingdom	united-kingdom
+greater-manchester	Greater Manchester	United Kingdom	united-kingdom
+great-marton	Great Marton	United Kingdom	united-kingdom
+great-sankey	Great Sankey	United Kingdom	united-kingdom
+great-staughton	Great Staughton	United Kingdom	united-kingdom
+great-sutton	Great Sutton	United Kingdom	united-kingdom
+great-waltham	Great Waltham	United Kingdom	united-kingdom
+great-yarmouth	Great Yarmouth	United Kingdom	united-kingdom
+greece	Greece	United States	united-states
+greeley	Greeley	United States	united-states
+greenacres	Greenacres	United States	united-states
+green-bay	Green Bay	United States	united-states
+greenfield	Greenfield	United Kingdom	united-kingdom
+greenhill	Greenhill	United Kingdom	united-kingdom
+greenisland	Greenisland	United Kingdom	united-kingdom
+greenock	Greenock	United Kingdom	united-kingdom
+greenock	Greenock	Australia	australia
+greenock-sa-5360	Greenock SA 5360	Australia	australia
+greensborough	Greensborough	Australia	australia
+greensborough-vic-3088	Greensborough VIC 3088	Australia	australia
+greenwich	Greenwich	United Kingdom	united-kingdom
+greenwood	Greenwood	United States	united-states
+grendon-underwood	Grendon Underwood	United Kingdom	united-kingdom
+gresham	Gresham	United States	united-states
+greystones	Greystones	United Kingdom	united-kingdom
+grimsby	Grimsby	United Kingdom	united-kingdom
+gringley-on-the-hill	Gringley on the Hill	United Kingdom	united-kingdom
+groomsport	Groomsport	United Kingdom	united-kingdom
+grove-city	Grove City	United States	united-states
+guerard	Guerard	France	france
+guildford	Guildford	United Kingdom	united-kingdom
+guildhall	Guildhall	United Kingdom	united-kingdom
+guiseley	Guiseley	United Kingdom	united-kingdom
+gulfport	Gulfport	United States	united-states
+guyancourt	Guyancourt	France	france
+hackett	Hackett	Australia	australia
+hackett-act-2602	Hackett ACT 2602	Australia	australia
+hackham	Hackham	Australia	australia
+hackham-sa-5163	Hackham SA 5163	Australia	australia
+hackney	Hackney	United Kingdom	united-kingdom
+hadley-heath	Hadley Heath	United Kingdom	united-kingdom
+hadley-wood	Hadley Wood	United Kingdom	united-kingdom
+hadlow	Hadlow	United Kingdom	united-kingdom
+haig-house	Haig House	United Kingdom	united-kingdom
+haisley	Haisley	United States	united-states
+hale	Hale	United Kingdom	united-kingdom
+halesowen	Halesowen	United Kingdom	united-kingdom
+halifax	Halifax	United Kingdom	united-kingdom
+hamble-le-rice	Hamble-le-Rice	United Kingdom	united-kingdom
+hambleton	Hambleton	United Kingdom	united-kingdom
+hamilton	Hamilton	United Kingdom	united-kingdom
+hamilton	Hamilton	Australia	australia
+hammersmith-and-fulham	Hammersmith and Fulham	United Kingdom	united-kingdom
+hammondsport	Hammondsport	United States	united-states
+hampstead	Hampstead	United Kingdom	united-kingdom
+hanover	Hanover	United States	united-states
+hanson	Hanson	United States	united-states
+harborne	Harborne	United Kingdom	united-kingdom
+harbour	Harbour	United Kingdom	united-kingdom
+hardingstone	Hardingstone	United Kingdom	united-kingdom
+haringey	Haringey	United Kingdom	united-kingdom
+harolds-cross	Harold's Cross	United Kingdom	united-kingdom
+harrietta	Harrietta	United States	united-states
+harringay	Harringay	United Kingdom	united-kingdom
+harrisonburg	Harrisonburg	United States	united-states
+harrogate	Harrogate	United Kingdom	united-kingdom
+harrow	Harrow	United Kingdom	united-kingdom
+harrowgate-hill	Harrowgate Hill	United Kingdom	united-kingdom
+hart	Hart	United Kingdom	united-kingdom
+hartford	Hartford	United States	united-states
+hartlepool	Hartlepool	United Kingdom	united-kingdom
+hartshill	Hartshill	United Kingdom	united-kingdom
+hartwell	Hartwell	United Kingdom	united-kingdom
+harwood	Harwood	United Kingdom	united-kingdom
+hatboro	Hatboro	United States	united-states
+hatfield	Hatfield	United Kingdom	united-kingdom
+hatfield-woodhouse	Hatfield Woodhouse	United Kingdom	united-kingdom
+haughton-green	Haughton Green	United Kingdom	united-kingdom
+havant	Havant	United Kingdom	united-kingdom
+havering	Havering	United Kingdom	united-kingdom
+hawkhead	Hawkhead	United Kingdom	united-kingdom
+haworth	Haworth	United Kingdom	united-kingdom
+hawthorne	Hawthorne	Australia	australia
+hawthorne-qld-4171	Hawthorne QLD 4171	Australia	australia
+hayes	Hayes	United Kingdom	united-kingdom
+hayfield	Hayfield	United Kingdom	united-kingdom
+hay-les-roses-l	Hay les Roses (L')	France	france
+haymarket	Haymarket	Australia	australia
+haymarket-nsw-2000	Haymarket NSW 2000	Australia	australia
+hayton	Hayton	United Kingdom	united-kingdom
+hazel-grove	Hazel Grove	United Kingdom	united-kingdom
+headingley	Headingley	United Kingdom	united-kingdom
+heald-green	Heald Green	United Kingdom	united-kingdom
+heanor	Heanor	United Kingdom	united-kingdom
+heatherton	Heatherton	Australia	australia
+heatherton-vic-3202	Heatherton VIC 3202	Australia	australia
+heaton-chapel	Heaton Chapel	United Kingdom	united-kingdom
+heidelberg-vic-3084	Heidelberg VIC 3084	Australia	australia
+hells-kitchen	Hell's Kitchen	United States	united-states
+hemel-hempstead	Hemel Hempstead	United Kingdom	united-kingdom
+hempstead	Hempstead	United Kingdom	united-kingdom
+henderson	Henderson	United States	united-states
+hendron	Hendron	United States	united-states
+henfield	Henfield	United Kingdom	united-kingdom
+henleaze	Henleaze	United Kingdom	united-kingdom
+henley-on-thames	Henley-on-Thames	United Kingdom	united-kingdom
+henrietta	Henrietta	United States	united-states
+herblay	Herblay	France	france
+hermosa-beach	Hermosa Beach	United States	united-states
+herndon	Herndon	United States	united-states
+hertford	Hertford	United Kingdom	united-kingdom
+heslington	Heslington	United Kingdom	united-kingdom
+heswall	Heswall	United Kingdom	united-kingdom
+heworth	Heworth	United Kingdom	united-kingdom
+hexham	Hexham	United Kingdom	united-kingdom
+heywood	Heywood	United Kingdom	united-kingdom
+higganum	Higganum	United States	united-states
+highfield	Highfield	United Kingdom	united-kingdom
+highfield-cascade	Highfield-Cascade	United States	united-states
+highgrove	Highgrove	United States	united-states
+highland-heights	Highland Heights	United States	united-states
+highland-park	Highland Park	United States	united-states
+highland-square	Highland Square	United States	united-states
+highlands-ranch	Highlands Ranch	United States	united-states
+high-lane	High Lane	United Kingdom	united-kingdom
+high-peak	High Peak	United Kingdom	united-kingdom
+high-st	High St	United Kingdom	united-kingdom
+high-wycombe	High Wycombe	United Kingdom	united-kingdom
+high-wycombe	High Wycombe	Australia	australia
+high-wycombe-wa-6057	High Wycombe WA 6057	Australia	australia
+hillarys	Hillarys	Australia	australia
+hillingdon	Hillingdon	United Kingdom	united-kingdom
+hilshire-village	Hilshire Village	United States	united-states
+hindley	Hindley	United Kingdom	united-kingdom
+histon	Histon	United Kingdom	united-kingdom
+historic-fourth-avenue	Historic Fourth Avenue	United States	united-states
+hitchin	Hitchin	United Kingdom	united-kingdom
+hobart	Hobart	Australia	australia
+hobart-tas-7000	Hobart TAS 7000	Australia	australia
+hoboken	Hoboken	United States	united-states
+hockley	Hockley	United Kingdom	united-kingdom
+hodgehill	Hodgehill	United Kingdom	united-kingdom
+hoghton	Hoghton	United Kingdom	united-kingdom
+holbrook	Holbrook	United States	united-states
+holcombe-brook	Holcombe Brook	United Kingdom	united-kingdom
+holgate	Holgate	United Kingdom	united-kingdom
+hollinwood	Hollinwood	United Kingdom	united-kingdom
+hollister	Hollister	United States	united-states
+holliston	Holliston	United States	united-states
+holloway	Holloway	United Kingdom	united-kingdom
+holly-hills	Holly Hills	United States	united-states
+holly-springs	Holly Springs	United States	united-states
+holmesfield	Holmesfield	United Kingdom	united-kingdom
+holyoke	Holyoke	United States	united-states
+homebush	Homebush	Australia	australia
+honolulu	Honolulu	United States	united-states
+hoole	Hoole	United Kingdom	united-kingdom
+horbury	Horbury	United Kingdom	united-kingdom
+horrocks-lane	Horrocks Lane	United Kingdom	united-kingdom
+horsforth	Horsforth	United Kingdom	united-kingdom
+horsham	Horsham	United Kingdom	united-kingdom
+horwich	Horwich	United Kingdom	united-kingdom
+houilles	Houilles	France	france
+houston	Houston	United States	united-states
+hove	Hove	United Kingdom	united-kingdom
+howell	Howell	United States	united-states
+howrah	Howrah	Australia	australia
+howrah-tas-7018	Howrah TAS 7018	Australia	australia
+howth	Howth	United Kingdom	united-kingdom
+hoylake	Hoylake	United Kingdom	united-kingdom
+hudson-bend	Hudson Bend	United States	united-states
+hull	Hull	United Kingdom	united-kingdom
+hulme	Hulme	United Kingdom	united-kingdom
+huntertown	Huntertown	United States	united-states
+huntingdale	Huntingdale	Australia	australia
+huntingdale-vic-3166	Huntingdale VIC 3166	Australia	australia
+huntington	Huntington	United Kingdom	united-kingdom
+huntington-beach	Huntington Beach	United States	united-states
+huntley	Huntley	United States	united-states
+huyton	Huyton	United Kingdom	united-kingdom
+hyde	Hyde	United Kingdom	united-kingdom
+hyde-park	Hyde Park	Australia	australia
+ibn-battuta-gate-building	Ibn Battuta Gate Building	United Kingdom	united-kingdom
+idle	Idle	United Kingdom	united-kingdom
+ile-saint-denis-l	Ile Saint Denis (L')	France	france
+ilminster	Ilminster	United Kingdom	united-kingdom
+imielin	Imielin	Poland	poland
+immokalee	Immokalee	United States	united-states
+imperial	Imperial	United States	united-states
+ince-blundell	Ince Blundell	United Kingdom	united-kingdom
+indianapolis	Indianapolis	United States	united-states
+ingleside-on-the-bay	Ingleside On-the-Bay	United States	united-states
+intercontinental-dubai-marina	Intercontinental Dubai Marina	United Arab Emirates	united-arab-emirates
+interlochen	Interlochen	United States	united-states
+inverkip	Inverkip	United Kingdom	united-kingdom
+inverness	Inverness	United States	united-states
+ipswich	Ipswich	United Kingdom	united-kingdom
+ipswich	Ipswich	United States	united-states
+ipswich-qld-4304	Ipswich QLD 4304	Australia	australia
+irishtown	Irishtown	United Kingdom	united-kingdom
+irlam	Irlam	United Kingdom	united-kingdom
+irvine	Irvine	United States	united-states
+irving	Irving	United States	united-states
+isham	Isham	United Kingdom	united-kingdom
+isle-adam-l	Isle Adam (L')	France	france
+isleworth	Isleworth	United Kingdom	united-kingdom
+islington	Islington	United Kingdom	united-kingdom
+issaquah	Issaquah	United States	united-states
+issy-les-moulineaux	Issy les Moulineaux	France	france
+ithaca	Ithaca	United States	united-states
+iver-heath	Iver Heath	United Kingdom	united-kingdom
+ivry-sur-seine	Ivry sur Seine	France	france
+jablines	Jablines	France	france
+jablonka	Jabłonka	Poland	poland
+jamul	Jamul	United States	united-states
+janvry	Janvry	France	france
+jaworzno	Jaworzno	Poland	poland
+jesmond	Jesmond	United Kingdom	united-kingdom
+johnson	Johnson	United States	united-states
+johnston	Johnston	United States	united-states
+johnstone	Johnstone	United Kingdom	united-kingdom
+joinville-le-pont	Joinville le Pont	France	france
+jolly-butcher	Jolly Butcher	United Kingdom	united-kingdom
+jollyville	Jollyville	United States	united-states
+jossigny	Jossigny	France	france
+jouarre	Jouarre	France	france
+jouy-en-josas	Jouy en Josas	France	france
+juh-3	Juh 3	United Kingdom	united-kingdom
+juneau	Juneau	United States	united-states
+juvisy-sur-orge	Juvisy sur Orge	France	france
+kailua	Kailua	United States	united-states
+kailua-kona	Kailua-Kona	United States	united-states
+kaimuki	Kaimuki	United States	united-states
+kalamazoo	Kalamazoo	United States	united-states
+kalkaska	Kalkaska	United States	united-states
+kallaroo	Kallaroo	Australia	australia
+kangaroo-point	Kangaroo Point	Australia	australia
+kangaroo-point-qld-4169	Kangaroo Point QLD 4169	Australia	australia
+kansas	Kansas	United States	united-states
+kansas-city	Kansas City	United States	united-states
+karrinyup	Karrinyup	Australia	australia
+karrinyup-shopping-centre	Karrinyup Shopping Centre	Australia	australia
+katowice	Katowice	Poland	poland
+kavecany	Kavečany	United Kingdom	united-kingdom
+kearsley	Kearsley	United Kingdom	united-kingdom
+keene	Keene	United States	united-states
+kellington	Kellington	United Kingdom	united-kingdom
+kells	Kells	United Kingdom	united-kingdom
+kempsey	Kempsey	United Kingdom	united-kingdom
+kendal	Kendal	United Kingdom	united-kingdom
+kenhorst	Kenhorst	United States	united-states
+kenilworth	Kenilworth	United Kingdom	united-kingdom
+kenmore	Kenmore	United States	united-states
+kenmore-qld-4069	Kenmore QLD 4069	Australia	australia
+kennington	Kennington	United Kingdom	united-kingdom
+kensington-and-chelsea	Kensington and Chelsea	United Kingdom	united-kingdom
+kensworth	Kensworth	United Kingdom	united-kingdom
+kent-town	Kent Town	Australia	australia
+kesgrave	Kesgrave	United Kingdom	united-kingdom
+kessingland	Kessingland	United Kingdom	united-kingdom
+keuka-park	Keuka Park	United States	united-states
+kew	Kew	Australia	australia
+kew-east	Kew East	Australia	australia
+kew-east-vic-3102	Kew East VIC 3102	Australia	australia
+khalifah-a-city	Khalifah A City	United Arab Emirates	united-arab-emirates
+kidderminster	Kidderminster	United Kingdom	united-kingdom
+kilburn	Kilburn	Australia	australia
+kilburn-sa-5084	Kilburn SA 5084	Australia	australia
+kilgobbin	Kilgobbin	United Kingdom	united-kingdom
+killian	Killian	United States	united-states
+killumney	Killumney	United Kingdom	united-kingdom
+kilmarnock	Kilmarnock	United Kingdom	united-kingdom
+kimmage	Kimmage	United Kingdom	united-kingdom
+king-ferry	King Ferry	United States	united-states
+kings-arms	Kings Arms	United Kingdom	united-kingdom
+kingsford	Kingsford	Australia	australia
+kingsford-nsw-2032	Kingsford NSW 2032	Australia	australia
+kings-heath	King's Heath	United Kingdom	united-kingdom
+kings-hill	Kings Hill	United Kingdom	united-kingdom
+kingskerswell	Kingskerswell	United Kingdom	united-kingdom
+kingsley	Kingsley	United States	united-states
+kings-lynn	King's Lynn	United Kingdom	united-kingdom
+kingston	Kingston	United States	united-states
+kingston-park	Kingston Park	United Kingdom	united-kingdom
+kingston-upon-hull	Kingston upon Hull	United Kingdom	united-kingdom
+kingston-upon-thames	Kingston upon Thames	United Kingdom	united-kingdom
+kingsville	Kingsville	Australia	australia
+kingsville-vic-3012	Kingsville VIC 3012	Australia	australia
+kinvere	Kinvere	United Kingdom	united-kingdom
+kirkham	Kirkham	United Kingdom	united-kingdom
+kirkhamgate	Kirkhamgate	United Kingdom	united-kingdom
+kirkland	Kirkland	United States	united-states
+kirk-sandall	Kirk Sandall	United Kingdom	united-kingdom
+kirwan	Kirwan	Australia	australia
+kirwan-qld-4817	Kirwan QLD 4817	Australia	australia
+kiveton-park	Kiveton Park	United Kingdom	united-kingdom
+kluszkowce	Kluszkowce	Poland	poland
+knott-end-on-sea	Knott End-on-Sea	United Kingdom	united-kingdom
+knowle	Knowle	United Kingdom	united-kingdom
+knoxfield	Knoxfield	Australia	australia
+knoxville	Knoxville	United States	united-states
+kopavogur	Kópavogur	United Kingdom	united-kingdom
+koreatown	Koreatown	United States	united-states
+koszyce	Koszyce	Poland	poland
+koszyce-wielkie	Koszyce Wielkie	Poland	poland
+kozy	Kozy	Poland	poland
+krakow	Kraków	Poland	poland
+kremlin-bicetre-le	Kremlin Bicetre (Le)	France	france
+krzeszowice	Krzeszowice	Poland	poland
+kuluin	Kuluin	Australia	australia
+kutztown	Kutztown	United States	united-states
+kylekiproe	Kylekiproe	United Kingdom	united-kingdom
+la-crescenta-montrose	La Crescenta-Montrose	United States	united-states
+lafayette	Lafayette	United States	united-states
+lagny-sur-marne	Lagny sur Marne	France	france
+la-grande-route-de-faldouet	La Grande Route de Faldouet	United Kingdom	united-kingdom
+la-habra	La Habra	United States	united-states
+la-jolla	La Jolla	United States	united-states
+lake-charles	Lake Charles	United States	united-states
+lake-oswego	Lake Oswego	United States	united-states
+lake-san-marcos	Lake San Marcos	United States	united-states
+lakewood	Lakewood	United States	united-states
+lake-wylie	Lake Wylie	United States	united-states
+lambeth	Lambeth	United Kingdom	united-kingdom
+lancaster	Lancaster	United Kingdom	united-kingdom
+lane-cove	Lane Cove	Australia	australia
+lane-cove-nsw-2066	Lane Cove NSW 2066	Australia	australia
+lansing	Lansing	United States	united-states
+larbert	Larbert	United Kingdom	united-kingdom
+lardy	Lardy	France	france
+larkfield	Larkfield	United Kingdom	united-kingdom
+las-vegas	Las Vegas	United States	united-states
+laughton-en-le-morthen	Laughton en le Morthen	United Kingdom	united-kingdom
+laurel-lodge-shopping-centre	Laurel Lodge Shopping Centre	United Kingdom	united-kingdom
+lavenham	Lavenham	United Kingdom	united-kingdom
+lawrenceville	Lawrenceville	United States	united-states
+laziska-gorne	Łaziska Górne	Poland	poland
+leamington-spa	Leamington Spa	United Kingdom	united-kingdom
+leander	Leander	United States	united-states
+leawood	Leawood	United States	united-states
+ledziny	Lędziny	Poland	poland
+leederville	Leederville	Australia	australia
+leeds	Leeds	United Kingdom	united-kingdom
+leeds-arms	Leeds Arms	United Kingdom	united-kingdom
+leek	Leek	United Kingdom	united-kingdom
+leicester	Leicester	United Kingdom	united-kingdom
+leith	Leith	United Kingdom	united-kingdom
+leixlip	Leixlip	United Kingdom	united-kingdom
+lenexa	Lenexa	United States	united-states
+lenham	Lenham	United Kingdom	united-kingdom
+lents	Lents	United States	united-states
+leon-valley	Leon Valley	United States	united-states
+leszno	Leszno	Poland	poland
+letterkenny	Letterkenny	United Kingdom	united-kingdom
+levallois-perret	Levallois Perret	France	france
+level-1-558a-anzac-parade	Level 1/558A Anzac Parade	Australia	australia
+level-3-2-george-st	Level 3/2 George St	Australia	australia
+lewisham	Lewisham	United Kingdom	united-kingdom
+liberty	Liberty	United States	united-states
+liberty-house	Liberty House	United States	united-states
+lichfield	Lichfield	United Kingdom	united-kingdom
+lieusaint	Lieusaint	France	france
+limanowa	Limanowa	Poland	poland
+linas	Linas	France	france
+lincoln	Lincoln	United Kingdom	united-kingdom
+lingfield	Lingfield	United Kingdom	united-kingdom
+liptovsky-hradok	Liptovský Hrádok	United Kingdom	united-kingdom
+liptovsky-mikulas	Liptovský Mikulás	United States	united-states
+lisburn	Lisburn	United Kingdom	united-kingdom
+litherland	Litherland	United Kingdom	united-kingdom
+little-hampton	Little Hampton	Australia	australia
+little-lever	Little Lever	United Kingdom	united-kingdom
+little-rock	Little Rock	United States	united-states
+little-stainforth	Little Stainforth	United Kingdom	united-kingdom
+little-sutton	Little Sutton	United Kingdom	united-kingdom
+littleton	Littleton	United States	united-states
+little-valley	Little Valley	United States	united-states
+little-wymondley	Little Wymondley	United Kingdom	united-kingdom
+liverpool	Liverpool	United Kingdom	united-kingdom
+liverpool-one	Liverpool One	United Kingdom	united-kingdom
+livilliers	Livilliers	France	france
+livingston	Livingston	United Kingdom	united-kingdom
+llandudno	Llandudno	United Kingdom	united-kingdom
+local-12	local 12	United States	united-states
+lodz	Lodz	Poland	poland
+logan-square	Logan Square	United States	united-states
+london	London	United Kingdom	united-kingdom
+london-colney	London Colney	United Kingdom	united-kingdom
+londonderry	Londonderry	United States	united-states
+londonderry-county-borough	Londonderry County Borough	United Kingdom	united-kingdom
+long-beach	Long Beach	United States	united-states
+long-branch	Long Branch	United States	united-states
+longdendale	Longdendale	United Kingdom	united-kingdom
+long-eaton	Long Eaton	United Kingdom	united-kingdom
+longford	Longford	United Kingdom	united-kingdom
+long-grove	Long Grove	United States	united-states
+longmont	Longmont	United States	united-states
+longridge	Longridge	United Kingdom	united-kingdom
+longton	Longton	United Kingdom	united-kingdom
+longuesse	Longuesse	France	france
+longueville	Longueville	France	france
+longvilliers	Longvilliers	France	france
+lonsdale-sa-5160	Lonsdale SA 5160	Australia	australia
+los-alamos	Los Alamos	United States	united-states
+los-angeles	Los Angeles	United States	united-states
+los-gatos	Los Gatos	United States	united-states
+lost-creek	Lost Creek	United States	united-states
+lostock	Lostock	United Kingdom	united-kingdom
+loughborough	Loughborough	United Kingdom	united-kingdom
+loughton	Loughton	United Kingdom	united-kingdom
+louisville	Louisville	United States	united-states
+louveciennes	Louveciennes	France	france
+loveland	Loveland	United States	united-states
+lowellville	Lowellville	United States	united-states
+lower-burrell	Lower Burrell	United States	united-states
+lower-ground-floor-leaf-tower-al-reem	Lower Ground Floor Leaf Tower - Al Reem	United Arab Emirates	united-arab-emirates
+lowestoft	Lowestoft	United Kingdom	united-kingdom
+lowton	Lowton	United Kingdom	united-kingdom
+luzarches	Luzarches	France	france
+luzerne	Luzerne	United States	united-states
+lvl-5-33-william-st	Lvl 5/33 William St	Australia	australia
+lydiard-millicent	Lydiard Millicent	United Kingdom	united-kingdom
+lymington	Lymington	United Kingdom	united-kingdom
+lymm	Lymm	United Kingdom	united-kingdom
+lyndhurst	Lyndhurst	United Kingdom	united-kingdom
+lyon-5eme-arrondissement	Lyon 5eme Arrondissement	France	france
+lytham	Lytham	United Kingdom	united-kingdom
+lytham-st-annes	Lytham St Annes	United Kingdom	united-kingdom
+macclesfield	Macclesfield	United Kingdom	united-kingdom
+madinat-sultan-qaboos	Madinat Sultan Qaboos	United Kingdom	united-kingdom
+madison	Madison	United States	united-states
+magherafelt	Magherafelt	United Kingdom	united-kingdom
+maghull	Maghull	United Kingdom	united-kingdom
+magill	Magill	Australia	australia
+magill-sa-5072	Magill SA 5072	Australia	australia
+magny-les-hameaux	Magny les Hameaux	France	france
+maidstone	Maidstone	United Kingdom	united-kingdom
+main-beach	Main Beach	Australia	australia
+main-beach-qld-4217	Main Beach QLD 4217	Australia	australia
+maincy	Maincy	France	france
+main-st	Main St	United Kingdom	united-kingdom
+maisons-laffitte	Maisons Laffitte	France	france
+makakilo-city	Makakilo City	United States	united-states
+malahide	Malahide	United Kingdom	united-kingdom
+malden	Malden	United States	united-states
+malinsgate	Malinsgate	United Kingdom	united-kingdom
+mallaig	Mallaig	United Kingdom	united-kingdom
+malletsheugh	Malletsheugh	United Kingdom	united-kingdom
+malvern-east-vic-3145	Malvern East VIC 3145	Australia	australia
+manchester	Manchester	United Kingdom	united-kingdom
+manchester	Manchester	United States	united-states
+mandres-les-roses	Mandres les Roses	France	france
+manhattan	Manhattan	United States	united-states
+manilva	Manilva	United States	united-states
+manlius	Manlius	United States	united-states
+manly-west-qld-4179	Manly West QLD 4179	Australia	australia
+manning	Manning	Australia	australia
+manoora	Manoora	Australia	australia
+manor	Manor	United States	united-states
+manor-park-student-village	Manor Park Student Village	United Kingdom	united-kingdom
+mansfield	Mansfield	United Kingdom	united-kingdom
+mansfield	Mansfield	United States	united-states
+mansfield-center	Mansfield Center	United States	united-states
+mantervrede-ah	Mantervrede AH	United Kingdom	united-kingdom
+mantes-la-jolie	Mantes la Jolie	France	france
+manunda-qld-4870	Manunda QLD 4870	Australia	australia
+marina-del-rey	Marina del Rey	United States	united-states
+marine-point	Marine Point	United Kingdom	united-kingdom
+marion	Marion	Australia	australia
+marion	Marion	United States	united-states
+markland-hill	Markland Hill	United Kingdom	united-kingdom
+marlborough	Marlborough	United States	united-states
+marolles-en-brie	Marolles en Brie	France	france
+maroochydore	Maroochydore	Australia	australia
+maroochydore-qld-4558	Maroochydore QLD 4558	Australia	australia
+maroubra-nsw-2035	Maroubra NSW 2035	Australia	australia
+marple-bridge	Marple Bridge	United Kingdom	united-kingdom
+marryatville	Marryatville	Australia	australia
+marryatville-sa-5068	Marryatville SA 5068	Australia	australia
+marshfield	Marshfield	United States	united-states
+marsworth	Marsworth	United Kingdom	united-kingdom
+mascot	Mascot	Australia	australia
+mascot-nsw-2020	Mascot NSW 2020	Australia	australia
+massy	Massy	France	france
+maynooth	Maynooth	United Kingdom	united-kingdom
+mcgovern	McGovern	United States	united-states
+mchenry	McHenry	United States	united-states
+mckownville	McKownville	United States	united-states
+meadows-place	Meadows Place	United States	united-states
+meaux	Meaux	France	france
+medan	Medan	France	france
+medford-lakes	Medford Lakes	United States	united-states
+medina	Medina	United States	united-states
+medway	Medway	United States	united-states
+melbourne	Melbourne	Australia	australia
+melbourne-city-centre	Melbourne City Centre	Australia	australia
+melbourne-vic-3000	Melbourne VIC 3000	Australia	australia
+melun	Melun	France	france
+memphis	Memphis	United States	united-states
+menai-bridge	Menai Bridge	United Kingdom	united-kingdom
+mentone	Mentone	United States	united-states
+mentor	Mentor	United States	united-states
+meols	Meols	United Kingdom	united-kingdom
+mercer-island	Mercer Island	United States	united-states
+mereville	Mereville	France	france
+merewether	Merewether	Australia	australia
+merewether-nsw-2291	Merewether NSW 2291	Australia	australia
+meridian	Meridian	United States	united-states
+meriel	Meriel	France	france
+merriam	Merriam	United States	united-states
+merrifield	Merrifield	United States	united-states
+merthyr-tydfil	Merthyr Tydfil	United Kingdom	united-kingdom
+merton	Merton	United Kingdom	united-kingdom
+mery-sur-oise	Mery sur Oise	France	france
+mesa	Mesa	United States	united-states
+mesick	Mesick	United States	united-states
+mesnil-amelot-le	Mesnil Amelot (Le)	France	france
+metairie	Metairie	United States	united-states
+methuen	Methuen	United States	united-states
+meudon	Meudon	France	france
+meudon-la-foret	Meudon la Foret	France	france
+mexborough	Mexborough	United Kingdom	united-kingdom
+miami	Miami	United States	united-states
+middleborough	Middleborough	United States	united-states
+middleburg-heights	Middleburg Heights	United States	united-states
+middlesbrough	Middlesbrough	United Kingdom	united-kingdom
+middleton	Middleton	United Kingdom	united-kingdom
+middleton-saint-george	Middleton Saint George	United Kingdom	united-kingdom
+middletown	Middletown	United States	united-states
+midleton	Midleton	United Kingdom	united-kingdom
+midway-city	Midway City	United States	united-states
+miechow-charsznica	Miechów Charsznica	Poland	poland
+milford	Milford	United States	united-states
+millenium-lakeview-dubai	Millenium Lakeview Dubai	United States	united-states
+millom	Millom	United Kingdom	united-kingdom
+mill-plain	Mill Plain	United States	united-states
+milly-la-foret	Milly la Foret	France	france
+milton	Milton	United States	united-states
+milton-keynes	Milton Keynes	United Kingdom	united-kingdom
+milton-qld-4064	Milton QLD 4064	Australia	australia
+milwaukie	Milwaukie	United States	united-states
+mineral-ridge	Mineral Ridge	United States	united-states
+minneapolis	Minneapolis	United States	united-states
+mission-bay	Mission Bay	United States	united-states
+mission-district	Mission District	United States	united-states
+mission-hills	Mission Hills	United States	united-states
+misson	Misson	United Kingdom	united-kingdom
+mitcham	Mitcham	United Kingdom	united-kingdom
+mitchell-park-sa-5043	Mitchell Park SA 5043	Australia	australia
+mitte	Mitte	United States	united-states
+moissy-cramayel	Moissy Cramayel	France	france
+monkseaton	Monkseaton	United Kingdom	united-kingdom
+monona	Monona	United States	united-states
+monson-center	Monson Center	United States	united-states
+montesson	Montesson	France	france
+montfermeil	Montfermeil	France	france
+monthyon	Monthyon	France	france
+monticello	Monticello	United States	united-states
+montigny-le-bretonneux	Montigny le Bretonneux	France	france
+montlignon	Montlignon	France	france
+montmorency	Montmorency	France	france
+monton	Monton	United Kingdom	united-kingdom
+montpelier	Montpelier	United States	united-states
+montreuil	Montreuil	France	france
+montrouge	Montrouge	France	france
+monument	Monument	United States	united-states
+moonee-ponds	Moonee Ponds	Australia	australia
+moonee-ponds-vic-3039	Moonee Ponds VIC 3039	Australia	australia
+moor-park-lane	Moor Park Lane	United Kingdom	united-kingdom
+moraira	Moraira	United States	united-states
+morden	Morden	United Kingdom	united-kingdom
+moret-sur-loing	Moret sur Loing	France	france
+morgan-park	Morgan Park	United States	united-states
+morgans-point-resort	Morgans Point Resort	United States	united-states
+morley	Morley	United Kingdom	united-kingdom
+morley	Morley	Australia	australia
+morningside	Morningside	United Kingdom	united-kingdom
+mornington	Mornington	Australia	australia
+mornington-vic-3931	Mornington VIC 3931	Australia	australia
+morsang-sur-orge	Morsang sur Orge	France	france
+mosborough	Mosborough	United Kingdom	united-kingdom
+moseley	Moseley	United Kingdom	united-kingdom
+mossley	Mossley	United Kingdom	united-kingdom
+moundsville	Moundsville	United States	united-states
+mountain-view	Mountain View	United States	united-states
+mount-gambier	Mount Gambier	Australia	australia
+mount-gambier-sa-5290	Mount Gambier SA 5290	Australia	australia
+mount-lawley	Mount Lawley	Australia	australia
+mount-lawley-wa-6050	Mount Lawley WA 6050	Australia	australia
+mount-oliver	Mount Oliver	United States	united-states
+mount-vernon	Mount Vernon	United States	united-states
+mount-washington	Mount Washington	United States	united-states
+mouttagiaka	Mouttagiáka	United Kingdom	united-kingdom
+moville	Moville	United Kingdom	united-kingdom
+murarrie	Murarrie	Australia	australia
+murarrie-qld-4172	Murarrie QLD 4172	Australia	australia
+murcki	Murcki	Poland	poland
+mureaux-les	Mureaux (Les)	France	france
+murphy	Murphy	United States	united-states
+murrays-beach	Murrays Beach	Australia	australia
+musaffah	Musaffah	United Kingdom	united-kingdom
+musaffah	Musaffah	United Arab Emirates	united-arab-emirates
+muscat	Muscat	United Kingdom	united-kingdom
+musselburgh	Musselburgh	United Kingdom	united-kingdom
+myslowice	Mysłowice	Poland	poland
+naas	Naas	United Kingdom	united-kingdom
+naas-east	Naas East	United Kingdom	united-kingdom
+nabiac	Nabiac	Australia	australia
+namestovo	Námestovo	Poland	poland
+nangis	Nangis	France	france
+nanterre	Nanterre	France	france
+nantwich	Nantwich	United Kingdom	united-kingdom
+napa	Napa	United States	united-states
+naperville	Naperville	United States	united-states
+naples	Naples	United States	united-states
+nashua	Nashua	United States	united-states
+nashville	Nashville	United States	united-states
+natick	Natick	United States	united-states
+navi-mumbai	Navi Mumbai	United Kingdom	united-kingdom
+near-bewdley	Near Bewdley	United Kingdom	united-kingdom
+near-north-side	Near North Side	United States	united-states
+near-trinity	Near Trinity	United Kingdom	united-kingdom
+nederland	Nederland	United States	united-states
+needham	Needham	United States	united-states
+nemours	Nemours	France	france
+netherlee	Netherlee	United Kingdom	united-kingdom
+neuilly-sur-marne	Neuilly sur Marne	France	france
+neuilly-sur-seine	Neuilly sur Seine	France	france
+neuville-sur-oise	Neuville sur Oise	France	france
+new-albany	New Albany	United States	united-states
+newark	Newark	United Kingdom	united-kingdom
+newark	Newark	United States	united-states
+newark-on-trent	Newark-on-Trent	United Kingdom	united-kingdom
+new-barnet	New Barnet	United Kingdom	united-kingdom
+new-basford	New Basford	United Kingdom	united-kingdom
+new-bedford	New Bedford	United States	united-states
+new-brighton	New Brighton	United Kingdom	united-kingdom
+newbury	Newbury	United Kingdom	united-kingdom
+new-castle	New Castle	United States	united-states
+newcastle	Newcastle	United Kingdom	united-kingdom
+newcastle-east	Newcastle East	Australia	australia
+newcastle-nsw-2300	Newcastle NSW 2300	Australia	australia
+newcastle-under-lyme	Newcastle-under-Lyme	United Kingdom	united-kingdom
+newcastle-upon-tyne	Newcastle upon Tyne	United Kingdom	united-kingdom
+new-ferry	New Ferry	United Kingdom	united-kingdom
+new-glasgow	New Glasgow	United Kingdom	united-kingdom
+new-hartford-center	New Hartford Center	United States	united-states
+new-malden	New Malden	United Kingdom	united-kingdom
+newmarket	Newmarket	United Kingdom	united-kingdom
+newmarket	Newmarket	Australia	australia
+newmarket	Newmarket	United States	united-states
+newmarket-qld-4051	Newmarket QLD 4051	Australia	australia
+new-moston	New Moston	United Kingdom	united-kingdom
+new-orleans	New Orleans	United States	united-states
+newport	Newport	United Kingdom	united-kingdom
+newport	Newport	United States	united-states
+newport-beach	Newport Beach	United States	united-states
+newport-news	Newport News	United States	united-states
+newport-on-tay	Newport-on-Tay	United Kingdom	united-kingdom
+newport-pagnell	Newport Pagnell	United Kingdom	united-kingdom
+new-rochelle	New Rochelle	United States	united-states
+newstead	Newstead	Australia	australia
+newstead-qld-4006	Newstead QLD 4006	Australia	australia
+newton-le-willows	Newton-le-Willows	United Kingdom	united-kingdom
+newton-mearns	Newton Mearns	United Kingdom	united-kingdom
+newtown	Newtown	Australia	australia
+newtownabbey	Newtownabbey	United Kingdom	united-kingdom
+newtownards	Newtownards	United Kingdom	united-kingdom
+newtown-blackrock	Newtown Blackrock	United Kingdom	united-kingdom
+newtown-little	Newtown Little	United Kingdom	united-kingdom
+newtown-nsw-2042	Newtown NSW 2042	Australia	australia
+new-york	New York	Poland	poland
+new-york	New York	Australia	australia
+nightcliff	Nightcliff	Australia	australia
+niles	Niles	United States	united-states
+nimes	Nimes	France	france
+no-8	no 8	United Kingdom	united-kingdom
+noble-house	Noble House	United Kingdom	united-kingdom
+nogent-sur-marne	Nogent sur Marne	France	france
+nogent-sur-seine	Nogent sur Seine	France	france
+noisy-le-grand	Noisy le Grand	France	france
+noisy-le-sec	Noisy-le-Sec	France	france
+norfolk	Norfolk	United States	united-states
+norman	Norman	United States	united-states
+north-adelaide	North Adelaide	Australia	australia
+north-adelaide-sa-5006	North Adelaide SA 5006	Australia	australia
+northampton	Northampton	United Kingdom	united-kingdom
+northampton	Northampton	United States	united-states
+north-anston	North Anston	United Kingdom	united-kingdom
+north-bay	North Bay	United Kingdom	united-kingdom
+north-bend	North Bend	United States	united-states
+north-bethesda	North Bethesda	United States	united-states
+north-branford	North Branford	United States	united-states
+northbridge	Northbridge	Australia	australia
+northbridge-wa-6003	Northbridge WA 6003	Australia	australia
+north-canton	North Canton	United States	united-states
+north-center	North Center	United States	united-states
+north-city	North City	United Kingdom	united-kingdom
+north-coogee	North Coogee	Australia	australia
+north-coogee-wa-6163	North Coogee WA 6163	Australia	australia
+northcote	Northcote	Australia	australia
+northcote-vic-3070	Northcote VIC 3070	Australia	australia
+northeast-colorado-springs	Northeast Colorado Springs	United States	united-states
+northfleet	Northfleet	United Kingdom	united-kingdom
+northgate	Northgate	United States	united-states
+northglenn	Northglenn	United States	united-states
+north-hertfordshire	North Hertfordshire	United Kingdom	united-kingdom
+north-hobart	North Hobart	Australia	australia
+north-hobart-tas-7000	North Hobart TAS 7000	Australia	australia
+north-hollywood	North Hollywood	United States	united-states
+north-hykeham	North Hykeham	United Kingdom	united-kingdom
+north-kansas-city	North Kansas City	United States	united-states
+northland-rd	Northland RD	United Kingdom	united-kingdom
+north-las-vegas	North Las Vegas	United States	united-states
+north-madison	North Madison	United States	united-states
+north-myrtle-beach	North Myrtle Beach	United States	united-states
+north-norfolk	North Norfolk	United Kingdom	united-kingdom
+north-petherton	North Petherton	United Kingdom	united-kingdom
+north-providence	North Providence	United States	united-states
+north-reading	North Reading	United States	united-states
+north-strathfield-nsw-2137	North Strathfield NSW 2137	Australia	australia
+north-toowoomba	North Toowoomba	Australia	australia
+north-toowoomba-qld-4350	North Toowoomba QLD 4350	Australia	australia
+north-valley	North Valley	United States	united-states
+north-warrandyte	North Warrandyte	Australia	australia
+northwest-harborcreek	Northwest Harborcreek	United States	united-states
+northwich	Northwich	United Kingdom	united-kingdom
+north-zanesville	North Zanesville	United States	united-states
+norton	Norton	United Kingdom	united-kingdom
+norton	Norton	United States	united-states
+norton-canes	Norton Canes	United Kingdom	united-kingdom
+norwood	Norwood	United States	united-states
+norwood-sa-5067	Norwood SA 5067	Australia	australia
+nottingham	Nottingham	United Kingdom	united-kingdom
+nowy-sacz	Nowy Sącz	Poland	poland
+nowy-targ	Nowy Targ	Poland	poland
+nudgee	Nudgee	Australia	australia
+nuriootpa	Nuriootpa	Australia	australia
+nuriootpa-sa-5355	Nuriootpa SA 5355	Australia	australia
+oakbrook-terrace	Oakbrook Terrace	United States	united-states
+oak-cliff-place	Oak Cliff Place	United States	united-states
+oak-hill	Oak Hill	United States	united-states
+oak-hills	Oak Hills	United States	united-states
+oakland	Oakland	United States	united-states
+oakville	Oakville	United States	united-states
+oban	Oban	United Kingdom	united-kingdom
+odenton	Odenton	United States	united-states
+odiham	Odiham	United Kingdom	united-kingdom
+ogden	Ogden	United Kingdom	united-kingdom
+oklahoma-city	Oklahoma City	United States	united-states
+oldham	Oldham	United Kingdom	united-kingdom
+old-noarlunga	Old Noarlunga	Australia	australia
+old-noarlunga-sa-5168	Old Noarlunga SA 5168	Australia	australia
+old-swan	Old Swan	United Kingdom	united-kingdom
+old-trafford	Old Trafford	United Kingdom	united-kingdom
+olsztyn	Olsztyn	Poland	poland
+omagh	Omagh	United Kingdom	united-kingdom
+ombersley	Ombersley	United Kingdom	united-kingdom
+onion-creek	Onion Creek	United States	united-states
+orange	Orange	United States	united-states
+orlando	Orlando	United States	united-states
+ormesson-sur-marne	Ormesson sur Marne	France	france
+ormskirk	Ormskirk	United Kingdom	united-kingdom
+orpington	Orpington	United Kingdom	united-kingdom
+orsay	Orsay	France	france
+osborne	Osborne	Australia	australia
+osborne-park	Osborne Park	Australia	australia
+osny	Osny	France	france
+oswiecim	Oświęcim	Poland	poland
+othis	Othis	France	france
+otisville	Otisville	United States	united-states
+otley	Otley	United Kingdom	united-kingdom
+ottawa-hills	Ottawa Hills	United States	united-states
+overcombe	Overcombe	United Kingdom	united-kingdom
+overland-park	Overland Park	United States	united-states
+owston-ferry	Owston Ferry	United Kingdom	united-kingdom
+oxford	Oxford	United Kingdom	united-kingdom
+oxley	Oxley	Australia	australia
+ozoir-la-ferriere	Ozoir la Ferriere	France	france
+pacheco	Pacheco	United States	united-states
+pacific-grove	Pacific Grove	United States	united-states
+pacific-paradise	Pacific Paradise	Australia	australia
+pacific-paradise-qld-4564	Pacific Paradise QLD 4564	Australia	australia
+paddington	Paddington	Australia	australia
+paddington-qld-4064	Paddington QLD 4064	Australia	australia
+paddock-wood	Paddock Wood	United Kingdom	united-kingdom
+paignton	Paignton	United Kingdom	united-kingdom
+painesville	Painesville	United States	united-states
+paisley	Paisley	United Kingdom	united-kingdom
+palaiseau	Palaiseau	France	france
+palmerston-lower	Palmerston Lower	United Kingdom	united-kingdom
+palmerstown	Palmerstown	United Kingdom	united-kingdom
+pantin	Pantin	France	france
+pantops	Pantops	United States	united-states
+paradise-hills	Paradise Hills	United States	united-states
+paradise-valley	Paradise Valley	United States	united-states
+parafield-gardens	Parafield Gardens	Australia	australia
+parafield-gardens-sa-5107	Parafield Gardens SA 5107	Australia	australia
+paris	Paris	France	france
+paris-1	Paris 1	France	france
+paris-10	Paris 10	France	france
+paris-11	Paris 11	France	france
+paris-12	Paris 12	France	france
+paris-13	Paris 13	France	france
+paris-14	Paris 14	France	france
+paris-15	Paris 15	France	france
+paris-16	Paris 16	France	france
+paris-17	Paris 17	France	france
+paris-18	Paris 18	France	france
+paris-19	Paris 19	France	france
+paris-2	Paris 2	France	france
+paris-20	Paris 20	France	france
+paris-3	Paris 3	France	france
+paris-4	Paris 4	France	france
+paris-5	Paris 5	France	france
+paris-6	Paris 6	France	france
+paris-7	Paris 7	France	france
+paris-8	Paris 8	France	france
+paris-9	Paris 9	France	france
+parker	Parker	United States	united-states
+parkland	Parkland	United States	united-states
+parkside	Parkside	Australia	australia
+parkside-sa-5063	Parkside SA 5063	Australia	australia
+parkstone	Parkstone	United Kingdom	united-kingdom
+parma	Parma	United States	united-states
+parma-heights	Parma Heights	United States	united-states
+parmain	Parmain	France	france
+partington	Partington	United Kingdom	united-kingdom
+pasadena	Pasadena	United States	united-states
+patrington	Patrington	United Kingdom	united-kingdom
+pavillons-sous-bois-les	Pavillons Sous Bois (Les)	France	france
+peckham	Peckham	United Kingdom	united-kingdom
+pecq-le	Pecq (Le)	France	france
+pelsall	Pelsall	United Kingdom	united-kingdom
+pembroke	Pembroke	United States	united-states
+penketh	Penketh	United Kingdom	united-kingdom
+penn-yan	Penn Yan	United States	united-states
+penrith	Penrith	Australia	australia
+penrith-nsw-2750	Penrith NSW 2750	Australia	australia
+pensacola	Pensacola	United States	united-states
+penwortham	Penwortham	United Kingdom	united-kingdom
+peopleton	Peopleton	United Kingdom	united-kingdom
+perreux-sur-marne-le	Perreux sur Marne (Le)	France	france
+perth	Perth	Australia	australia
+perth-wa-6000	Perth WA 6000	Australia	australia
+petersfield	Petersfield	United Kingdom	united-kingdom
+petrie-terrace	Petrie Terrace	Australia	australia
+pflugerville	Pflugerville	United States	united-states
+phibsborough	Phibsborough	United Kingdom	united-kingdom
+philadelphia	Philadelphia	United States	united-states
+phoenix	Phoenix	United States	united-states
+piedmont	Piedmont	United States	united-states
+piekary-slaskie	Piekary Śląskie	Poland	poland
+pinckney	Pinckney	United States	united-states
+pinczow	Pińczów	Poland	poland
+pinner	Pinner	United Kingdom	united-kingdom
+piolenc	Piolenc	France	france
+pipers-lane	Pipers Lane	United Kingdom	united-kingdom
+pissouri	Pissoúri	United Kingdom	united-kingdom
+pissouri-bay	Pissouri Bay	United Kingdom	united-kingdom
+pitminster	Pitminster	United Kingdom	united-kingdom
+pittsburgh	Pittsburgh	United States	united-states
+pittsford	Pittsford	United States	united-states
+plailly	Plailly	France	france
+plains	plains	United States	united-states
+plainwell	Plainwell	United States	united-states
+plaisir	Plaisir	France	france
+plano	Plano	United States	united-states
+playa-flamenca	Playa Flamenca	United States	united-states
+pleasant-hills	Pleasant Hills	United States	united-states
+pleasant-run-farm	Pleasant Run Farm	United States	united-states
+pleasant-valley	Pleasant Valley	United States	united-states
+plessis-robinson-le	Plessis Robinson (Le)	France	france
+plymouth	Plymouth	United Kingdom	united-kingdom
+plymouth	Plymouth	United States	united-states
+pocklington	Pocklington	United Kingdom	united-kingdom
+podleze	Podłęże	Poland	poland
+point-venture	Point Venture	United States	united-states
+poissy	Poissy	France	france
+ponchatoula	Ponchatoula	United States	united-states
+pontault-combault	Pontault Combault	France	france
+pontoise	Pontoise	France	france
+pontyclun	Pontyclun	United Kingdom	united-kingdom
+poole	Poole	United Kingdom	united-kingdom
+poprad	Poprad	United Kingdom	united-kingdom
+poprad	Poprad	United States	united-states
+portadown	Portadown	United Kingdom	united-kingdom
+portage	Portage	United States	united-states
+port-glasgow	Port Glasgow	United Kingdom	united-kingdom
+portglenone	Portglenone	United Kingdom	united-kingdom
+portland	Portland	United States	united-states
+portlaoise	Portlaoise	United Kingdom	united-kingdom
+port-lincoln	Port Lincoln	Australia	australia
+port-lincoln-sa-5606	Port Lincoln SA 5606	Australia	australia
+port-marly-le	Port Marly (Le)	France	france
+port-melbourne	Port Melbourne	Australia	australia
+port-melbourne-vic-3207	Port Melbourne VIC 3207	Australia	australia
+portsmouth	Portsmouth	United Kingdom	united-kingdom
+portsmouth	Portsmouth	United States	united-states
+portsmouth-heights	Portsmouth Heights	United States	united-states
+post-falls	Post Falls	United States	united-states
+potsdam	Potsdam	United States	united-states
+poulton-le-fylde	Poulton-le-Fylde	United Kingdom	united-kingdom
+poznan	Poznan	Poland	poland
+prahran	Prahran	Australia	australia
+prahran-vic-3181	Prahran VIC 3181	Australia	australia
+prenton	Prenton	United Kingdom	united-kingdom
+prestatyn	Prestatyn	United Kingdom	united-kingdom
+preston	Preston	United Kingdom	united-kingdom
+preston	Preston	Australia	australia
+prestonpans	Prestonpans	United Kingdom	united-kingdom
+preston-vic-3072	Preston VIC 3072	Australia	australia
+prestwich	Prestwich	United Kingdom	united-kingdom
+prestwick	Prestwick	United Kingdom	united-kingdom
+princes-esplanade	Prince's Esplanade	United Kingdom	united-kingdom
+pringy	Pringy	France	france
+prosper	Prosper	United States	united-states
+providence	Providence	United States	united-states
+provins	Provins	France	france
+przytkowice	Przytkowice	Poland	poland
+pszczyna	Pszczyna	Poland	poland
+pudsey	Pudsey	United Kingdom	united-kingdom
+pueblo	Pueblo	United States	united-states
+pulborough	Pulborough	United Kingdom	united-kingdom
+puteaux	Puteaux	France	france
+queensberry-square	Queensberry Square	United Kingdom	united-kingdom
+queensbury	Queensbury	United Kingdom	united-kingdom
+queensbury-way	Queensbury Way	United Kingdom	united-kingdom
+queen-st	Queen St	United Kingdom	united-kingdom
+queenstown	Queenstown	United Kingdom	united-kingdom
+quincy	Quincy	United States	united-states
+radcliffe	Radcliffe	United Kingdom	united-kingdom
+raf-akrotiri	RAF Akrotiri	United Kingdom	united-kingdom
+raheny-foxfield	Raheny - Foxfield	United Kingdom	united-kingdom
+raheny-st-assam	Raheny - St. Assam	United Kingdom	united-kingdom
+rainford	Rainford	United Kingdom	united-kingdom
+rainham	Rainham	United Kingdom	united-kingdom
+rainhill	Rainhill	United Kingdom	united-kingdom
+raleigh	Raleigh	United States	united-states
+ralston	Ralston	United States	united-states
+rambouillet	Rambouillet	France	france
+ramsbottom	Ramsbottom	United Kingdom	united-kingdom
+ramsden-heath	Ramsden Heath	United Kingdom	united-kingdom
+ranches	ranches	United Arab Emirates	united-arab-emirates
+rancho-cucamonga	Rancho Cucamonga	United States	united-states
+rancho-santa-margarita	Rancho Santa Margarita	United States	united-states
+ranken-arms	Ranken Arms	United Kingdom	united-kingdom
+rasmussen	Rasmussen	Australia	australia
+rasmussen-qld-4815	Rasmussen QLD 4815	Australia	australia
+rathcoole	Rathcoole	United Kingdom	united-kingdom
+rathdown-lower	Rathdown Lower	United Kingdom	united-kingdom
+rathfarnham	Rathfarnham	United Kingdom	united-kingdom
+rathgar	Rathgar	United Kingdom	united-kingdom
+rathmines	Rathmines	United Kingdom	united-kingdom
+ratoath	Ratoath	United Kingdom	united-kingdom
+rawcliffe	Rawcliffe	United Kingdom	united-kingdom
+raynham	Raynham	United States	united-states
+reading	Reading	United Kingdom	united-kingdom
+reading	Reading	United States	united-states
+reau	Reau	France	france
+reda	Reda	Poland	poland
+redbank	Redbank	Australia	australia
+red-bull	Red Bull	United Kingdom	united-kingdom
+redditch	Redditch	United Kingdom	united-kingdom
+redhill	Redhill	United Kingdom	united-kingdom
+redland	Redland	United Kingdom	united-kingdom
+redland-bay	Redland Bay	Australia	australia
+redland-bay-qld-4165	Redland Bay QLD 4165	Australia	australia
+redlands	Redlands	United States	united-states
+red-lion	Red Lion	United Kingdom	united-kingdom
+red-lodge	Red Lodge	United Kingdom	united-kingdom
+redwood-park	Redwood Park	Australia	australia
+reedham	Reedham	United Kingdom	united-kingdom
+reigate	Reigate	United Kingdom	united-kingdom
+reigate-and-banstead	Reigate and Banstead	United Kingdom	united-kingdom
+renhold	Renhold	United Kingdom	united-kingdom
+reno	Reno	United States	united-states
+renton	Renton	United States	united-states
+reservoir	Reservoir	Australia	australia
+reservoir-vic-3073	Reservoir VIC 3073	Australia	australia
+retford	Retford	United Kingdom	united-kingdom
+rhoose	Rhoose	United Kingdom	united-kingdom
+rialto	Rialto	United Kingdom	united-kingdom
+richardson	Richardson	United States	united-states
+richland	Richland	United States	united-states
+richmond	Richmond	United Kingdom	united-kingdom
+richmond	Richmond	Australia	australia
+richmond	Richmond	United States	united-states
+richmond-upon-thames	Richmond upon Thames	United Kingdom	united-kingdom
+richmond-vic-3121	Richmond VIC 3121	Australia	australia
+ring-o-bells	Ring O Bells	United Kingdom	united-kingdom
+ringsend	Ringsend	United Kingdom	united-kingdom
+ringwood	Ringwood	Australia	australia
+ringwood-vic-3134	Ringwood VIC 3134	Australia	australia
+rio-rancho	Rio Rancho	United States	united-states
+ripley	Ripley	United Kingdom	united-kingdom
+ripponden	Ripponden	United Kingdom	united-kingdom
+ripponlea	Ripponlea	Australia	australia
+rising-brook	Rising brook	United Kingdom	united-kingdom
+risiville	Risiville	United Kingdom	united-kingdom
+riverdale-park	Riverdale Park	United States	united-states
+riverlea	Riverlea	United States	united-states
+riverside	Riverside	United States	united-states
+roanoke	Roanoke	United States	united-states
+robbinsdale	Robbinsdale	United States	united-states
+robina	Robina	Australia	australia
+robina-qld-4226	Robina QLD 4226	Australia	australia
+robinsons-way	Robinsons Way	United Kingdom	united-kingdom
+rochdale	Rochdale	United Kingdom	united-kingdom
+rochefort-en-yvelines	Rochefort en Yvelines	France	france
+roche-guyon-la	Roche Guyon (La)	France	france
+rochester	Rochester	United Kingdom	united-kingdom
+rochester	Rochester	United States	united-states
+rock	Rock	United Kingdom	united-kingdom
+rockland	Rockland	United States	united-states
+rocquencourt	Rocquencourt	France	france
+rode-heath	Rode Heath	United Kingdom	united-kingdom
+roissy-en-brie	Roissy en Brie	France	france
+roissy-en-france	Roissy en France	France	france
+rolesville	Rolesville	United States	united-states
+rolling-meadows	Rolling Meadows	United States	united-states
+rollingwood	Rollingwood	United States	united-states
+romainville	Romainville	France	france
+romford	ROMFORD	United Kingdom	united-kingdom
+romsey	Romsey	United Kingdom	united-kingdom
+rose-crown	Rose & Crown	United Kingdom	united-kingdom
+rosehill-tavern	Rosehill Tavern	United Kingdom	united-kingdom
+rosny-sous-bois	Rosny Sous Bois	France	france
+rosoy-en-multien	Rosoy en Multien	France	france
+rossford	Rossford	United States	united-states
+rossington	Rossington	United Kingdom	united-kingdom
+rothwell	Rothwell	United Kingdom	united-kingdom
+round-rock	Round Rock	United States	united-states
+rowville-vic-3178	Rowville VIC 3178	Australia	australia
+royal-george-public-house	Royal George Public House	United Kingdom	united-kingdom
+royal-leamington-spa	Royal Leamington Spa	United Kingdom	united-kingdom
+royal-oak	Royal Oak	United Kingdom	united-kingdom
+royal-tunbridge-wells	Royal Tunbridge Wells	United Kingdom	united-kingdom
+royston	Royston	United Kingdom	united-kingdom
+royton	Royton	United Kingdom	united-kingdom
+rueil-malmaison	Rueil Malmaison	France	france
+ruislip	Ruislip	United Kingdom	united-kingdom
+rushall	Rushall	United Kingdom	united-kingdom
+rutherglen	Rutherglen	United Kingdom	united-kingdom
+ryhope	Ryhope	United Kingdom	united-kingdom
+sabino-canyon-estates	Sabino Canyon Estates	United States	united-states
+saclay	Saclay	France	france
+sacramento	Sacramento	United States	united-states
+sagamore	Sagamore	United States	united-states
+saint-andrews	Saint Andrews	United Kingdom	united-kingdom
+saint-bernard	Saint Bernard	United States	united-states
+saint-brieuc	Saint Brieuc	France	france
+saint-cloud	Saint Cloud	France	france
+saint-cyr-lecole	Saint Cyr l'Ecole	France	france
+saint-denis	Saint Denis	France	france
+saint-emilion	Saint Emilion	France	france
+saint-francis	Saint Francis	United States	united-states
+saint-germain-en-laye	Saint Germain en Laye	France	france
+saint-helens-tas-7216	Saint Helens TAS 7216	Australia	australia
+saint-helier	Saint Helier	United Kingdom	united-kingdom
+saint-hilliers	Saint Hilliers	France	france
+saint-jean-de-beauregard	Saint Jean de Beauregard	France	france
+saint-joseph	Saint Joseph	United States	united-states
+saint-kevins	Saint Kevin's	United Kingdom	united-kingdom
+saint-louis-park	Saint Louis Park	United States	united-states
+saint-mard	Saint Mard	France	france
+saint-marys-island	Saint Mary's Island	United Kingdom	united-kingdom
+saint-neots	Saint Neots	United Kingdom	united-kingdom
+saint-ouen	Saint Ouen	France	france
+saint-ouen-laumone	Saint Ouen l'Aumone	France	france
+saint-peters	Saint Peters	Australia	australia
+saint-prix	Saint Prix	France	france
+saint-remy-les-chevreuse	Saint Remy les Chevreuse	France	france
+saint-witz	Saint Witz	France	france
+salado	Salado	United States	united-states
+sale	Sale	United Kingdom	united-kingdom
+salem	Salem	United States	united-states
+salford	Salford	United Kingdom	united-kingdom
+salford-enterprise-centre	Salford Enterprise Centre	United Kingdom	united-kingdom
+salisbury	Salisbury	United Kingdom	united-kingdom
+salisbury	Salisbury	Australia	australia
+salt-lake-city	Salt Lake City	United States	united-states
+sam-hughes	Sam Hughes	United States	united-states
+san-angelo	San Angelo	United States	united-states
+san-antonio	San Antonio	United States	united-states
+san-carlos	San Carlos	United States	united-states
+sandbrook-park	Sandbrook Park	United Kingdom	united-kingdom
+sandia-heights	Sandia Heights	United States	united-states
+san-diego	San Diego	United States	united-states
+sandstone-point	Sandstone Point	Australia	australia
+sandstone-point-qld-4511	Sandstone Point QLD 4511	Australia	australia
+sandyford	Sandyford	United Kingdom	united-kingdom
+sandy-lane	Sandy Lane	United Kingdom	united-kingdom
+san-francisco	San Francisco	United States	united-states
+san-jose	San Jose	United States	united-states
+san-leanna	San Leanna	United States	united-states
+san-luis-de-sabinillas	San Luis de Sabinillas	United States	united-states
+san-luis-obispo	San Luis Obispo	United States	united-states
+san-miguel-de-salinas	San Miguel de Salinas	United Kingdom	united-kingdom
+san-miguel-de-salinas	San Miguel de Salinas	United States	united-states
+sannois	Sannois	France	france
+santa-ana	Santa Ana	United States	united-states
+santa-barbara	Santa Barbara	United States	united-states
+santa-fe	Santa Fe	United States	united-states
+santa-monica	Santa Monica	United States	united-states
+santeny	Santeny	France	france
+saratoga-springs	Saratoga Springs	United States	united-states
+sarcelles	Sarcelles	France	france
+sarisske-bohdanovce	Šarišské Bohdanovce	United Kingdom	united-kingdom
+sartrouville	Sartrouville	France	france
+savigny-le-temple	Savigny le Temple	France	france
+sawtell	Sawtell	Australia	australia
+sawtell-nsw-2452	Sawtell NSW 2452	Australia	australia
+saxilby	Saxilby	United Kingdom	united-kingdom
+scarborough	Scarborough	United Kingdom	united-kingdom
+scarborough	Scarborough	Australia	australia
+scarborough-wa-6019	Scarborough WA 6019	Australia	australia
+scarness	Scarness	Australia	australia
+scarness-qld-4655	Scarness QLD 4655	Australia	australia
+sceaux	Sceaux	France	france
+schoolcraft	Schoolcraft	United States	united-states
+scoresby	Scoresby	Australia	australia
+scotch-grove	Scotch Grove	United States	united-states
+scottsdale	Scottsdale	United States	united-states
+scunthorpe	Scunthorpe	United Kingdom	united-kingdom
+seabrook	Seabrook	United States	united-states
+seaburn	Seaburn	United Kingdom	united-kingdom
+seacliff	Seacliff	Australia	australia
+seacliff-sa-5049	Seacliff SA 5049	Australia	australia
+seal-beach	Seal Beach	United States	united-states
+seaton-carew	Seaton Carew	United Kingdom	united-kingdom
+seattle	Seattle	United States	united-states
+sebastopol	Sebastopol	United States	united-states
+sedgefield	Sedgefield	United Kingdom	united-kingdom
+seekonk	Seekonk	United States	united-states
+selkirk	Selkirk	United Kingdom	united-kingdom
+selly-oak	Selly Oak	United Kingdom	united-kingdom
+sequim	Sequim	United States	united-states
+serris	Serris	France	france
+sevres	Sevres	France	france
+shady-hollow	Shady Hollow	United States	united-states
+shadyside	Shadyside	United States	united-states
+sharjah	Sharjah	United States	united-states
+sharjah	Sharjah	United Arab Emirates	united-arab-emirates
+shaw	Shaw	United Kingdom	united-kingdom
+shaw	Shaw	United States	united-states
+shaw-heights	Shaw Heights	United States	united-states
+shawlands	Shawlands	United Kingdom	united-kingdom
+sheerness	Sheerness	United Kingdom	united-kingdom
+sheffield	Sheffield	United Kingdom	united-kingdom
+sheraton	Sheraton	United Arab Emirates	united-arab-emirates
+sherwood	Sherwood	United States	united-states
+shifnal	Shifnal	United Kingdom	united-kingdom
+shipley	Shipley	United Kingdom	united-kingdom
+shirley	Shirley	United Kingdom	united-kingdom
+shop-4-10-39-hercules-st	Shop 4 10/39 Hercules St	Australia	australia
+shoreline	Shoreline	United States	united-states
+shortlands	Shortlands	United Kingdom	united-kingdom
+sidcup	Sidcup	United Kingdom	united-kingdom
+siemianowice-slaskie	Siemianowice Śląskie	Poland	poland
+signal-hill	Signal Hill	United States	united-states
+silver-lake	Silver Lake	United States	united-states
+silver-spring	Silver Spring	United States	united-states
+sittingbourne	Sittingbourne	United Kingdom	united-kingdom
+sixteen-acres	Sixteen Acres	United States	united-states
+skawina	Skawina	Poland	poland
+skellow	Skellow	United Kingdom	united-kingdom
+skelmersdale	Skelmersdale	United Kingdom	united-kingdom
+skelton	Skelton	United Kingdom	united-kingdom
+skerries	Skerries	United Kingdom	united-kingdom
+skidby	Skidby	United Kingdom	united-kingdom
+skippack	Skippack	United States	united-states
+skokie	Skokie	United States	united-states
+sligo	Sligo	United Kingdom	united-kingdom
+slippery-rock	Slippery Rock	United States	united-states
+smithfield	Smithfield	United States	united-states
+smithfield-qld-4878	Smithfield QLD 4878	Australia	australia
+snelsmoor-lane	Snelsmoor Lane	United Kingdom	united-kingdom
+socorro	Socorro	United States	united-states
+sofitel-wafi	Sofitel Wafi	United States	united-states
+soham	Soham	United Kingdom	united-kingdom
+soisy-sous-montmorency	Soisy Sous Montmorency	France	france
+solihull	Solihull	United Kingdom	united-kingdom
+somerset	Somerset	United States	united-states
+somerville	Somerville	United States	united-states
+sonora-moonshine	Sonora Moonshine	United States	united-states
+sopot	Sopot	Poland	poland
+sosnowiec	Sosnowiec	Poland	poland
+souk-al-bahar	Souk Al Bahar	United Arab Emirates	united-arab-emirates
+souk-madinat-jumeirah	Souk Madinat Jumeirah	United Arab Emirates	united-arab-emirates
+south-boardman	South Boardman	United States	united-states
+southborough	Southborough	United States	united-states
+south-boston	South Boston	United States	united-states
+southbourne	Southbourne	United Kingdom	united-kingdom
+south-brisbane	South Brisbane	Australia	australia
+south-brisbane-qld-4101	South Brisbane QLD 4101	Australia	australia
+south-cambridgeshire	South Cambridgeshire	United Kingdom	united-kingdom
+south-carolina	South Carolina	United States	united-states
+south-coogee	South Coogee	Australia	australia
+southeast-pensacola	Southeast Pensacola	United States	united-states
+southend-on-sea	Southend-on-Sea	United Kingdom	united-kingdom
+south-geelong	South Geelong	Australia	australia
+south-hadley	South Hadley	United States	united-states
+south-hill	South Hill	United States	united-states
+south-hobart	South Hobart	Australia	australia
+south-kingsville	South Kingsville	Australia	australia
+south-melbourne	South Melbourne	Australia	australia
+south-melbourne-vic-3205	South Melbourne VIC 3205	Australia	australia
+south-new-castle	South New Castle	United States	united-states
+south-ockendon	South Ockendon	United Kingdom	united-kingdom
+south-oxfordshire	South Oxfordshire	United Kingdom	united-kingdom
+south-pasadena	South Pasadena	United States	united-states
+southport	Southport	United Kingdom	united-kingdom
+south-reddish	South Reddish	United Kingdom	united-kingdom
+south-salt-lake	South Salt Lake	United States	united-states
+southsea	Southsea	United Kingdom	united-kingdom
+south-side-flats	South Side Flats	United States	united-states
+south-tucson	South Tucson	United States	united-states
+southwick	Southwick	United States	united-states
+south-yarra	South Yarra	Australia	australia
+south-yarra-vic-3141	South Yarra VIC 3141	Australia	australia
+sports-city	Sports City	United Arab Emirates	united-arab-emirates
+springfield	Springfield	United States	united-states
+springfield-central-qld-4300	Springfield Central QLD 4300	Australia	australia
+springfield-lakes	Springfield Lakes	Australia	australia
+springfield-lakes-qld-4300	Springfield Lakes QLD 4300	Australia	australia
+spring-hill	Spring Hill	Australia	australia
+spring-valley	Spring Valley	United States	united-states
+sproatley	Sproatley	United Kingdom	united-kingdom
+stafford	Stafford	United Kingdom	united-kingdom
+stafford-qld-4053	Stafford QLD 4053	Australia	australia
+st-agnes	St Agnes	Australia	australia
+st-agnes-sa-5097	St Agnes SA 5097	Australia	australia
+stainforth	Stainforth	United Kingdom	united-kingdom
+stains	Stains	France	france
+st-albans	St Albans	United Kingdom	united-kingdom
+stamford	Stamford	United States	united-states
+stamford-bridge	Stamford Bridge	United Kingdom	united-kingdom
+st-andrews	St Andrews	United Kingdom	united-kingdom
+stanmore	Stanmore	United Kingdom	united-kingdom
+stanmore	Stanmore	Australia	australia
+stanmore-nsw-2048	Stanmore NSW 2048	Australia	australia
+stanningley	Stanningley	United Kingdom	united-kingdom
+stapleford	Stapleford	United Kingdom	united-kingdom
+stara-lubovna	Stará Ľubovňa	United Kingdom	united-kingdom
+stare-bielsko	Stare Bielsko	Poland	poland
+stary-sacz	Stary Sącz	Poland	poland
+state-college	State College	United States	united-states
+ste-103	Ste 103	United States	united-states
+ste-301	Ste 301	United States	united-states
+ste-a	Ste A	United States	united-states
+steamboat-springs	Steamboat Springs	United States	united-states
+stellarton	Stellarton	United Kingdom	united-kingdom
+stepney	Stepney	Australia	australia
+stepney-sa-5069	Stepney SA 5069	Australia	australia
+stevenage	Stevenage	United Kingdom	united-kingdom
+st-helens	St Helens	United Kingdom	united-kingdom
+st-helens	St Helens	Australia	australia
+st-helier	St. Helier	United Kingdom	united-kingdom
+stillorgan	Stillorgan	United Kingdom	united-kingdom
+stirling	Stirling	United Kingdom	united-kingdom
+stirling	Stirling	Australia	australia
+stirling-sa-5152	Stirling SA 5152	Australia	australia
+st-kilda	St Kilda	United Kingdom	united-kingdom
+st-louis	St. Louis	United States	united-states
+stockport	Stockport	United Kingdom	united-kingdom
+stockton-heath	Stockton Heath	United Kingdom	united-kingdom
+stockton-on-the-forest	Stockton on the Forest	United Kingdom	united-kingdom
+stoke-on-trent	Stoke-on-Trent	United Kingdom	united-kingdom
+stoneclough	stoneclough	United Kingdom	united-kingdom
+stoneybatter	Stoneybatter	United Kingdom	united-kingdom
+stourport-on-severn	Stourport-on-Severn	United Kingdom	united-kingdom
+stowmarket	Stowmarket	United Kingdom	united-kingdom
+strabane	Strabane	United Kingdom	united-kingdom
+stratmoor	Stratmoor	United States	united-states
+stratton-house	Stratton House	United Kingdom	united-kingdom
+street	Street	United Kingdom	united-kingdom
+streetsboro	Streetsboro	United States	united-states
+stretford	Stretford	United Kingdom	united-kingdom
+stretford-mall	Stretford Mall	United Kingdom	united-kingdom
+strip-district	Strip District	United States	united-states
+stropkov	Stropkov	United Kingdom	united-kingdom
+st-thomas	ST Thomas	United Kingdom	united-kingdom
+students-union-south	Students Union South	United Kingdom	united-kingdom
+studio-city	Studio City	United States	united-states
+sturbridge	Sturbridge	United States	united-states
+suffolk	Suffolk	United States	united-states
+sugarland-run	Sugarland Run	United States	united-states
+suite-110	suite 110	United States	united-states
+sunbury-on-thames	Sunbury-on-Thames	United Kingdom	united-kingdom
+sunderland	Sunderland	United Kingdom	united-kingdom
+sunnyside	Sunnyside	United States	united-states
+sunnyvale	Sunnyvale	United States	united-states
+sunset	Sunset	United States	united-states
+sunset-valley	Sunset Valley	United States	united-states
+surbiton	Surbiton	United Kingdom	united-kingdom
+suresnes	Suresnes	France	france
+surfside-beach	Surfside Beach	United States	united-states
+surrey	Surrey	United Kingdom	united-kingdom
+surrey-downs-sa-5126	Surrey Downs SA 5126	Australia	australia
+sussex-place	Sussex Place	United Kingdom	united-kingdom
+sutton	Sutton	United Kingdom	united-kingdom
+sutton-coldfield	Sutton Coldfield	United Kingdom	united-kingdom
+svidnik	Svidník	United States	united-states
+swadlincote	Swadlincote	United Kingdom	united-kingdom
+swanscombe	Swanscombe	United Kingdom	united-kingdom
+swillington	Swillington	United Kingdom	united-kingdom
+swindon	Swindon	United Kingdom	united-kingdom
+swinnow-grange-mill	Swinnow Grange Mill	United Kingdom	united-kingdom
+swinton	Swinton	United Kingdom	united-kingdom
+swords	Swords	United Kingdom	united-kingdom
+swoyersville	Swoyersville	United States	united-states
+sydney	Sydney	Australia	australia
+sydney-nsw-2000	Sydney NSW 2000	Australia	australia
+sylvan-beach	Sylvan Beach	United States	united-states
+sylvania	Sylvania	Australia	australia
+syracuse	Syracuse	United States	united-states
+sywell	Sywell	United Kingdom	united-kingdom
+tacoma	Tacoma	United States	united-states
+tallaght	Tallaght	United Kingdom	united-kingdom
+tallmadge	Tallmadge	United States	united-states
+tampa	Tampa	United States	united-states
+tamworth	Tamworth	United Kingdom	united-kingdom
+tannochside	Tannochside	United Kingdom	united-kingdom
+taperoo-sa-5017	Taperoo SA 5017	Australia	australia
+tarleton	Tarleton	United Kingdom	united-kingdom
+tarnow	Tarnów	Poland	poland
+tarporley	Tarporley	United Kingdom	united-kingdom
+tatling-end	Tatling End	United Kingdom	united-kingdom
+taunton	Taunton	United Kingdom	united-kingdom
+taunton	Taunton	United States	united-states
+taverny	Taverny	France	france
+teddington	Teddington	United Kingdom	united-kingdom
+tehachapi	Tehachapi	United States	united-states
+telford	Telford	United Kingdom	united-kingdom
+tempe-junction	Tempe Junction	United States	united-states
+templeogue	Templeogue	United Kingdom	united-kingdom
+teneriffe	Teneriffe	Australia	australia
+teneriffe-qld-4005	Teneriffe QLD 4005	Australia	australia
+terenure	Terenure	United Kingdom	united-kingdom
+terrell-hills	Terrell Hills	United States	united-states
+tewksbury	Tewksbury	United States	united-states
+thame	Thame	United Kingdom	united-kingdom
+thames-ditton	Thames Ditton	United Kingdom	united-kingdom
+thebarton-sa-5031	Thebarton SA 5031	Australia	australia
+the-colony	The Colony	United States	united-states
+the-junction	The Junction	Australia	australia
+themericourt	Themericourt	France	france
+thiais	Thiais	France	france
+thoiry	Thoiry	France	france
+thomery	Thomery	France	france
+thompsonville	Thompsonville	United States	united-states
+thornbury	Thornbury	Australia	australia
+thornham	Thornham	United Kingdom	united-kingdom
+thornliebank	Thornliebank	United Kingdom	united-kingdom
+thornton	Thornton	United Kingdom	united-kingdom
+thornton-cleveleys	Thornton-Cleveleys	United Kingdom	united-kingdom
+thornton-heath	Thornton Heath	United Kingdom	united-kingdom
+thorpe-audlin	Thorpe Audlin	United Kingdom	united-kingdom
+thousand-oaks	Thousand Oaks	United States	united-states
+three-rivers	Three Rivers	United Kingdom	united-kingdom
+three-rivers	Three Rivers	United States	united-states
+thurston	Thurston	United Kingdom	united-kingdom
+tigard	Tigard	United States	united-states
+tillamook	Tillamook	United States	united-states
+timberwood-park	Timberwood Park	United States	united-states
+timnath	Timnath	United States	united-states
+timperley	Timperley	United Kingdom	united-kingdom
+tipton	Tipton	United Kingdom	united-kingdom
+tonawanda	Tonawanda	United States	united-states
+tonbridge	Tonbridge	United Kingdom	united-kingdom
+tonyrefail	Tonyrefail	United Kingdom	united-kingdom
+toowong-qld-4066	Toowong QLD 4066	Australia	australia
+toowoomba	Toowoomba	Australia	australia
+toowoomba-city-qld-4350	Toowoomba City QLD 4350	Australia	australia
+topsham	Topsham	United Kingdom	united-kingdom
+torcy	Torcy	France	france
+torquay	Torquay	United Kingdom	united-kingdom
+torrance	Torrance	United States	united-states
+torre-de-la-horadada	Torre de la Horadada	United States	united-states
+torrevieja	Torrevieja	United States	united-states
+torun	Torun	Poland	poland
+tostock	Tostock	United Kingdom	united-kingdom
+totnes	Totnes	United Kingdom	united-kingdom
+totness-sa-5250	Totness SA 5250	Australia	australia
+toton	toton	United Kingdom	united-kingdom
+tottington	Tottington	United Kingdom	united-kingdom
+tower-hamlets	Tower Hamlets	United Kingdom	united-kingdom
+towngate	Towngate	United Kingdom	united-kingdom
+townparks	Townparks	United Kingdom	united-kingdom
+townsville	Townsville	Australia	australia
+townsville-city-qld-4810	Townsville City QLD 4810	Australia	australia
+towson	Towson	United States	united-states
+trafford-park	Trafford Park	United Kingdom	united-kingdom
+tralee	Tralee	United Kingdom	united-kingdom
+tranent	Tranent	United Kingdom	united-kingdom
+tranmere	Tranmere	United Kingdom	united-kingdom
+traverse-city	Traverse City	United States	united-states
+tremblay-en-france	Tremblay en France	France	france
+trenton	Trenton	United Kingdom	united-kingdom
+trenton	Trenton	United States	united-states
+treorchy	Treorchy	United Kingdom	united-kingdom
+triadelphia	Triadelphia	United States	united-states
+triel-sur-seine	Triel sur Seine	France	france
+tring	Tring	United Kingdom	united-kingdom
+trinity-park	Trinity Park	Australia	australia
+troon	Troon	United Kingdom	united-kingdom
+trumansburg	Trumansburg	United States	united-states
+tuart-hill	Tuart Hill	Australia	australia
+tucson	Tucson	United States	united-states
+tunstall	Tunstall	United Kingdom	united-kingdom
+turnersville	Turnersville	United States	united-states
+twickenham	Twickenham	United Kingdom	united-kingdom
+twyford	Twyford	United Kingdom	united-kingdom
+twyning	Twyning	United Kingdom	united-kingdom
+tychy	Tychy	Poland	poland
+tyldesley	Tyldesley	United Kingdom	united-kingdom
+uddingston	Uddingston	United Kingdom	united-kingdom
+ungersheim	Ungersheim	France	france
+unit-2	Unit 2	United Kingdom	united-kingdom
+unit-200	Unit 200	United States	united-states
+unit-240	unit 240	United States	united-states
+united-kingdom	United Kingdom	United Kingdom	united-kingdom
+universal-city	Universal City	United States	united-states
+university-of-edinburgh	University of Edinburgh	United Kingdom	united-kingdom
+university-park	University Park	United Kingdom	united-kingdom
+university-park	University Park	United States	united-states
+unley-sa-5061	Unley SA 5061	Australia	australia
+up-holland	Up Holland	United Kingdom	united-kingdom
+upminster	Upminster	United Kingdom	united-kingdom
+upper-heyford	Upper Heyford	United Kingdom	united-kingdom
+upper-hulme	Upper Hulme	United Kingdom	united-kingdom
+upton-snodsbury	UPTON SNODSBURY	United Kingdom	united-kingdom
+uptown	Uptown	United States	united-states
+urmston	Urmston	United Kingdom	united-kingdom
+uxbridge	Uxbridge	United Kingdom	united-kingdom
+vaalpark	Vaalpark	United Kingdom	united-kingdom
+vaires-sur-marne	Vaires sur Marne	France	france
+valmondois	Valmondois	France	france
+vancouver	Vancouver	United States	united-states
+vanderbijlpark-c-w-5	Vanderbijlpark C. W. 5	United Kingdom	united-kingdom
+vanves	Vanves	France	france
+varsity-lakes	Varsity Lakes	Australia	australia
+vaujours	Vaujours	France	france
+vaureal	Vaureal	France	france
+venable	Venable	United States	united-states
+venice	Venice	United States	united-states
+vereeniging	Vereeniging	United Kingdom	united-kingdom
+verneuil-sur-seine	Verneuil sur Seine	France	france
+versailles	Versailles	France	france
+vesinet-le	Vesinet (Le)	France	france
+viarmes	Viarmes	France	france
+victor	Victor	United States	united-states
+victor-harbor	Victor Harbor	Australia	australia
+victor-harbor-sa-5211	Victor Harbor SA 5211	Australia	australia
+victoria-square	Victoria Square	United Kingdom	united-kingdom
+vigneux-sur-seine	Vigneux sur Seine	France	france
+villeconin	Villeconin	France	france
+ville-du-bois-la	Ville du Bois (La)	France	france
+villejuif	Villejuif	France	france
+villeneuve-la-garenne	Villeneuve la Garenne	France	france
+villennes-sur-seine	Villennes sur Seine	France	france
+villenoy	Villenoy	France	france
+villepinte	Villepinte	France	france
+villiers-le-bacle	Villiers le Bacle	France	france
+vincennes	Vincennes	France	france
+vinton	Vinton	United States	united-states
+viry-chatillon	Viry Chatillon	France	france
+vitry-sur-seine	Vitry sur Seine	France	france
+voisenon	Voisenon	France	france
+volant	Volant	United States	united-states
+vulaines-sur-seine	Vulaines sur Seine	France	france
+vung-tau	Vũng Tàu	United Kingdom	united-kingdom
+waddesdon	Waddesdon	United Kingdom	united-kingdom
+waddicar	Waddicar	United Kingdom	united-kingdom
+wadhurst	Wadhurst	United Kingdom	united-kingdom
+wadworth	Wadworth	United Kingdom	united-kingdom
+wakefield	Wakefield	United Kingdom	united-kingdom
+waldon	Waldon	United States	united-states
+walkden	Walkden	United Kingdom	united-kingdom
+wallasey	Wallasey	United Kingdom	united-kingdom
+walla-walla	Walla Walla	United States	united-states
+walmgate	Walmgate	United Kingdom	united-kingdom
+walnut-creek	Walnut Creek	United States	united-states
+walsall	Walsall	United Kingdom	united-kingdom
+walshaw	Walshaw	United Kingdom	united-kingdom
+walton	Walton	United Kingdom	united-kingdom
+walyalup-waterfront	Walyalup Waterfront	Australia	australia
+wanakah	Wanakah	United States	united-states
+wandsworth	Wandsworth	United Kingdom	united-kingdom
+wappingers-falls	Wappingers Falls	United States	united-states
+warana	Warana	Australia	australia
+warana-qld-4575	Warana QLD 4575	Australia	australia
+wardley	Wardley	United Kingdom	united-kingdom
+warrandyte-vic-3113	Warrandyte VIC 3113	Australia	australia
+warrendale	Warrendale	United States	united-states
+warrington	Warrington	United Kingdom	united-kingdom
+warsash	Warsash	United Kingdom	united-kingdom
+warsaw	Warsaw	Poland	poland
+warsop	Warsop	United Kingdom	united-kingdom
+warton	Warton	United Kingdom	united-kingdom
+warwick	Warwick	United Kingdom	united-kingdom
+washington	Washington	United States	united-states
+washwood-heath	Washwood Heath	United Kingdom	united-kingdom
+wateringbury	Wateringbury	United Kingdom	united-kingdom
+watford	Watford	United Kingdom	united-kingdom
+wauconda	Wauconda	United States	united-states
+wauwatosa	Wauwatosa	United States	united-states
+wavertree	Wavertree	United Kingdom	united-kingdom
+waxahachie	Waxahachie	United States	united-states
+weavering	Weavering	United Kingdom	united-kingdom
+webster	Webster	United States	united-states
+wednesfield	Wednesfield	United Kingdom	united-kingdom
+welles-cross	Welles & Cross	United Kingdom	united-kingdom
+welling	Welling	United Kingdom	united-kingdom
+wellington	Wellington	United States	united-states
+wells-branch	Wells Branch	United States	united-states
+welwyn-garden-city	Welwyn Garden City	United Kingdom	united-kingdom
+wembley	Wembley	United Kingdom	united-kingdom
+wembley-park	Wembley Park	United Kingdom	united-kingdom
+wenatchee	Wenatchee	United States	united-states
+wendlebury	Wendlebury	United Kingdom	united-kingdom
+werrington	Werrington	United Kingdom	united-kingdom
+west-boylston	West Boylston	United States	united-states
+west-bridgewater	West Bridgewater	United States	united-states
+west-bridgford	West Bridgford	United Kingdom	united-kingdom
+westcott	Westcott	United Kingdom	united-kingdom
+west-derby	West Derby	United Kingdom	united-kingdom
+west-end	West End	United Kingdom	united-kingdom
+west-end	West End	Australia	australia
+west-end-of-london	West End of London	United Kingdom	united-kingdom
+west-end-qld-4101	West End QLD 4101	Australia	australia
+western-side	Western Side	Australia	australia
+westfield	Westfield	United States	united-states
+westfield-avenue	Westfield Avenue	United Kingdom	united-kingdom
+westgate-house	Westgate House	United Kingdom	united-kingdom
+west-hindmarsh	West Hindmarsh	Australia	australia
+west-homestead	West Homestead	United States	united-states
+west-horndon	West Horndon	United Kingdom	united-kingdom
+west-horsley	West Horsley	United Kingdom	united-kingdom
+westhoughton	Westhoughton	United Kingdom	united-kingdom
+west-kirby	West Kirby	United Kingdom	united-kingdom
+west-lafayette	West Lafayette	United States	united-states
+west-lake-hills	West Lake Hills	United States	united-states
+west-lakes	West Lakes	Australia	australia
+west-lakes-sa-5021	West Lakes SA 5021	Australia	australia
+west-leederville-wa-6007	West Leederville WA 6007	Australia	australia
+west-malling	West Malling	United Kingdom	united-kingdom
+west-melbourne	West Melbourne	Australia	australia
+west-mifflin	West Mifflin	United States	united-states
+westminster	Westminster	United Kingdom	united-kingdom
+westminster	Westminster	United States	united-states
+west-oakland	West Oakland	United States	united-states
+west-omaha	West Omaha	United States	united-states
+west-pasco	West Pasco	United States	united-states
+west-raleigh	West Raleigh	United States	united-states
+west-samoset	West Samoset	United States	united-states
+west-seneca	West Seneca	United States	united-states
+west-springfield	West Springfield	United States	united-states
+west-swindon-district-centre	West Swindon District Centre	United Kingdom	united-kingdom
+west-town	West Town	United States	united-states
+west-university-place	West University Place	United States	united-states
+west-view	West View	United States	united-states
+westwood	Westwood	United States	united-states
+west-wratting	West Wratting	United Kingdom	united-kingdom
+wetherby	Wetherby	United Kingdom	united-kingdom
+weymouth	Weymouth	United Kingdom	united-kingdom
+wharf-st	Wharf St	Australia	australia
+wheaton	Wheaton	United States	united-states
+wheat-ridge	Wheat Ridge	United States	united-states
+whickham	Whickham	United Kingdom	united-kingdom
+white-center	White Center	United States	united-states
+whitefield	Whitefield	United Kingdom	united-kingdom
+whitehall	Whitehall	United States	united-states
+white-swan	White Swan	United Kingdom	united-kingdom
+whitley-bay	Whitley Bay	United Kingdom	united-kingdom
+whitley-farm-cottage	Whitley Farm Cottage	United Kingdom	united-kingdom
+whitman	Whitman	United States	united-states
+wibsey	Wibsey	United Kingdom	united-kingdom
+wickford	Wickford	United Kingdom	united-kingdom
+wicklow	Wicklow	United Kingdom	united-kingdom
+wideopen	Wideopen	United Kingdom	united-kingdom
+widnes	Widnes	United Kingdom	united-kingdom
+wigan	Wigan	United Kingdom	united-kingdom
+willenhall	Willenhall	United Kingdom	united-kingdom
+willerby	Willerby	United Kingdom	united-kingdom
+williamsburg	Williamsburg	Australia	australia
+williamsburg	Williamsburg	United States	united-states
+williamstown	Williamstown	United States	united-states
+williamsville	Williamsville	United States	united-states
+willunga	Willunga	Australia	australia
+willunga-sa-5172	Willunga SA 5172	Australia	australia
+wilmette	Wilmette	United States	united-states
+wilmington	Wilmington	United States	united-states
+wilmslow	Wilmslow	United Kingdom	united-kingdom
+wilston	Wilston	Australia	australia
+wilston-qld-4051	Wilston QLD 4051	Australia	australia
+wilton	Wilton	United Kingdom	united-kingdom
+wincham	Wincham	United Kingdom	united-kingdom
+winchcombe	Winchcombe	United Kingdom	united-kingdom
+winchmore-hill	Winchmore Hill	United Kingdom	united-kingdom
+windemere	Windemere	United States	united-states
+windham	Windham	United States	united-states
+windlesham	Windlesham	United Kingdom	united-kingdom
+windmill-hill	Windmill Hill	United Kingdom	united-kingdom
+windsor	Windsor	United Kingdom	united-kingdom
+windsor	Windsor	Australia	australia
+windsor	Windsor	United States	united-states
+windsor-locks	Windsor Locks	United States	united-states
+windsor-vic-3181	Windsor VIC 3181	Australia	australia
+wingerworth	Wingerworth	United Kingdom	united-kingdom
+winsford	Winsford	United Kingdom	united-kingdom
+wistaston	Wistaston	United Kingdom	united-kingdom
+woburn	Woburn	United States	united-states
+wollongong-city-centre	Wollongong city centre	Australia	australia
+wollongong-nsw-2500	Wollongong NSW 2500	Australia	australia
+wolverhampton	Wolverhampton	United Kingdom	united-kingdom
+woodford-green	Woodford Green	United Kingdom	united-kingdom
+woodhouses	Woodhouses	United Kingdom	united-kingdom
+woodlawn	Woodlawn	United States	united-states
+woodley	Woodley	United Kingdom	united-kingdom
+woodmill-lane	Woodmill Lane	United Kingdom	united-kingdom
+wood-quay	Wood Quay	United Kingdom	united-kingdom
+woodsetton	Woodsetton	United Kingdom	united-kingdom
+woodstock	Woodstock	United States	united-states
+wood-street-village	Wood Street Village	United Kingdom	united-kingdom
+woodville-south	Woodville South	Australia	australia
+woodville-south-sa-5011	Woodville South SA 5011	Australia	australia
+woollahra	Woollahra	Australia	australia
+woolloongabba	Woolloongabba	Australia	australia
+woolpit	Woolpit	United Kingdom	united-kingdom
+woolton	Woolton	United Kingdom	united-kingdom
+worcester	Worcester	United Kingdom	united-kingdom
+worcester	Worcester	United States	united-states
+worksop	Worksop	United Kingdom	united-kingdom
+worlington	Worlington	United Kingdom	united-kingdom
+worsley	Worsley	United Kingdom	united-kingdom
+wouldham	Wouldham	United Kingdom	united-kingdom
+wrenbury	Wrenbury	United Kingdom	united-kingdom
+wrenthorpe	Wrenthorpe	United Kingdom	united-kingdom
+wroclaw	Wroclaw	Poland	poland
+wrotham	Wrotham	United Kingdom	united-kingdom
+wy-dit-joli-village	Wy Dit Joli Village	France	france
+wylam	Wylam	United Kingdom	united-kingdom
+wynnum-west	Wynnum West	Australia	australia
+wythall	Wythall	United Kingdom	united-kingdom
+wythenshawe	Wythenshawe	United Kingdom	united-kingdom
+yarraville	Yarraville	Australia	australia
+yarraville-vic-3013	Yarraville VIC 3013	Australia	australia
+yarrow-point	Yarrow Point	United States	united-states
+yas-island	Yas Island	United Arab Emirates	united-arab-emirates
+yatala	Yatala	Australia	australia
+yeadon	Yeadon	United Kingdom	united-kingdom
+yeerongpilly	Yeerongpilly	Australia	australia
+yeerongpilly-qld-4105	Yeerongpilly QLD 4105	Australia	australia
+york	York	United Kingdom	united-kingdom
+youngstown	Youngstown	United States	united-states
+yoxall	Yoxall	United Kingdom	united-kingdom
+zaborze	Zaborze	Poland	poland
+zanesville	Zanesville	United States	united-states
+zielona-gora	Zielona-gora	Poland	poland

@@ -1,7 +1,7 @@
 defmodule TriviaAdvisor.Sitemap do
   @moduledoc """
   Sitemap generation for Trivia Advisor.
-  Generates XML sitemaps matching V1 URL structure for 100% SEO preservation.
+  Generates XML sitemaps with flat URL structure for production URL matching.
   """
 
   alias TriviaAdvisor.{Locations, Repo}
@@ -58,22 +58,20 @@ defmodule TriviaAdvisor.Sitemap do
   end
 
   @doc """
-  Generates city page URLs.
+  Generates city page URLs (flat structure with disambiguation: /cities/{slug} or /cities/{slug-country-slug}).
   """
   def city_urls(base_url) do
     query =
       from c in TriviaAdvisor.Locations.City,
-        join: country in assoc(c, :country),
-        select: %{
-          city_slug: c.slug,
-          country_slug: country.slug,
-          updated_at: c.updated_at
-        }
+        preload: [:country]
 
     Repo.all(query)
     |> Enum.map(fn city ->
+      # Use the Locations.city_url_slug/1 function to handle disambiguation
+      city_url_slug = Locations.city_url_slug(city)
+
       %{
-        loc: "#{base_url}/#{city.country_slug}/#{city.city_slug}",
+        loc: "#{base_url}/cities/#{city_url_slug}",
         changefreq: "weekly",
         priority: 0.8,
         lastmod: city.updated_at |> NaiveDateTime.to_date()
@@ -82,24 +80,20 @@ defmodule TriviaAdvisor.Sitemap do
   end
 
   @doc """
-  Generates venue page URLs.
+  Generates venue page URLs (flat structure: /venues/{slug}).
   """
   def venue_urls(base_url) do
     query =
       from v in TriviaAdvisor.Locations.Venue,
-        join: city in assoc(v, :city),
-        join: country in assoc(city, :country),
         select: %{
           venue_slug: v.slug,
-          city_slug: city.slug,
-          country_slug: country.slug,
           updated_at: v.updated_at
         }
 
     Repo.all(query)
     |> Enum.map(fn venue ->
       %{
-        loc: "#{base_url}/#{venue.country_slug}/#{venue.city_slug}/#{venue.venue_slug}",
+        loc: "#{base_url}/venues/#{venue.venue_slug}",
         changefreq: "daily",
         priority: 0.7,
         lastmod: venue.updated_at |> NaiveDateTime.to_date()
@@ -132,15 +126,25 @@ defmodule TriviaAdvisor.Sitemap do
   def to_xml do
     urls = generate()
 
-    Sitemapper.generate(urls, fn url, _index ->
-      """
-      <url>
-        <loc>#{url.loc}</loc>
-        <lastmod>#{url.lastmod}</lastmod>
-        <changefreq>#{url.changefreq}</changefreq>
-        <priority>#{url.priority}</priority>
-      </url>
-      """
-    end)
+    url_entries =
+      urls
+      |> Enum.map(fn url ->
+        """
+            <url>
+              <loc>#{url.loc}</loc>
+              <lastmod>#{url.lastmod}</lastmod>
+              <changefreq>#{url.changefreq}</changefreq>
+              <priority>#{url.priority}</priority>
+            </url>
+        """
+      end)
+      |> Enum.join("\n")
+
+    """
+    <?xml version="1.0" encoding="UTF-8"?>
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    #{url_entries}
+    </urlset>
+    """
   end
 end

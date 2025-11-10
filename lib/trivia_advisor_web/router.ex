@@ -33,6 +33,11 @@ defmodule TriviaAdvisorWeb.Router do
     get "/sitemap.xml", SitemapController, :sitemap
     get "/robots.txt", SitemapController, :robots
 
+    # Flat URL routes (Phases 1-2: Venues & Cities - matches production patterns)
+    # These must come BEFORE hierarchical routes to take precedence
+    live "/venues/:venue_slug", VenueShowLive, :show
+    live "/cities/:city_slug", CityShowLive, :show
+
     # Dynamic routes matching V1 patterns for SEO preservation
     # Pattern: /{country-slug}/{city-slug}/{venue-slug}/
     live "/:country_slug/:city_slug/:venue_slug", VenueShowLive, :show

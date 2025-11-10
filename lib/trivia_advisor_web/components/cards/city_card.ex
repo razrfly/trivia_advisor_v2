@@ -3,6 +3,7 @@ defmodule TriviaAdvisorWeb.Components.Cards.CityCard do
   City card component for displaying city information.
   """
   use Phoenix.Component
+  alias TriviaAdvisor.Locations
 
   @doc """
   Renders a city card with link to city page.
@@ -16,9 +17,12 @@ defmodule TriviaAdvisorWeb.Components.Cards.CityCard do
   attr :show_country, :boolean, default: true
 
   def city_card(assigns) do
+    # Generate the appropriate city URL slug (handles disambiguation)
+    assigns = assign(assigns, :city_url_slug, Locations.city_url_slug(assigns.city))
+
     ~H"""
     <.link
-      navigate={"#{@base_url}/#{@city.country.slug}/#{@city.slug}"}
+      navigate={"/cities/#{@city_url_slug}"}
       class="block group"
     >
       <div class="p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-200">

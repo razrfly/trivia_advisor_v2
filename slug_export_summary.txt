@@ -1,0 +1,20 @@
+=== SLUG EXPORT SUMMARY ===
+
+Database Statistics:
+- Total Cities: 2657
+- Unique City Slugs: 2586
+- Duplicate City Slugs: 71
+- City Uniqueness: 97.3%
+
+- Total Venues: 4934
+- Unique Venue Slugs: 4934
+- Duplicate Venue Slugs: 0
+- Venue Uniqueness: 100.0%
+
+Files Generated:
+- city_slugs.txt: All city slugs with country context
+- venue_slugs.txt: All venue slugs with location context
+
+Format:
+City: slug<TAB>name<TAB>country<TAB>country_slug
+Venue: slug<TAB>name<TAB>city<TAB>city_slug<TAB>country<TAB>country_slug

@@ -68,6 +68,115 @@ defmodule TriviaAdvisor.Locations do
   end
 
   @doc """
+  Gets a city by URL slug, handling both unique slugs and disambiguated slugs.
+
+  Disambiguated slugs follow the pattern: {city-slug}-{country-slug}
+
+  ## Examples
+
+      iex> get_city_by_url_slug("austin")  # Unique slug
+      %City{name: "Austin", country: %Country{name: "United States"}}
+
+      iex> get_city_by_url_slug("aberdeen-united-kingdom")  # Disambiguated
+      %City{name: "Aberdeen", country: %Country{name: "United Kingdom"}}
+  """
+  def get_city_by_url_slug(url_slug) when is_binary(url_slug) do
+    # First, try as a unique city slug
+    case get_unique_city_by_slug(url_slug) do
+      %City{} = city ->
+        # Found unique city
+        city
+
+      nil ->
+        # Not found as unique slug, try parsing as disambiguated format
+        # Format: {city-slug}-{country-slug}
+        # We need to try all possible splits from the right since both parts can contain hyphens
+        parts = String.split(url_slug, "-")
+        try_disambiguated_slug(parts, [])
+    end
+  end
+
+  # Helper to try different split positions for disambiguated slugs
+  defp try_disambiguated_slug([_single_part], _acc), do: nil
+
+  defp try_disambiguated_slug([part | rest], acc) do
+    # Try current split: everything before as city slug, everything after as country slug
+    city_slug = Enum.join(Enum.reverse([part | acc]), "-")
+    country_slug = Enum.join(rest, "-")
+
+    case get_city_by_slugs(city_slug, country_slug) do
+      %City{} = city -> city
+      nil -> try_disambiguated_slug(rest, [part | acc])
+    end
+  end
+
+  defp try_disambiguated_slug([], _acc), do: nil
+
+  @doc """
+  Gets a city by city slug and country slug.
+  """
+  def get_city_by_slugs(city_slug, country_slug) when is_binary(city_slug) and is_binary(country_slug) do
+    Repo.one(
+      from c in City,
+        join: country in assoc(c, :country),
+        where: c.slug == ^city_slug and country.slug == ^country_slug,
+        preload: [:country]
+    )
+  end
+
+  @doc """
+  Gets a unique city by slug (returns nil if multiple cities have the same slug).
+  """
+  def get_unique_city_by_slug(slug) when is_binary(slug) do
+    case Repo.all(
+      from c in City,
+        where: c.slug == ^slug,
+        preload: [:country]
+    ) do
+      [city] -> city  # Exactly one match
+      _ -> nil        # Zero or multiple matches
+    end
+  end
+
+  @doc """
+  Checks if a city slug is duplicated (appears for multiple cities).
+  """
+  def is_duplicate_city_slug?(slug) when is_binary(slug) do
+    count = Repo.one(
+      from c in City,
+        where: c.slug == ^slug,
+        select: count(c.id)
+    )
+
+    count > 1
+  end
+
+  @doc """
+  Generates the appropriate URL slug for a city.
+  Returns city slug for unique cities, or city-slug-country-slug for duplicates.
+
+  ## Examples
+
+      iex> city_url_slug(%City{slug: "austin"})  # Unique
+      "austin"
+
+      iex> city_url_slug(%City{slug: "aberdeen", country: %Country{slug: "united-kingdom"}})  # Duplicate
+      "aberdeen-united-kingdom"
+  """
+  def city_url_slug(%City{slug: slug, country: %Country{slug: country_slug}}) do
+    if is_duplicate_city_slug?(slug) do
+      "#{slug}-#{country_slug}"
+    else
+      slug
+    end
+  end
+
+  def city_url_slug(%City{slug: slug}) do
+    # If country not preloaded, assume unique
+    slug
+  end
+
+  @doc """
   Gets cities with discovery enabled that have trivia events (popular cities).
   Queries the trivia_events_export view for simplicity.
 

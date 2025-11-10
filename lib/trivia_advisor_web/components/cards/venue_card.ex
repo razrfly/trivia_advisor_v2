@@ -6,22 +6,20 @@ defmodule TriviaAdvisorWeb.Components.Cards.VenueCard do
   alias TriviaAdvisor.Locations.Venue
 
   @doc """
-  Renders a venue card with link to venue page.
+  Renders a venue card with link to venue page (flat URL structure).
 
   ## Examples
 
-      <VenueCard.venue_card venue={venue} country_slug={@country.slug} city_slug={@city.slug} base_url={@base_url} />
+      <VenueCard.venue_card venue={venue} />
+      <VenueCard.venue_card venue={venue} show_city={true} />
   """
   attr :venue, :map, required: true
-  attr :country_slug, :string, required: true
-  attr :city_slug, :string, required: true
-  attr :base_url, :string, required: true
   attr :show_city, :boolean, default: false
 
   def venue_card(assigns) do
     ~H"""
     <.link
-      navigate={"#{@base_url}/#{@country_slug}/#{@city_slug}/#{@venue.slug}"}
+      navigate={"/venues/#{@venue.slug}"}
       class="block group"
     >
       <div class="p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-200">

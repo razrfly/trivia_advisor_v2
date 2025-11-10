@@ -1,7 +1,7 @@
 defmodule TriviaAdvisorWeb.VenueShowLive do
   @moduledoc """
   Venue page LiveView - displays venue details and trivia events.
-  Matches V1 route pattern: /{country-slug}/{city-slug}/{venue-slug}/
+  Supports both flat (/venues/{slug}) and hierarchical patterns for backward compatibility.
   """
   use TriviaAdvisorWeb, :live_view
 
@@ -14,6 +14,24 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
   alias TriviaAdvisorWeb.Components.UI.EmptyState
 
   @impl true
+  # Flat URL pattern: /venues/{venue-slug}
+  def mount(%{"venue_slug" => venue_slug} = params, _session, socket)
+      when not is_map_key(params, "country_slug") and not is_map_key(params, "city_slug") do
+    case Locations.get_venue_by_slug(venue_slug) do
+      %{city: %{country: country} = city} = venue ->
+        # Venue found with city and country preloaded
+        load_venue_page(venue, city, country, socket)
+
+      _ ->
+        # Venue not found or missing associations
+        {:ok,
+         socket
+         |> put_flash(:error, "Venue not found")
+         |> redirect(to: "/")}
+    end
+  end
+
+  # Hierarchical URL pattern: /{country-slug}/{city-slug}/{venue-slug}
   def mount(
         %{"country_slug" => country_slug, "city_slug" => city_slug, "venue_slug" => venue_slug},
         _session,
@@ -24,44 +42,8 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
          true <- city.country_id == country.id,
          venue when not is_nil(venue) <- Locations.get_venue_by_slug(venue_slug),
          true <- venue.city_id == city.id do
-      events = Events.get_events_for_venue(venue.id)
-      nearby_venues = Locations.find_venues_near_venue(venue, 5)
-      base_url = get_base_url()
-
-      # Generate JSON-LD structured data for venue and breadcrumbs
-      venue_json_ld = VenueSchema.generate(venue)
-      breadcrumbs = BreadcrumbListSchema.build_venue_breadcrumbs(venue, base_url)
-      breadcrumbs_json_ld = BreadcrumbListSchema.generate(breadcrumbs)
-
-      # Combine JSON-LD schemas
-      combined_json_ld = "[#{venue_json_ld},#{breadcrumbs_json_ld}]"
-
-      # Build meta description
-      event_count = length(events)
-      description =
-        if event_count > 0 do
-          "#{venue.name} in #{city.name}, #{country.name} - #{event_count} trivia events. Find trivia nights, pub quizzes, and quiz events."
-        else
-          "#{venue.name} in #{city.name}, #{country.name} - Trivia venue information and events."
-        end
-
-      socket =
-        socket
-        |> assign(:country, country)
-        |> assign(:city, city)
-        |> assign(:venue, venue)
-        |> assign(:events, events)
-        |> assign(:nearby_venues, nearby_venues)
-        |> assign(:base_url, base_url)
-        |> SEOHelpers.assign_meta_tags(
-          title: "#{venue.name} - Trivia in #{city.name}, #{country.name}",
-          description: description,
-          type: "website",
-          canonical_path: "/#{country.slug}/#{city.slug}/#{venue.slug}",
-          json_ld: combined_json_ld
-        )
-
-      {:ok, socket}
+      # Use common helper to load venue page
+      load_venue_page(venue, city, country, socket)
     else
       _ ->
         {:ok,
@@ -69,6 +51,49 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
          |> put_flash(:error, "Venue not found")
          |> redirect(to: "/")}
     end
+  end
+
+  # Common helper to load venue page data (used by both flat and hierarchical routes)
+  defp load_venue_page(venue, city, country, socket) do
+    events = Events.get_events_for_venue(venue.id)
+    nearby_venues = Locations.find_venues_near_venue(venue, 5)
+    base_url = get_base_url()
+
+    # Generate JSON-LD structured data for venue and breadcrumbs
+    venue_json_ld = VenueSchema.generate(venue)
+    breadcrumbs = BreadcrumbListSchema.build_venue_breadcrumbs(venue, base_url)
+    breadcrumbs_json_ld = BreadcrumbListSchema.generate(breadcrumbs)
+
+    # Combine JSON-LD schemas
+    combined_json_ld = "[#{venue_json_ld},#{breadcrumbs_json_ld}]"
+
+    # Build meta description
+    event_count = length(events)
+
+    description =
+      if event_count > 0 do
+        "#{venue.name} in #{city.name}, #{country.name} - #{event_count} trivia events. Find trivia nights, pub quizzes, and quiz events."
+      else
+        "#{venue.name} in #{city.name}, #{country.name} - Trivia venue information and events."
+      end
+
+    socket =
+      socket
+      |> assign(:country, country)
+      |> assign(:city, city)
+      |> assign(:venue, venue)
+      |> assign(:events, events)
+      |> assign(:nearby_venues, nearby_venues)
+      |> assign(:base_url, base_url)
+      |> SEOHelpers.assign_meta_tags(
+        title: "#{venue.name} - Trivia in #{city.name}, #{country.name}",
+        description: description,
+        type: "website",
+        canonical_path: "/venues/#{venue.slug}",
+        json_ld: combined_json_ld
+      )
+
+    {:ok, socket}
   end
 
   @impl true
@@ -94,9 +119,7 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
       <MetaTags.meta_tags {Map.to_list(@meta)} />
 
       <!-- Header -->
-      <Header.site_header current_path={
-        "#{@base_url}/#{@country.slug}/#{@city.slug}/#{@venue.slug}"
-      } />
+      <Header.site_header current_path={"/venues/#{@venue.slug}"} />
 
       <!-- Main Content -->
       <main class="flex-1">
@@ -257,7 +280,7 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
             title="No trivia events currently listed"
             description={"Check back soon or explore other venues in #{@city.name}."}
             action_text={"← Back to #{@city.name}"}
-            action_path={"#{@base_url}/#{@country.slug}/#{@city.slug}"}
+            action_path={"/#{@country.slug}/#{@city.slug}"}
           />
         <% else %>
           <div class="space-y-6">
@@ -300,7 +323,7 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <%= for nearby_venue <- @nearby_venues do %>
                 <a
-                  href={"#{@base_url}/#{nearby_venue.city.country.slug}/#{nearby_venue.city.slug}/#{nearby_venue.slug}"}
+                  href={"/venues/#{nearby_venue.slug}"}
                   class="block bg-gray-50 rounded-lg p-6 hover:bg-gray-100 transition-colors border border-gray-200 hover:border-blue-500"
                 >
                   <div class="flex items-start justify-between mb-3">

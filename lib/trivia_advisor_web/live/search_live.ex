@@ -159,7 +159,7 @@ defmodule TriviaAdvisorWeb.SearchLive do
                   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <%= for venue <- @venues do %>
                       <.link
-                        navigate={"#{@base_url}/#{venue.city.country.slug}/#{venue.city.slug}/#{venue.slug}"}
+                        navigate={"/venues/#{venue.slug}"}
                         class="block p-6 bg-white rounded-lg border border-gray-200 hover:border-blue-500 hover:shadow-md transition-all"
                       >
                         <h3 class="text-lg font-semibold text-gray-900 mb-2">
@@ -194,7 +194,7 @@ defmodule TriviaAdvisorWeb.SearchLive do
                   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <%= for city <- @cities do %>
                       <.link
-                        navigate={"#{@base_url}/#{city.country.slug}/#{city.slug}"}
+                        navigate={"/cities/#{Locations.city_url_slug(city)}"}
                         class="block p-4 bg-white rounded-lg border border-gray-200 hover:border-blue-500 hover:shadow-md transition-all"
                       >
                         <h3 class="text-lg font-semibold text-gray-900 mb-1">

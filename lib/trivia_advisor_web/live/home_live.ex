@@ -98,12 +98,7 @@ defmodule TriviaAdvisorWeb.HomeLive do
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
             <%= for venue <- @latest_venues do %>
-              <VenueCard.venue_card
-                venue={venue}
-                country_slug={venue.city.country.slug}
-                city_slug={venue.city.slug}
-                base_url={@base_url}
-              />
+              <VenueCard.venue_card venue={venue} show_city={true} />
             <% end %>
           </div>
         </div>
