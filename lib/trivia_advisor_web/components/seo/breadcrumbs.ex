@@ -4,6 +4,7 @@ defmodule TriviaAdvisorWeb.Components.SEO.Breadcrumbs do
   """
   use Phoenix.Component
   alias TriviaAdvisorWeb.Components.SEO.JsonLD
+  alias TriviaAdvisor.Locations
 
   @doc """
   Renders breadcrumb navigation with JSON-LD structured data.
@@ -69,10 +70,12 @@ defmodule TriviaAdvisorWeb.Components.SEO.Breadcrumbs do
   Builds breadcrumb items for city page.
   """
   def city_breadcrumbs(city, country, base_url) do
+    city_url_slug = Locations.city_url_slug(city)
+
     [
       %{name: "Home", url: base_url},
       %{name: country.name, url: "#{base_url}/#{country.slug}"},
-      %{name: city.name, url: "#{base_url}/#{country.slug}/#{city.slug}"}
+      %{name: city.name, url: "#{base_url}/cities/#{city_url_slug}"}
     ]
   end
 
@@ -80,11 +83,13 @@ defmodule TriviaAdvisorWeb.Components.SEO.Breadcrumbs do
   Builds breadcrumb items for venue page.
   """
   def venue_breadcrumbs(venue, city, country, base_url) do
+    city_url_slug = Locations.city_url_slug(city)
+
     [
       %{name: "Home", url: base_url},
       %{name: country.name, url: "#{base_url}/#{country.slug}"},
-      %{name: city.name, url: "#{base_url}/#{country.slug}/#{city.slug}"},
-      %{name: venue.name, url: "#{base_url}/#{country.slug}/#{city.slug}/#{venue.slug}"}
+      %{name: city.name, url: "#{base_url}/cities/#{city_url_slug}"},
+      %{name: venue.name, url: "#{base_url}/venues/#{venue.slug}"}
     ]
   end
 end

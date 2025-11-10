@@ -16,6 +16,8 @@ defmodule TriviaAdvisorWeb.JsonLd.BreadcrumbListSchema do
   - item: Full URL to the page
   """
 
+  alias TriviaAdvisor.Locations
+
   @doc """
   Generates JSON-LD structured data for breadcrumb navigation.
 
@@ -93,12 +95,13 @@ defmodule TriviaAdvisorWeb.JsonLd.BreadcrumbListSchema do
     if venue.city && venue.city.country do
       country = venue.city.country
       city = venue.city
+      city_url_slug = Locations.city_url_slug(city)
 
       breadcrumbs ++
         [
           %{name: country.name, url: "#{base_url}/#{country.slug}"},
-          %{name: city.name, url: "#{base_url}/#{country.slug}/#{city.slug}"},
-          %{name: venue.name, url: "#{base_url}/#{country.slug}/#{city.slug}/#{venue.slug}"}
+          %{name: city.name, url: "#{base_url}/cities/#{city_url_slug}"},
+          %{name: venue.name, url: "#{base_url}/venues/#{venue.slug}"}
         ]
     else
       breadcrumbs ++ [%{name: venue.name, url: "#{base_url}/venues/#{venue.slug}"}]
@@ -121,10 +124,12 @@ defmodule TriviaAdvisorWeb.JsonLd.BreadcrumbListSchema do
     ]
 
     if city.country do
+      city_url_slug = Locations.city_url_slug(city)
+
       breadcrumbs ++
         [
           %{name: city.country.name, url: "#{base_url}/#{city.country.slug}"},
-          %{name: city.name, url: "#{base_url}/#{city.country.slug}/#{city.slug}"}
+          %{name: city.name, url: "#{base_url}/cities/#{city_url_slug}"}
         ]
     else
       breadcrumbs ++ [%{name: city.name, url: "#{base_url}/cities/#{city.slug}"}]

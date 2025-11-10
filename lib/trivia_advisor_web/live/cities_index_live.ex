@@ -107,7 +107,7 @@ defmodule TriviaAdvisorWeb.CitiesIndexLive do
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 <%= for city <- Enum.sort_by(cities, & &1.name) do %>
                   <.link
-                    navigate={"/#{country.slug}/#{city.slug}"}
+                    navigate={"/cities/#{Locations.city_url_slug(city)}"}
                     class="block p-4 bg-white rounded-lg border border-gray-200 hover:border-blue-500 hover:shadow-md transition-all"
                   >
                     <div class="flex items-start justify-between">

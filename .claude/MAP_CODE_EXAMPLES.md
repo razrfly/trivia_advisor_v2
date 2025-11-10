@@ -15,7 +15,7 @@
       frameborder="0"
       style="border:0"
       referrerpolicy="no-referrer-when-downgrade"
-      src={"https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=#{@venue.latitude},#{@venue.longitude}&zoom=15"}
+      src={"https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_KEY&q=#{@venue.latitude},#{@venue.longitude}&zoom=15"}
       allowfullscreen
       class="rounded-lg shadow-md"
     >
@@ -47,7 +47,7 @@
 ```
 
 **Issues with Current Code**:
-- ⚠️ Hardcoded API key: `AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8`
+- ⚠️ Hardcoded API key (REDACTED - was exposed in old code, now removed)
 - No configuration management
 - Static iframe (no interactivity)
 - No error handling
