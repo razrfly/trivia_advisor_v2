@@ -8,7 +8,21 @@
 import Config
 
 config :trivia_advisor,
-  generators: [timestamp_type: :utc_datetime]
+  ecto_repos: [TriviaAdvisor.Repo],
+  generators: [timestamp_type: :utc_datetime],
+  base_url: "https://quizadvisor.com"
+
+# Configure Ecto
+config :trivia_advisor, TriviaAdvisor.Repo,
+  migration_timestamps: [type: :utc_datetime]
+
+# Configure PostGIS extension for Ecto
+config :trivia_advisor, TriviaAdvisor.Repo,
+  types: TriviaAdvisor.PostgresTypes
+
+# Configure Geo/PostGIS types
+config :geo_postgis,
+  json_library: Jason
 
 # Configures the endpoint
 config :trivia_advisor, TriviaAdvisorWeb.Endpoint,

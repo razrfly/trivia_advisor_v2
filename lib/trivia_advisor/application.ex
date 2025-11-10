@@ -9,6 +9,7 @@ defmodule TriviaAdvisor.Application do
   def start(_type, _args) do
     children = [
       TriviaAdvisorWeb.Telemetry,
+      TriviaAdvisor.Repo,
       {DNSCluster, query: Application.get_env(:trivia_advisor, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: TriviaAdvisor.PubSub},
       # Start a worker by calling: TriviaAdvisor.Worker.start_link(arg)

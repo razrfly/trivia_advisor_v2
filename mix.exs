@@ -21,7 +21,7 @@ defmodule TriviaAdvisor.MixProject do
   def application do
     [
       mod: {TriviaAdvisor.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :os_mon]
     ]
   end
 
@@ -62,7 +62,19 @@ defmodule TriviaAdvisor.MixProject do
       {:gettext, "~> 0.26"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.2.0"},
-      {:bandit, "~> 1.5"}
+      {:bandit, "~> 1.5"},
+      # Database
+      {:ecto_sql, "~> 3.12"},
+      {:postgrex, "~> 0.19"},
+      {:geo_postgis, "~> 3.6"},
+      # Utilities
+      {:countries, "~> 1.6"},
+      # Load environment variables from .env file
+      {:dotenv, "~> 3.1", only: [:dev, :test]},
+      # Sitemap generation
+      {:sitemapper, "~> 0.8"},
+      {:hackney, "~> 1.20"},
+      {:sweet_xml, "~> 0.7"}
     ]
   end
 
