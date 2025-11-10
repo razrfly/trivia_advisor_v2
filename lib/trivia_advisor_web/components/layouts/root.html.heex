@@ -64,6 +64,19 @@
       <meta property="og:site_name" content="Trivia Advisor" />
     <% end %>
 
+    <!-- Mapbox GL JS -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js">
+    </script>
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <script>
+      // Set Mapbox access token from server-side environment
+      // Evaluated at runtime when template is rendered
+      window.MAPBOX_ACCESS_TOKEN = "<%= System.get_env("MAPBOX_ACCESS_TOKEN") || "" %>";
+    </script>
+
     <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}>
     </script>

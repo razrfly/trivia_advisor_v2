@@ -47,11 +47,17 @@ defmodule TriviaAdvisorWeb.JsonLd.CitySchema do
   def build_city_schema(city, stats \\ %{}) do
     base_url = SEOHelpers.get_base_url()
 
+    url = if city.country do
+      "#{base_url}/#{city.country.slug}/#{city.slug}"
+    else
+      "#{base_url}/cities/#{city.slug}"
+    end
+
     %{
       "@context" => "https://schema.org",
       "@type" => "City",
       "name" => city.name,
-      "url" => "#{base_url}/#{city.country.slug}/#{city.slug}",
+      "url" => url,
       "description" => build_description(city, stats)
     }
     |> add_geo_coordinates(city)
