@@ -1,0 +1,314 @@
+================================================================================
+              MAP IMPLEMENTATION RESEARCH - QUICK SUMMARY
+================================================================================
+
+PROJECT: TriviaAdvisor V2 vs Eventasaurus
+RESEARCH DATE: 2025-11-10
+STATUS: Complete - Ready for Implementation
+
+================================================================================
+PART 1: TriviaAdvisor V2 - Current Google Maps Usage
+================================================================================
+
+LOCATION
+  File: /lib/trivia_advisor_web/live/venue_show_live.ex
+  Lines: 180-216 (37 lines)
+  Usage: Single venue page map display
+
+FEATURES IMPLEMENTED
+  ✓ Static Google Maps Embed iframe
+  ✓ "Get Directions" link to Google Maps
+  ✓ Zoom level set to 15
+  ✓ Responsive width/height
+  ✓ Fallback: Only shows if venue has coordinates
+
+CRITICAL SECURITY ISSUE ⚠️
+  - Google Maps API Key HARDCODED: AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8
+  - Exposed in public source code
+  - Visible in browser network requests
+  - Anyone can use it, generate charges
+  - No environment-based configuration
+
+FUNCTIONALITY ASSESSMENT
+  - Works but minimal features
+  - No interactivity (static iframe only)
+  - No panning/zooming/clustering
+  - No user demand reported
+  - Nice-to-have, not critical
+
+CODE REFERENCE
+  Google Maps Embed v1 API:
+    https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q={lat},{lng}&zoom=15
+  
+  Directions API:
+    https://www.google.com/maps/dir/?api=1&destination={lat},{lng}
+
+================================================================================
+PART 2: Eventasaurus - Mapbox Implementation
+================================================================================
+
+SOPHISTICATED MULTI-COMPONENT SYSTEM (4 major components)
+
+Component 1: Interactive Venue Map Display
+  File: /assets/js/hooks/mapbox-venues-map.js (276 lines)
+  File: /lib/eventasaurus_web/components/mapbox_venues_map_component.ex (135 lines)
+  Features:
+    - Full interactive Mapbox GL JS map
+    - Smart clustering (10+ venues auto-group)
+    - Navigation controls (zoom, pan, fullscreen)
+    - Custom markers with popups
+    - Event count display per venue
+    - Dark mode support
+    - Smooth animations
+
+Component 2: Geocoding Backend Service
+  File: /lib/eventasaurus_discovery/geocoding/providers/mapbox.ex (281 lines)
+  Features:
+    - Forward geocoding (address → coordinates)
+    - Reverse geocoding (coordinates → address)
+    - Free tier: 100,000 requests/month
+    - Rate limit: 600 requests/minute
+    - Comprehensive error handling
+    - Detailed logging
+    - Context extraction (city, country, place_type)
+
+Component 3: Client-Side Search Integration
+  File: /assets/js/hooks/places-search/providers/mapbox-provider.js (389 lines)
+  Features:
+    - Autocomplete search
+    - SearchBox Core API
+    - Session token management
+    - Real-time suggestions
+    - Graceful error recovery
+
+Component 4: Configuration Management
+  File: /config/runtime.exs
+  Method: Environment variables (.env)
+  Setup:
+    MAPBOX_ACCESS_TOKEN=your_token_here
+    MAPBOX_DEFAULT_STYLE_ID=mapbox/streets-v12
+  Security: Token in .env, not in code
+
+ARCHITECTURE BENEFITS
+  ✓ Separated concerns (hooks, components, services)
+  ✓ Configurable per environment
+  ✓ Scalable for multiple views
+  ✓ Professional error handling
+  ✓ Cost-optimized (free tier sufficient)
+  ✓ Security best practices (environment config)
+
+================================================================================
+COMPARATIVE ANALYSIS
+================================================================================
+
+Feature                  TriviaAdvisor V2    Eventasaurus
+────────────────────────────────────────────────────────
+Interactivity           Static iframe       Full interactive
+Number of views         1 view only         Multiple views
+Configuration           Hardcoded ⚠️        Environment-based ✓
+Security                KEY EXPOSED ⚠️      Secure ✓
+Feature scope           Display only        Display + Geocoding + Search
+Clustering              N/A                 Intelligent ✓
+Code organization       In template         Separated modules ✓
+Error handling          None ⚠️             Comprehensive ✓
+Dark mode support       N/A                 Supported ✓
+Maintenance effort      Low                 Low
+Production ready        No (key exposed)    Yes ✓
+
+COST ANALYSIS
+Google Maps:
+  - Up to 25,000 requests/day free
+  - Overage charges apply
+  - ⚠️ Key exposed = uncontrolled costs
+
+Mapbox:
+  - 100,000 geocoding requests/month free
+  - Unlimited map views after load
+  - $5 per 100k requests after free tier
+  - Session tokens reduce costs
+
+================================================================================
+RECOMMENDATIONS
+================================================================================
+
+OPTION A: REMOVE MAPS (✓ RECOMMENDED FOR V2)
+────────────────────────────────────────────
+Rationale:
+  - Maps are optional, not core feature
+  - Address already displayed
+  - No user demand for interactive maps
+  - Removes security vulnerability
+  - Simplifies deployment
+  - Zero maintenance
+
+Action:
+  1. Delete lines 180-216 from venue_show_live.ex (37 lines)
+  2. Keep address display (lines 174-178)
+  3. Test mobile responsiveness
+  4. No other files affected
+
+Security benefit:
+  - Removes hardcoded API key from codebase
+  - Eliminates exposure risk
+  - No ongoing credential management
+
+Time estimate: 5 minutes
+
+────────────────────────────────────────────
+
+OPTION B: MIGRATE TO MAPBOX (If maps needed later)
+──────────────────────────────────────────────────
+Prerequisites:
+  - Only if maps become business requirement
+  - Already have proven Eventasaurus implementation
+
+Setup:
+  1. Create free Mapbox account ($0)
+  2. Add MAPBOX_ACCESS_TOKEN to .env
+  3. Copy components from Eventasaurus:
+     - mapbox-venues-map.js hook
+     - mapbox_venues_map_component.ex
+  4. Register hook in app.js
+  5. Update venue_show_live.ex to use component
+
+Advantages:
+  ✓ Production-proven code from Eventasaurus
+  ✓ Professional interactive maps
+  ✓ Better performance
+  ✓ Secure environment-based config
+  ✓ Future-proof architecture
+
+Time estimate: 2 hours (copy + integration)
+
+────────────────────────────────────────────
+
+OPTION C: KEEP GOOGLE MAPS (Not recommended)
+─────────────────────────────────────────────
+Issues:
+  ⚠️ MUST rotate exposed API key immediately
+  ❌ Limited features
+  ❌ Hardcoded, non-configurable
+  ❌ No error handling
+
+If forced to choose this:
+  1. Rotate current Google Maps API key (compromised)
+  2. Move new key to .env
+  3. Update config/runtime.exs:
+     config :trivia_advisor, :google_maps,
+       api_key: System.get_env("GOOGLE_MAPS_EMBED_KEY")
+  4. Update template to use config value
+  5. Requires ongoing key management
+
+Time estimate: 1 hour + ongoing management
+
+================================================================================
+IMPLEMENTATION DECISION MATRIX
+================================================================================
+
+Choose Option A if:
+  ✓ Maps are not business-critical
+  ✓ Want to eliminate security risk
+  ✓ Want simplest solution
+  ✓ Want zero maintenance
+  → TriviaAdvisor V2 case: YES
+
+Choose Option B if:
+  ✓ Maps become important feature later
+  ✓ Want industry-standard implementation
+  ✓ Want professional appearance
+  ✓ Willing to implement ecosystem
+  → Future requirement case
+
+Choose Option C if:
+  ✓ Required to keep Google Maps
+  ✓ Acceptable to manage credentials
+  → Not recommended for this project
+
+================================================================================
+FILES AFFECTED BY RECOMMENDATION (Option A)
+================================================================================
+
+Primary changes:
+  /lib/trivia_advisor_web/live/venue_show_live.ex
+    - Delete lines 180-216 (map iframe and directions link)
+    - Keep lines 174-178 (address display)
+    - Total: 37 lines removed
+
+No other files require changes:
+  - No configuration files
+  - No component files
+  - No hook files
+  - No imports to update
+
+Result:
+  - Cleaner, simpler code
+  - Faster page loads
+  - One less external dependency
+  - No API key management
+  - Removed security vulnerability
+
+================================================================================
+NEXT STEPS (RECOMMENDED IMPLEMENTATION)
+================================================================================
+
+Immediate actions:
+  1. Review this research report
+  2. Decide on Option A/B/C
+  3. If Option A (recommended):
+     - Delete map code from venue_show_live.ex
+     - Test on mobile
+     - Verify address still displays
+     - Commit changes
+
+Future option:
+  4. If maps needed later, use Eventasaurus components as template
+  5. Setup Mapbox account when needed
+  6. Port components in ~2 hours
+
+================================================================================
+RESEARCH COMPLETENESS CHECKLIST
+================================================================================
+
+Part 1: TriviaAdvisor V2 Google Maps Investigation
+  ✓ Located all map references
+  ✓ Found hardcoded API key
+  ✓ Analyzed functionality
+  ✓ Identified security issues
+  ✓ Mapped code structure
+  ✓ Assessed criticality
+
+Part 2: Eventasaurus Mapbox Investigation
+  ✓ Found Mapbox configuration
+  ✓ Located all 4 components
+  ✓ Analyzed implementation details
+  ✓ Reviewed security practices
+  ✓ Assessed feature scope
+  ✓ Evaluated code organization
+
+Part 3: Comparative Analysis
+  ✓ Created feature comparison
+  ✓ Analyzed cost implications
+  ✓ Reviewed implementation quality
+  ✓ Assessed maintenance burden
+
+Part 4: Recommendations
+  ✓ Provided 3 clear options
+  ✓ Detailed each approach
+  ✓ Included code examples
+  ✓ Time/effort estimates
+  ✓ Security implications
+  ✓ Implementation instructions
+
+================================================================================
+REPORT LOCATION
+================================================================================
+
+Full Research Report:
+  /Users/holdenthomas/Code/paid-projects-2025/trivia_advisor/.claude/MAP_IMPLEMENTATION_RESEARCH.md
+
+Quick Summary (this file):
+  /tmp/map_quick_summary.txt
+
+Ready for presentation and implementation decision.
+
+================================================================================

@@ -90,22 +90,19 @@ defmodule TriviaAdvisorWeb.JsonLd.BreadcrumbListSchema do
       %{name: "Home", url: base_url}
     ]
 
-    breadcrumbs =
-      if venue.city && venue.city.country do
-        country = venue.city.country
-        city = venue.city
+    if venue.city && venue.city.country do
+      country = venue.city.country
+      city = venue.city
 
-        breadcrumbs ++
-          [
-            %{name: country.name, url: "#{base_url}/#{country.slug}"},
-            %{name: city.name, url: "#{base_url}/#{country.slug}/#{city.slug}"}
-          ]
-      else
-        breadcrumbs
-      end
-
-    breadcrumbs ++
-      [%{name: venue.name, url: "#{base_url}/#{venue.city.country.slug}/#{venue.city.slug}/#{venue.slug}"}]
+      breadcrumbs ++
+        [
+          %{name: country.name, url: "#{base_url}/#{country.slug}"},
+          %{name: city.name, url: "#{base_url}/#{country.slug}/#{city.slug}"},
+          %{name: venue.name, url: "#{base_url}/#{country.slug}/#{city.slug}/#{venue.slug}"}
+        ]
+    else
+      breadcrumbs ++ [%{name: venue.name, url: "#{base_url}/venues/#{venue.slug}"}]
+    end
   end
 
   @doc """
@@ -123,16 +120,15 @@ defmodule TriviaAdvisorWeb.JsonLd.BreadcrumbListSchema do
       %{name: "Home", url: base_url}
     ]
 
-    breadcrumbs =
-      if city.country do
-        breadcrumbs ++
-          [%{name: city.country.name, url: "#{base_url}/#{city.country.slug}"}]
-      else
-        breadcrumbs
-      end
-
-    breadcrumbs ++
-      [%{name: city.name, url: "#{base_url}/#{city.country.slug}/#{city.slug}"}]
+    if city.country do
+      breadcrumbs ++
+        [
+          %{name: city.country.name, url: "#{base_url}/#{city.country.slug}"},
+          %{name: city.name, url: "#{base_url}/#{city.country.slug}/#{city.slug}"}
+        ]
+    else
+      breadcrumbs ++ [%{name: city.name, url: "#{base_url}/cities/#{city.slug}"}]
+    end
   end
 
   @doc """
