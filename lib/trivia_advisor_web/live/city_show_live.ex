@@ -55,6 +55,9 @@ defmodule TriviaAdvisorWeb.CityShowLive do
     venues = Locations.list_venues_for_city(city.id, [])
     venue_count = length(venues)
 
+    # Get day counts for filter UI
+    day_counts = Locations.get_day_counts_for_city(city.id)
+
     # Generate JSON-LD structured data
     city_json_ld = CitySchema.generate(city, %{venue_count: venue_count})
     breadcrumbs = BreadcrumbListSchema.build_city_breadcrumbs(city, base_url)
@@ -81,7 +84,9 @@ defmodule TriviaAdvisorWeb.CityShowLive do
       |> assign(:city, city)
       |> assign(:base_url, base_url)
       |> assign(:selected_weekday, nil)
+      |> assign(:selected_radius, nil)
       |> assign(:venues, venues)
+      |> assign(:day_counts, day_counts)
       |> assign(:hero_image_url, hero_image_url)
       |> assign(:city_url_slug, city_url_slug)
       |> SEOHelpers.assign_meta_tags(
@@ -193,18 +198,21 @@ defmodule TriviaAdvisorWeb.CityShowLive do
                 {"Saturday", 6},
                 {"Sunday", 7}
               ] do %>
-                <.link
-                  patch={"/cities/#{@city_url_slug}?day=#{String.downcase(day_name)}"}
-                  class={[
-                    "px-4 py-2 rounded-lg font-medium transition-colors",
-                    if(@selected_weekday == day_num,
-                      do: "bg-blue-600 text-white",
-                      else: "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                    )
-                  ]}
-                >
-                  <%= day_name %>
-                </.link>
+                <% count = Map.get(@day_counts, day_num, 0) %>
+                <%= if count > 0 do %>
+                  <.link
+                    patch={"/cities/#{@city_url_slug}?day=#{String.downcase(day_name)}"}
+                    class={[
+                      "px-4 py-2 rounded-lg font-medium transition-colors",
+                      if(@selected_weekday == day_num,
+                        do: "bg-blue-600 text-white",
+                        else: "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      )
+                    ]}
+                  >
+                    <%= day_name %> (<%= count %>)
+                  </.link>
+                <% end %>
               <% end %>
             </div>
           </div>

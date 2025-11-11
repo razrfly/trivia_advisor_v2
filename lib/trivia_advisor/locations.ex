@@ -385,21 +385,57 @@ defmodule TriviaAdvisor.Locations do
 
   @doc """
   Gets the latest added venues that have trivia events.
-  Queries the trivia_events_export view for simplicity.
+  Returns flat maps from trivia_events_export view with event details.
 
   ## Examples
 
       iex> get_latest_venues(10)
-      [%Venue{}, ...]
+      [%{venue_name: "...", day_of_week: 3, ...}, ...]
   """
   def get_latest_venues(limit \\ 20) do
     Repo.all(
-      from v in Venue,
-        join: te in PublicEvent, on: te.venue_id == v.id,
-        distinct: true,
-        order_by: [desc: v.inserted_at],
+      from te in PublicEvent,
+        distinct: te.venue_id,
+        order_by: [desc: te.updated_at],
         limit: ^limit,
-        preload: [city: :country]
+        select: %{
+          # Event details
+          event_id: te.id,
+          event_name: te.name,
+          day_of_week: te.day_of_week,
+          start_time: te.start_time,
+          timezone: te.timezone,
+          frequency: te.frequency,
+          entry_fee_cents: te.entry_fee_cents,
+          description: te.description,
+          hero_image: te.hero_image,
+
+          # Source attribution
+          source_name: te.source_name,
+          source_url: te.source_url,
+          source_logo_url: te.source_logo_url,
+          last_seen_at: te.last_seen_at,
+          updated_at: te.updated_at,
+
+          # Venue details
+          venue_id: te.venue_id,
+          venue_name: te.venue_name,
+          slug: te.venue_slug,  # Map to 'slug' for VenueCard compatibility
+          venue_address: te.venue_address,
+          venue_latitude: te.venue_latitude,
+          venue_longitude: te.venue_longitude,
+          venue_images: te.venue_images,
+
+          # City details
+          city_id: te.city_id,
+          city_name: te.city_name,
+          city_slug: te.city_slug,
+
+          # Country details
+          country_id: te.country_id,
+          country_name: te.country_name,
+          country_code: te.country_code
+        }
     )
   end
 
@@ -411,8 +447,11 @@ defmodule TriviaAdvisor.Locations do
   end
 
   @doc """
-  Lists all venues for a city that have trivia events, ordered by name.
-  Queries the trivia_events_export view for simplicity.
+  Lists all venues for a city that have trivia events, with full event details.
+  Queries the trivia_events_export view which provides all fields pre-flattened.
+
+  Returns event/venue data as maps (not Venue structs) with all fields from the view.
+  All event data is pre-extracted from JSONB - no fragment queries needed!
 
   ## Options
   - `:weekday` - Filter by day of week (1=Monday, 7=Sunday). Default: nil (no filter)
@@ -420,40 +459,92 @@ defmodule TriviaAdvisor.Locations do
   ## Examples
 
       iex> list_venues_for_city(123)
-      [%Venue{}, ...]
+      [%{venue_name: "...", day_of_week: 1, start_time: ~T[19:00:00], ...}, ...]
 
       iex> list_venues_for_city(123, weekday: 3)
-      [%Venue{}, ...]  # Only venues with events on Wednesday
+      [%{...}, ...]  # Only events on Wednesday
   """
   def list_venues_for_city(city_id, opts \\ []) do
     weekday = Keyword.get(opts, :weekday)
 
+    # Query trivia_events_export view directly for all flat fields
     query =
-      from v in Venue,
-        join: te in PublicEvent, on: te.venue_id == v.id,
-        where: v.city_id == ^city_id,
-        distinct: true,
-        order_by: v.name,
-        preload: [city: :country]
+      from te in PublicEvent,
+        where: te.city_id == ^city_id,
+        order_by: te.venue_name,
+        # Select all event details as a map
+        select: %{
+          # Event details (all pre-extracted, no JSONB parsing!)
+          event_id: te.id,
+          event_name: te.name,
+          day_of_week: te.day_of_week,          # 1-7, ready to use
+          start_time: te.start_time,            # time field
+          timezone: te.timezone,
+          frequency: te.frequency,
+          entry_fee_cents: te.entry_fee_cents,  # 0 = free
+          description: te.description,
+          hero_image: te.hero_image,
 
+          # Source attribution (for "Updated X ago • Source: Y")
+          source_name: te.source_name,
+          source_url: te.source_url,
+          source_logo_url: te.source_logo_url,
+          last_seen_at: te.last_seen_at,
+          updated_at: te.updated_at,
+
+          # Venue details (all flat)
+          venue_id: te.venue_id,
+          venue_name: te.venue_name,
+          slug: te.venue_slug,  # Map to 'slug' for VenueCard compatibility
+          venue_address: te.venue_address,
+          venue_latitude: te.venue_latitude,
+          venue_longitude: te.venue_longitude,
+          venue_images: te.venue_images,
+
+          # Location info (for distance calculations)
+          city_id: te.city_id,
+          city_name: te.city_name,
+          city_slug: te.city_slug,
+          city_latitude: te.city_latitude,
+          city_longitude: te.city_longitude,
+          country_id: te.country_id,
+          country_name: te.country_name,
+          country_code: te.country_code
+        }
+
+    # Filter by weekday using flat day_of_week field (simple integer comparison!)
     query =
       if weekday && weekday in 1..7 do
-        # Filter venues by weekday using PostgreSQL date extraction
-        # The occurrences field has dates in ISO format, we extract day of week
-        from [v, te] in query,
-          where: fragment(
-            "EXISTS (
-              SELECT 1 FROM jsonb_array_elements(?->'dates') AS occ
-              WHERE EXTRACT(ISODOW FROM (occ->>'date')::date) = ?
-            )",
-            te.occurrences,
-            ^weekday
-          )
+        from [te] in query, where: te.day_of_week == ^weekday
       else
         query
       end
 
+    # Return list of events with all venue/event details merged
     Repo.all(query)
+  end
+
+  @doc """
+  Gets event counts per day of week for a city.
+  Returns a map with day numbers (1-7) as keys and counts as values.
+
+  ## Examples
+
+      iex> get_day_counts_for_city(53)
+      %{1 => 12, 2 => 18, 3 => 26, 4 => 15, 5 => 20, 6 => 8, 7 => 4}
+  """
+  def get_day_counts_for_city(city_id) do
+    # Query the view and group by day_of_week
+    results =
+      Repo.all(
+        from te in PublicEvent,
+          where: te.city_id == ^city_id,
+          group_by: te.day_of_week,
+          select: {te.day_of_week, count(te.id)}
+      )
+
+    # Convert list of tuples to map
+    Map.new(results)
   end
 
   @doc """

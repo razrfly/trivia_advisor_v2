@@ -3,8 +3,11 @@ defmodule TriviaAdvisor.Events do
   Context module for event-related queries (PublicEvents, Sources, Performers).
   All queries are read-only against the Eventasaurus database.
 
-  Note: Events in Eventasaurus use an `occurrences` JSONB field to store
-  recurring schedules, which is a different model from V1.
+  Note: Events in trivia_events_export view represent recurring patterns
+  (e.g., "Trivia every Wednesday at 7pm") with flat fields like day_of_week,
+  start_time, frequency. No JSONB parsing needed.
+
+  Reference: https://github.com/razrfly/eventasaurus/issues/2203
   """
 
   import Ecto.Query, warn: false
@@ -30,58 +33,28 @@ defmodule TriviaAdvisor.Events do
     Repo.all(
       from e in PublicEvent,
         where: e.venue_id == ^venue_id,
-        order_by: e.title
+        order_by: e.name
     )
   end
 
   @doc """
-  Gets trivia events with upcoming occurrences from trivia_events_export view.
-  Filters events where at least one occurrence is today or later.
+  Gets trivia events for a specific day of the week.
+  Day: 1 = Monday, 2 = Tuesday, ..., 7 = Sunday (ISO 8601).
 
   ## Examples
 
-      iex> get_upcoming_events(limit: 20)
+      iex> get_events_for_weekday(3)  # Wednesday
       [%PublicEvent{}, ...]
   """
-  def get_upcoming_events(opts \\ []) do
+  def get_events_for_weekday(weekday, opts \\ []) when weekday in 1..7 do
     limit = Keyword.get(opts, :limit, 50)
-    today = Date.utc_today()
 
-    query =
+    Repo.all(
       from e in PublicEvent,
-        where: fragment(
-          "EXISTS (SELECT 1 FROM jsonb_array_elements(?->'dates') AS occ WHERE (occ->>'date')::date >= ?)",
-          e.occurrences,
-          ^today
-        ),
-        order_by: e.title,
+        where: e.day_of_week == ^weekday,
+        order_by: e.name,
         limit: ^limit
-
-    Repo.all(query)
-  end
-
-  @doc """
-  Gets trivia events for a specific date from trivia_events_export view.
-  Searches the occurrences JSONB array for matching dates.
-
-  ## Examples
-
-      iex> get_events_for_date(~D[2025-01-15])
-      [%PublicEvent{}, ...]
-  """
-  def get_events_for_date(%Date{} = date) do
-    date_string = Date.to_iso8601(date)
-
-    query =
-      from e in PublicEvent,
-        where: fragment(
-          "EXISTS (SELECT 1 FROM jsonb_array_elements(?->'dates') AS occ WHERE occ->>'date' = ?)",
-          e.occurrences,
-          ^date_string
-        ),
-        order_by: e.title
-
-    Repo.all(query)
+    )
   end
 
   @doc """
@@ -98,7 +71,7 @@ defmodule TriviaAdvisor.Events do
 
     Repo.all(
       from e in PublicEvent,
-        order_by: e.title,
+        order_by: e.name,
         limit: ^limit
     )
   end
@@ -123,59 +96,57 @@ defmodule TriviaAdvisor.Events do
   end
 
   # ============================================================================
-  # Occurrence Helper Functions
+  # Event Pattern Helper Functions
   # ============================================================================
 
   @doc """
-  Extracts upcoming occurrences from an event's occurrences JSONB field.
-  Returns a list of occurrence maps sorted by date.
-
-  ## Examples
-
-      iex> get_upcoming_occurrences(%PublicEvent{occurrences: [...]})
-      [%{"date" => "2025-01-15", "start_time" => "19:00", ...}, ...]
-  """
-  def get_upcoming_occurrences(%PublicEvent{} = event) do
-    PublicEvent.upcoming_occurrences(event)
-  end
-
-  @doc """
-  Gets the next occurrence for an event.
-
-  ## Examples
-
-      iex> get_next_occurrence(%PublicEvent{occurrences: [...]})
-      %{"date" => "2025-01-15", "start_time" => "19:00", ...}
-
-      iex> get_next_occurrence(%PublicEvent{occurrences: []})
-      nil
-  """
-  def get_next_occurrence(%PublicEvent{} = event) do
-    event
-    |> get_upcoming_occurrences()
-    |> List.first()
-  end
-
-  @doc """
-  Checks if an event has occurrences on a specific weekday.
+  Checks if an event occurs on a specific weekday.
   Weekday: 1 = Monday, 7 = Sunday (ISO 8601).
 
   ## Examples
 
-      iex> has_occurrences_on_weekday?(%PublicEvent{}, 3)
+      iex> event_on_weekday?(%PublicEvent{day_of_week: 3}, 3)
       true
+
+      iex> event_on_weekday?(%PublicEvent{day_of_week: 5}, 3)
+      false
   """
-  def has_occurrences_on_weekday?(%PublicEvent{occurrences: occurrences}, weekday)
-      when is_list(occurrences) and weekday in 1..7 do
-    Enum.any?(occurrences, fn occ ->
-      case Date.from_iso8601(occ["date"]) do
-        {:ok, date} -> Date.day_of_week(date) == weekday
-        _ -> false
-      end
-    end)
+  def event_on_weekday?(%PublicEvent{day_of_week: day}, weekday)
+      when is_integer(day) and weekday in 1..7 do
+    day == weekday
   end
 
-  def has_occurrences_on_weekday?(_, _), do: false
+  def event_on_weekday?(_, _), do: false
+
+  @doc """
+  Formats an event's time for display based on country code.
+
+  ## Examples
+
+      iex> format_event_time(%PublicEvent{start_time: ~T[19:00:00], country_code: "US"})
+      "7:00 PM"
+
+      iex> format_event_time(%PublicEvent{start_time: ~T[19:00:00], country_code: "GB"})
+      "19:00"
+  """
+  def format_event_time(%PublicEvent{} = event) do
+    PublicEvent.format_time(event.start_time, event.country_code)
+  end
+
+  @doc """
+  Formats an event's entry fee for display.
+
+  ## Examples
+
+      iex> format_event_fee(%PublicEvent{entry_fee_cents: 0})
+      "Free"
+
+      iex> format_event_fee(%PublicEvent{entry_fee_cents: 500})
+      "$5.00"
+  """
+  def format_event_fee(%PublicEvent{} = event) do
+    PublicEvent.format_entry_fee(event.entry_fee_cents)
+  end
 
   # ============================================================================
   # Event Source Queries
