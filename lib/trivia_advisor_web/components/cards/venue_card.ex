@@ -42,7 +42,7 @@ defmodule TriviaAdvisorWeb.Components.Cards.VenueCard do
             <img
               src={image.url}
               alt={image.alt}
-              class="w-full h-48 object-cover rounded-t-lg"
+              class="w-full h-40 object-cover rounded-t-lg"
             />
           </div>
         <% end %>
