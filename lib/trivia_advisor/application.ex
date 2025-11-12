@@ -11,6 +11,12 @@ defmodule TriviaAdvisor.Application do
       TriviaAdvisorWeb.Telemetry,
       TriviaAdvisor.Repo,
       {DNSCluster, query: Application.get_env(:trivia_advisor, :dns_cluster_query) || :ignore},
+      # ConCache for query result caching with 15-minute TTL
+      {ConCache, [
+        name: :city_cache,
+        ttl_check_interval: :timer.minutes(1),
+        global_ttl: :timer.minutes(15)
+      ]},
       {Phoenix.PubSub, name: TriviaAdvisor.PubSub},
       # Start a worker by calling: TriviaAdvisor.Worker.start_link(arg)
       # {TriviaAdvisor.Worker, arg},
