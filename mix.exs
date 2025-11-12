@@ -70,6 +70,7 @@ defmodule TriviaAdvisor.MixProject do
       # Utilities
       {:countries, "~> 1.6"},
       {:timex, "~> 3.7"},
+      {:con_cache, "~> 1.0"},
       # Load environment variables from .env file
       {:dotenv, "~> 3.1", only: [:dev, :test]},
       # Sitemap generation

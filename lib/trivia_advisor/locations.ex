@@ -217,9 +217,46 @@ defmodule TriviaAdvisor.Locations do
   @doc """
   Lists all cities for a country that have trivia events, ordered by venue count DESC then name.
   Prioritizes cities with more venues to surface major trivia destinations first.
+  Returns city structs with :venue_count field added.
+
+  Results are cached for 15 minutes to improve performance.
+
+  ## Options
+  - `:page` - Page number (1-indexed, defaults to 1)
+  - `:per_page` - Results per page (defaults to 50)
   """
-  def list_cities_for_country(country_id) do
-    # Get cities with venue counts
+  def list_cities_for_country(country_id, opts \\ []) do
+    page = Keyword.get(opts, :page, 1)
+    per_page = Keyword.get(opts, :per_page, 50)
+
+    # Cache key includes pagination params for separate cache entries per page
+    cache_key = "country_#{country_id}_page_#{page}_per_#{per_page}"
+
+    ConCache.get_or_store(:city_cache, cache_key, fn ->
+      fetch_cities_for_country(country_id, page, per_page)
+    end)
+  end
+
+  @doc """
+  Gets the total count of cities for a country (used for pagination).
+  Results are cached for 15 minutes.
+  """
+  def count_cities_for_country(country_id) do
+    ConCache.get_or_store(:city_cache, "country_#{country_id}_count", fn ->
+      Repo.one(
+        from c in City,
+          join: te in PublicEvent,
+          on: te.city_id == c.id,
+          where: c.country_id == ^country_id,
+          select: count(c.id, :distinct)
+      )
+    end)
+  end
+
+  defp fetch_cities_for_country(country_id, page, per_page) do
+    offset = (page - 1) * per_page
+
+    # Get cities with venue counts (paginated)
     cities_with_counts =
       Repo.all(
         from c in City,
@@ -231,8 +268,13 @@ defmodule TriviaAdvisor.Locations do
             id: c.id,
             venue_count: count(te.venue_id, :distinct)
           },
-          order_by: [desc: count(te.venue_id, :distinct), asc: c.name]
+          order_by: [desc: count(te.venue_id, :distinct), asc: c.name],
+          limit: ^per_page,
+          offset: ^offset
       )
+
+    # Build map of city_id => venue_count for quick lookup
+    count_map = Map.new(cities_with_counts, &{&1.id, &1.venue_count})
 
     # Get city IDs in priority order
     city_ids = Enum.map(cities_with_counts, & &1.id)
@@ -245,9 +287,14 @@ defmodule TriviaAdvisor.Locations do
           preload: [:country]
       )
 
-    # Re-sort cities to match the priority order
+    # Re-sort cities to match priority order and add venue_count field
     city_map = Map.new(cities, &{&1.id, &1})
-    Enum.map(city_ids, &Map.get(city_map, &1))
+
+    Enum.map(city_ids, fn city_id ->
+      city = Map.get(city_map, city_id)
+      venue_count = Map.get(count_map, city_id, 0)
+      Map.put(city, :venue_count, venue_count)
+    end)
   end
 
   # ============================================================================
