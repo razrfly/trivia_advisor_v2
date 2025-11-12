@@ -52,7 +52,7 @@ defmodule TriviaAdvisorWeb.Components.SEO.JsonLD do
     %{
       "@context" => "https://schema.org",
       "@type" => "Event",
-      "name" => event.title,
+      "name" => event.name,
       "description" => "Trivia night at #{event.venue_name || venue.name}",
       "eventStatus" => "https://schema.org/EventScheduled",
       "eventAttendanceMode" => "https://schema.org/OfflineEventAttendanceMode",

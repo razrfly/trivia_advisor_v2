@@ -148,6 +148,34 @@ defmodule TriviaAdvisor.Events do
     PublicEvent.format_entry_fee(event.entry_fee_cents)
   end
 
+  @doc """
+  Gets the next occurrence of a recurring event.
+
+  Note: This is a stub function for V2. Returns nil to gracefully hide
+  the "Next Quiz Night" feature. Future implementation would calculate
+  next occurrence based on day_of_week, start_time, and frequency fields.
+
+  ## Examples
+
+      iex> get_next_occurrence(%PublicEvent{})
+      nil
+  """
+  def get_next_occurrence(_event), do: nil
+
+  @doc """
+  Gets upcoming occurrences of a recurring event.
+
+  Note: This is a stub function for V2. Returns nil to gracefully hide
+  the "Upcoming Occurrences" feature. Future implementation would calculate
+  upcoming dates based on day_of_week, start_time, and frequency fields.
+
+  ## Examples
+
+      iex> get_upcoming_occurrences(%PublicEvent{})
+      nil
+  """
+  def get_upcoming_occurrences(_event), do: nil
+
   # ============================================================================
   # Event Source Queries
   # ============================================================================

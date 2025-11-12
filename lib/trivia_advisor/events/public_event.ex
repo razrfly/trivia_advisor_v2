@@ -37,6 +37,7 @@ defmodule TriviaAdvisor.Events.PublicEvent do
     field :source_logo_url, :string         # Source branding logo
     field :source_website_url, :string      # Source website
     field :source_url, :string              # Event URL on source site
+    field :activity_slug, :string           # Wombie.com activity slug for URL construction
     field :last_seen_at, :naive_datetime    # When scraper last saw this event
 
     # Venue information (all flat, denormalized from venues table)
@@ -57,7 +58,7 @@ defmodule TriviaAdvisor.Events.PublicEvent do
     field :city_name, :string
     field :city_latitude, :decimal          # City center for radius searches
     field :city_longitude, :decimal         # City center for radius searches
-    field :city_images, {:array, :map}      # Unsplash gallery for hero images (JSONB array)
+    field :city_images, :map                # Unsplash gallery object with categories (JSONB object)
 
     # Country information (for localization, time formatting)
     field :country_id, :integer
