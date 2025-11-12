@@ -22,7 +22,7 @@ defmodule TriviaAdvisorWeb.Components.Cards.EventCard do
       <div class="flex items-start justify-between mb-4">
         <div class="flex-1">
           <h3 class="text-2xl font-semibold text-gray-900 mb-2">
-            <%= @event.title %>
+            <%= @event.name %>
           </h3>
 
           <!-- Venue (if show_venue is true) -->

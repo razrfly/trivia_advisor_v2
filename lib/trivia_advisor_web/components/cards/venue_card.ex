@@ -20,19 +20,28 @@ defmodule TriviaAdvisorWeb.Components.Cards.VenueCard do
   attr :show_city, :boolean, default: false
 
   def venue_card(assigns) do
+    # Convert struct to map for easier field access (if it's a struct)
+    venue = if is_struct(assigns.venue), do: Map.from_struct(assigns.venue), else: assigns.venue
+
+    # Handle both :slug (from get_latest_venues) and :venue_slug (from list_venues_for_city)
+    slug = Map.get(venue, :venue_slug) || Map.get(venue, :slug)
+    venue = Map.put(venue, :slug, slug)
+
+    assigns = assign(assigns, :venue, venue)
+
     ~H"""
     <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-200">
       <.link
         navigate={"/venues/#{@venue.slug}"}
         class="block group"
       >
-        <!-- Venue Image (if available) -->
-        <%= if @venue[:venue_images] && is_list(@venue.venue_images) && length(@venue.venue_images) > 0 do %>
-          <% primary_image = List.first(@venue.venue_images) %>
+        <!-- Venue Image with 3-level fallback (venue_images → video_images → city_images) -->
+        <% image = get_venue_card_image(@venue) %>
+        <%= if image do %>
           <div class="mb-4">
             <img
-              src={primary_image["url"]}
-              alt={primary_image["alt"] || @venue.venue_name}
+              src={image.url}
+              alt={image.alt}
               class="w-full h-48 object-cover rounded-t-lg"
             />
           </div>
@@ -99,7 +108,7 @@ defmodule TriviaAdvisorWeb.Components.Cards.VenueCard do
         </div>
       </.link>
 
-      <!-- Source Attribution: Last Seen + Source Name (outside main link to avoid nesting) -->
+      <!-- Source Attribution: Last Seen + Source Name + Website (outside main link to avoid nesting) -->
       <%= if @venue[:last_seen_at] do %>
         <div class="px-6 pb-4 flex items-center text-xs text-gray-500">
           <svg
@@ -120,10 +129,9 @@ defmodule TriviaAdvisorWeb.Components.Cards.VenueCard do
           <%= if @venue[:source_name] do %>
             <span class="mx-1">•</span>
             <span>
-              Source:
-              <%= if @venue[:source_url] do %>
+              Source: <%= if @venue[:activity_slug] do %>
                 <a
-                  href={@venue.source_url}
+                  href={"https://wombie.com/activities/#{@venue.activity_slug}"}
                   target="_blank"
                   rel="noopener noreferrer"
                   class="text-indigo-600 hover:text-indigo-800"
@@ -142,26 +150,107 @@ defmodule TriviaAdvisorWeb.Components.Cards.VenueCard do
     """
   end
 
-  # Time ago helper (simplified version, similar to production)
+  @doc """
+  Gets the best available image for a venue card with fallback chain.
+  Returns a map with url and alt text, or nil if no images available.
+
+  Fallback order:
+  1. venue_images (uploaded venue photos)
+  2. venue_metadata["video_images"] (video thumbnails)
+  3. city_images (Unsplash city gallery)
+  """
+  def get_venue_card_image(venue) do
+    cond do
+      # Try venue_images first
+      has_venue_images?(venue) ->
+        image = List.first(venue.venue_images)
+        %{
+          url: image["url"],
+          alt: image["alt"] || venue.venue_name
+        }
+
+      # Try video_images second
+      has_video_images?(venue) ->
+        image = venue.venue_metadata["video_images"] |> List.first()
+        %{
+          url: image["url"],
+          alt: "#{venue.venue_name} video thumbnail"
+        }
+
+      # Fall back to city_images (Unsplash gallery - different image per venue)
+      has_city_images?(venue) ->
+        get_random_city_image(venue)
+
+      # No images available
+      true ->
+        nil
+    end
+  end
+
+  defp has_venue_images?(venue) do
+    venue_images = Map.get(venue, :venue_images)
+    is_list(venue_images) &&
+      length(venue_images) > 0 &&
+      get_in(venue_images, [Access.at(0), "url"])
+  end
+
+  defp has_video_images?(venue) do
+    venue_metadata = Map.get(venue, :venue_metadata)
+    is_map(venue_metadata) &&
+      is_list(venue_metadata["video_images"]) &&
+      length(venue_metadata["video_images"]) > 0 &&
+      get_in(venue_metadata, ["video_images", Access.at(0), "url"])
+  end
+
+  defp has_city_images?(venue) do
+    city_images = Map.get(venue, :city_images)
+
+    # Handle Unsplash gallery structure: %{"active_category" => "general", "categories" => %{...}}
+    if is_map(city_images) && Map.has_key?(city_images, "active_category") do
+      active_cat = city_images["active_category"]
+      categories = city_images["categories"]
+
+      is_map(categories) &&
+        is_map(categories[active_cat]) &&
+        is_list(categories[active_cat]["images"]) &&
+        length(categories[active_cat]["images"]) > 0 &&
+        get_in(categories, [active_cat, "images", Access.at(0), "url"])
+    else
+      false
+    end
+  end
+
+  @doc """
+  Get a random image from city's Unsplash gallery, consistent per venue ID.
+
+  Uses venue_id as seed to ensure the same venue always gets the same image
+  from the gallery, while different venues get different images for visual variety.
+  """
+  defp get_random_city_image(venue) do
+    city_images = venue.city_images
+    active_cat = city_images["active_category"]
+    images = city_images["categories"][active_cat]["images"]
+
+    # Use venue_id modulo length to select a consistent image per venue
+    venue_id = Map.get(venue, :venue_id) || Map.get(venue, :id) || 0
+    index = rem(venue_id, length(images))
+    image = Enum.at(images, index)
+
+    %{
+      url: image["url"],
+      alt: "#{venue.city_name} cityscape"
+    }
+  end
+
+  # Time ago helper using Timex for proper pluralization
   defp time_ago(datetime) when is_struct(datetime, NaiveDateTime) do
-    # Convert to DateTime for comparison
+    # Convert to DateTime for Timex
     {:ok, dt} = DateTime.from_naive(datetime, "Etc/UTC")
     time_ago(dt)
   end
 
   defp time_ago(datetime) when is_struct(datetime, DateTime) do
-    now = DateTime.utc_now()
-    diff_seconds = DateTime.diff(now, datetime, :second)
-
-    cond do
-      diff_seconds < 60 -> "just now"
-      diff_seconds < 3600 -> "#{div(diff_seconds, 60)} minutes ago"
-      diff_seconds < 86400 -> "#{div(diff_seconds, 3600)} hours ago"
-      diff_seconds < 604_800 -> "#{div(diff_seconds, 86400)} days ago"
-      diff_seconds < 2_592_000 -> "#{div(diff_seconds, 604_800)} weeks ago"
-      diff_seconds < 31_536_000 -> "#{div(diff_seconds, 2_592_000)} months ago"
-      true -> "#{div(diff_seconds, 31_536_000)} years ago"
-    end
+    Timex.from_now(datetime)
   end
 
   defp time_ago(_), do: "recently"

@@ -215,18 +215,39 @@ defmodule TriviaAdvisor.Locations do
   end
 
   @doc """
-  Lists all cities for a country that have trivia events, ordered by name.
-  Queries the trivia_events_export view for simplicity.
+  Lists all cities for a country that have trivia events, ordered by venue count DESC then name.
+  Prioritizes cities with more venues to surface major trivia destinations first.
   """
   def list_cities_for_country(country_id) do
-    Repo.all(
-      from c in City,
-        join: te in PublicEvent, on: te.city_id == c.id,
-        where: c.country_id == ^country_id,
-        distinct: true,
-        order_by: c.name,
-        preload: [:country]
-    )
+    # Get cities with venue counts
+    cities_with_counts =
+      Repo.all(
+        from c in City,
+          join: te in PublicEvent,
+          on: te.city_id == c.id,
+          where: c.country_id == ^country_id,
+          group_by: c.id,
+          select: %{
+            id: c.id,
+            venue_count: count(te.venue_id, :distinct)
+          },
+          order_by: [desc: count(te.venue_id, :distinct), asc: c.name]
+      )
+
+    # Get city IDs in priority order
+    city_ids = Enum.map(cities_with_counts, & &1.id)
+
+    # Fetch full city records with preloads, maintaining the sort order
+    cities =
+      Repo.all(
+        from c in City,
+          where: c.id in ^city_ids,
+          preload: [:country]
+      )
+
+    # Re-sort cities to match the priority order
+    city_map = Map.new(cities, &{&1.id, &1})
+    Enum.map(city_ids, &Map.get(city_map, &1))
   end
 
   # ============================================================================
@@ -396,7 +417,7 @@ defmodule TriviaAdvisor.Locations do
     Repo.all(
       from te in PublicEvent,
         distinct: te.venue_id,
-        order_by: [desc: te.updated_at],
+        order_by: [te.venue_id, desc: te.updated_at],
         limit: ^limit,
         select: %{
           # Event details
@@ -414,6 +435,8 @@ defmodule TriviaAdvisor.Locations do
           source_name: te.source_name,
           source_url: te.source_url,
           source_logo_url: te.source_logo_url,
+          source_website_url: te.source_website_url,
+          activity_slug: te.activity_slug,
           last_seen_at: te.last_seen_at,
           updated_at: te.updated_at,
 
@@ -425,11 +448,13 @@ defmodule TriviaAdvisor.Locations do
           venue_latitude: te.venue_latitude,
           venue_longitude: te.venue_longitude,
           venue_images: te.venue_images,
+          venue_metadata: te.venue_metadata,  # For video_images fallback
 
           # City details
           city_id: te.city_id,
           city_name: te.city_name,
           city_slug: te.city_slug,
+          city_images: te.city_images,  # For city image fallback
 
           # Country details
           country_id: te.country_id,
@@ -489,6 +514,8 @@ defmodule TriviaAdvisor.Locations do
           source_name: te.source_name,
           source_url: te.source_url,
           source_logo_url: te.source_logo_url,
+          source_website_url: te.source_website_url,
+          activity_slug: te.activity_slug,
           last_seen_at: te.last_seen_at,
           updated_at: te.updated_at,
 
@@ -500,6 +527,7 @@ defmodule TriviaAdvisor.Locations do
           venue_latitude: te.venue_latitude,
           venue_longitude: te.venue_longitude,
           venue_images: te.venue_images,
+          venue_metadata: te.venue_metadata,  # For video_images fallback
 
           # Location info (for distance calculations)
           city_id: te.city_id,
@@ -507,6 +535,7 @@ defmodule TriviaAdvisor.Locations do
           city_slug: te.city_slug,
           city_latitude: te.city_latitude,
           city_longitude: te.city_longitude,
+          city_images: te.city_images,  # For city image fallback
           country_id: te.country_id,
           country_name: te.country_name,
           country_code: te.country_code

@@ -69,6 +69,7 @@ defmodule TriviaAdvisor.MixProject do
       {:geo_postgis, "~> 3.6"},
       # Utilities
       {:countries, "~> 1.6"},
+      {:timex, "~> 3.7"},
       # Load environment variables from .env file
       {:dotenv, "~> 3.1", only: [:dev, :test]},
       # Sitemap generation
