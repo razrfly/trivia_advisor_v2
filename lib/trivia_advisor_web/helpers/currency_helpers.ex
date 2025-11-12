@@ -19,7 +19,7 @@ defmodule TriviaAdvisorWeb.Helpers.CurrencyHelpers do
       iex> format_currency(nil, "USD")
       "Free"
   """
-  def format_currency(amount_cents, currency_code) when is_number(amount_cents) do
+  def format_currency(amount_cents, currency_code) when is_integer(amount_cents) do
     # Create Money struct with proper currency
     money = Money.new(amount_cents, currency_code)
 
