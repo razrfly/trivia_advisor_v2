@@ -55,8 +55,9 @@ defmodule TriviaAdvisorWeb.CityShowLive do
     venues = Locations.list_venues_for_city(city.id, [])
     venue_count = length(venues)
 
-    # Get day counts for filter UI
+    # Get day counts and suburbs for filter UI
     day_counts = Locations.get_day_counts_for_city(city.id)
+    suburbs = Locations.get_suburbs_for_city(city.id)
 
     # Generate JSON-LD structured data
     city_json_ld = CitySchema.generate(city, %{venue_count: venue_count})
@@ -84,9 +85,12 @@ defmodule TriviaAdvisorWeb.CityShowLive do
       |> assign(:city, city)
       |> assign(:base_url, base_url)
       |> assign(:selected_weekday, nil)
+      |> assign(:selected_suburb, nil)
       |> assign(:selected_radius, nil)
       |> assign(:venues, venues)
+      |> assign(:total_venue_count, venue_count)
       |> assign(:day_counts, day_counts)
+      |> assign(:suburbs, suburbs)
       |> assign(:hero_image_url, hero_image_url)
       |> assign(:city_url_slug, city_url_slug)
       |> SEOHelpers.assign_meta_tags(
@@ -104,10 +108,12 @@ defmodule TriviaAdvisorWeb.CityShowLive do
   @impl true
   def handle_params(params, _uri, socket) do
     weekday = parse_weekday(params["day"])
+    suburb = params["suburb"]
 
     socket =
       socket
       |> assign(:selected_weekday, weekday)
+      |> assign(:selected_suburb, suburb)
       |> load_venues()
 
     {:noreply, socket}
@@ -116,12 +122,20 @@ defmodule TriviaAdvisorWeb.CityShowLive do
   defp load_venues(socket) do
     city_id = socket.assigns.city.id
     weekday = socket.assigns[:selected_weekday]
+    suburb = socket.assigns[:selected_suburb]
 
-    opts = if weekday, do: [weekday: weekday], else: []
+    opts =
+      []
+      |> maybe_add_opt(:weekday, weekday)
+      |> maybe_add_opt(:suburb, suburb)
+
     venues = Locations.list_venues_for_city(city_id, opts)
 
     assign(socket, :venues, venues)
   end
+
+  defp maybe_add_opt(opts, _key, nil), do: opts
+  defp maybe_add_opt(opts, key, value), do: Keyword.put(opts, key, value)
 
   defp parse_weekday(nil), do: nil
   defp parse_weekday("monday"), do: 1
@@ -158,7 +172,7 @@ defmodule TriviaAdvisorWeb.CityShowLive do
                 Trivia Nights in <%= @city.name %>
               </h1>
               <p class="text-xl md:text-2xl text-gray-200">
-                <%= @country.name %> • <%= length(@venues) %> <%= if length(@venues) == 1,
+                <%= @country.name %> • <%= @total_venue_count %> <%= if @total_venue_count == 1,
                   do: "venue",
                   else: "venues" %>
               </p>
@@ -215,6 +229,42 @@ defmodule TriviaAdvisorWeb.CityShowLive do
                 <% end %>
               <% end %>
             </div>
+
+            <!-- Suburb Filter -->
+            <%= if length(@suburbs) > 1 do %>
+              <div class="mt-6">
+                <h3 class="text-sm font-semibold text-gray-700 mb-3">Filter by Suburb:</h3>
+                <div class="flex flex-wrap gap-2">
+                  <.link
+                    patch={"/cities/#{@city_url_slug}"}
+                    class={[
+                      "px-4 py-2 rounded-lg font-medium transition-colors",
+                      if(@selected_suburb == nil,
+                        do: "bg-indigo-600 text-white",
+                        else: "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      )
+                    ]}
+                  >
+                    All Suburbs
+                  </.link>
+
+                  <%= for suburb_data <- Enum.take(@suburbs, 15) do %>
+                    <.link
+                      patch={"/cities/#{@city_url_slug}?suburb=#{URI.encode(suburb_data.suburb)}"}
+                      class={[
+                        "px-4 py-2 rounded-lg font-medium transition-colors",
+                        if(@selected_suburb == suburb_data.suburb,
+                          do: "bg-indigo-600 text-white",
+                          else: "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                        )
+                      ]}
+                    >
+                      <%= suburb_data.suburb %> (<%= suburb_data.count %>)
+                    </.link>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
           </div>
         </div>
 
@@ -229,7 +279,7 @@ defmodule TriviaAdvisorWeb.CityShowLive do
               action_path={"#{@base_url}/#{@country.slug}"}
             />
           <% else %>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <%= for venue <- @venues do %>
                 <VenueCard.venue_card venue={venue} />
               <% end %>

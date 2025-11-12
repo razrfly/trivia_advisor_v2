@@ -538,7 +538,30 @@ defmodule TriviaAdvisor.Locations do
   """
   def list_venues_for_city(city_id, opts \\ []) do
     weekday = Keyword.get(opts, :weekday)
+    suburb = Keyword.get(opts, :suburb)
 
+    # Cache key includes city_id, weekday, and suburb filters for separate cache entries
+    cache_key =
+      cond do
+        weekday && suburb ->
+          "city_#{city_id}_day_#{weekday}_suburb_#{suburb}"
+
+        weekday ->
+          "city_#{city_id}_venues_day_#{weekday}"
+
+        suburb ->
+          "city_#{city_id}_suburb_#{suburb}"
+
+        true ->
+          "city_#{city_id}_venues_all"
+      end
+
+    ConCache.get_or_store(:city_cache, cache_key, fn ->
+      fetch_venues_for_city(city_id, weekday, suburb)
+    end)
+  end
+
+  defp fetch_venues_for_city(city_id, weekday, suburb) do
     # Query trivia_events_export view directly for all flat fields
     query =
       from te in PublicEvent,
@@ -596,6 +619,16 @@ defmodule TriviaAdvisor.Locations do
         query
       end
 
+    # Filter by suburb using LIKE pattern on venue_name
+    # Venue names follow pattern: "{Venue Name}, {Suburb}"
+    query =
+      if suburb && is_binary(suburb) do
+        pattern = "%, #{suburb}%"
+        from [te] in query, where: ilike(te.venue_name, ^pattern)
+      else
+        query
+      end
+
     # Return list of events with all venue/event details merged
     Repo.all(query)
   end
@@ -621,6 +654,66 @@ defmodule TriviaAdvisor.Locations do
 
     # Convert list of tuples to map
     Map.new(results)
+  end
+
+  @doc """
+  Extracts suburb/neighborhood from venue name.
+
+  Venue names often follow the pattern: "{Venue Name}, {Suburb}"
+  Examples:
+  - "Hope and Anchor, Brixton" → "Brixton"
+  - "Howling Hops, Hackney Wick" → "Hackney Wick"
+  - "Duke of Sussex, Chiswick, Every Sunday" → "Chiswick"
+
+  Returns nil if no suburb can be extracted.
+  """
+  def extract_suburb_from_venue_name(venue_name) when is_binary(venue_name) do
+    case String.split(venue_name, ",", parts: 3) do
+      [_name, suburb | _rest] ->
+        suburb
+        |> String.trim()
+        |> case do
+          "" -> nil
+          suburb -> suburb
+        end
+
+      _ ->
+        nil
+    end
+  end
+
+  def extract_suburb_from_venue_name(_), do: nil
+
+  @doc """
+  Gets list of suburbs for a city with venue counts.
+  Returns a list of %{suburb: "Name", count: 5} sorted by count descending.
+
+  ## Examples
+
+      iex> get_suburbs_for_city(53)
+      [
+        %{suburb: "Camden", count: 8},
+        %{suburb: "Shoreditch", count: 6},
+        %{suburb: "Brixton", count: 4}
+      ]
+  """
+  def get_suburbs_for_city(city_id) do
+    # Get all venue names for the city
+    venue_names =
+      Repo.all(
+        from te in PublicEvent,
+          where: te.city_id == ^city_id,
+          distinct: te.venue_id,
+          select: te.venue_name
+      )
+
+    # Extract suburbs and count occurrences
+    venue_names
+    |> Enum.map(&extract_suburb_from_venue_name/1)
+    |> Enum.reject(&is_nil/1)
+    |> Enum.frequencies()
+    |> Enum.map(fn {suburb, count} -> %{suburb: suburb, count: count} end)
+    |> Enum.sort_by(& &1.count, :desc)
   end
 
   @doc """
