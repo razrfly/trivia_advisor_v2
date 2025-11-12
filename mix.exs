@@ -70,6 +70,11 @@ defmodule TriviaAdvisor.MixProject do
       # Utilities
       {:countries, "~> 1.6"},
       {:timex, "~> 3.7"},
+      {:money, "~> 1.12"},
+      {:ex_cldr, "~> 2.40"},
+      {:ex_cldr_numbers, "~> 2.33"},
+      {:ex_cldr_dates_times, "~> 2.20"},
+      {:ex_cldr_calendars, "~> 1.26"},
       {:con_cache, "~> 1.0"},
       # Load environment variables from .env file
       {:dotenv, "~> 3.1", only: [:dev, :test]},

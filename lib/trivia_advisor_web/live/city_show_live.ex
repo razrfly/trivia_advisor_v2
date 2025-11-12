@@ -172,9 +172,15 @@ defmodule TriviaAdvisorWeb.CityShowLive do
                 Trivia Nights in <%= @city.name %>
               </h1>
               <p class="text-xl md:text-2xl text-gray-200">
-                <%= @country.name %> • <%= @total_venue_count %> <%= if @total_venue_count == 1,
-                  do: "venue",
-                  else: "venues" %>
+                <%= if @selected_weekday || @selected_suburb do %>
+                  <%= @country.name %> • <%= length(@venues) %> of <%= @total_venue_count %> <%= if @total_venue_count == 1,
+                    do: "venue",
+                    else: "venues" %>
+                <% else %>
+                  <%= @country.name %> • <%= @total_venue_count %> <%= if @total_venue_count == 1,
+                    do: "venue",
+                    else: "venues" %>
+                <% end %>
               </p>
             </div>
           </div>

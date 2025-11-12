@@ -37,7 +37,7 @@ defmodule TriviaAdvisorWeb.CountryShowLive do
 
   @impl true
   def handle_params(params, _url, socket) do
-    page = String.to_integer(params["page"] || "1")
+    page = normalize_page(params["page"])
     per_page = socket.assigns.per_page
     country_id = socket.assigns.country.id
 
@@ -291,4 +291,18 @@ defmodule TriviaAdvisorWeb.CountryShowLive do
         [1, :ellipsis, current - 1, current, current + 1, :ellipsis, total]
     end
   end
+
+  defp normalize_page(nil), do: 1
+
+  defp normalize_page(param) when is_binary(param) do
+    param
+    |> String.trim()
+    |> Integer.parse()
+    |> case do
+      {value, ""} when value > 0 -> value
+      _ -> 1
+    end
+  end
+
+  defp normalize_page(_), do: 1
 end

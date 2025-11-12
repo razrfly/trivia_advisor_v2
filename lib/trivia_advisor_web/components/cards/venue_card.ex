@@ -4,6 +4,7 @@ defmodule TriviaAdvisorWeb.Components.Cards.VenueCard do
   """
   use Phoenix.Component
   alias TriviaAdvisor.Events.PublicEvent
+  alias TriviaAdvisorWeb.Helpers.CurrencyHelpers
 
   @doc """
   Renders a venue card with event details and link to venue page (flat URL structure).
@@ -95,9 +96,9 @@ defmodule TriviaAdvisorWeb.Components.Cards.VenueCard do
                 <%= PublicEvent.format_day_name(@venue.day_of_week) %>s
               </span>
               <span class="mx-2">•</span>
-              <span><%= PublicEvent.format_time(@venue.start_time, @venue.country_code) %></span>
+              <span><%= PublicEvent.format_time(@venue.start_time, get_country(@venue)) %></span>
               <span class="mx-2">•</span>
-              <span><%= PublicEvent.format_entry_fee(@venue.entry_fee_cents) %></span>
+              <span><%= PublicEvent.format_entry_fee(@venue.entry_fee_cents, get_currency_code(@venue)) %></span>
             </div>
           <% end %>
 
@@ -240,6 +241,33 @@ defmodule TriviaAdvisorWeb.Components.Cards.VenueCard do
       url: image["url"],
       alt: "#{venue.city_name} cityscape"
     }
+  end
+
+  # Helper to get country map from venue for localization
+  defp get_country(venue) do
+    cond do
+      # If country_code is available, create a country map
+      Map.has_key?(venue, :country_code) && is_binary(venue.country_code) ->
+        %{code: venue.country_code}
+
+      # Default fallback to US
+      true ->
+        %{code: "US"}
+    end
+  end
+
+  # Helper to get currency code from venue's country
+  defp get_currency_code(venue) do
+    country = get_country(venue)
+
+    # Use Countries library to get currency code from country code
+    case Countries.get(country.code) do
+      %{currency_code: currency_code} when is_binary(currency_code) ->
+        currency_code
+
+      _ ->
+        "USD"  # Default fallback
+    end
   end
 
   # Time ago helper using Timex for proper pluralization

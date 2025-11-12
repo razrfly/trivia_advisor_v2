@@ -145,7 +145,13 @@ defmodule TriviaAdvisor.Events do
       "$5.00"
   """
   def format_event_fee(%PublicEvent{} = event) do
-    PublicEvent.format_entry_fee(event.entry_fee_cents)
+    # Get currency code from country_code using Countries library
+    currency_code = case Countries.get(event.country_code) do
+      %{currency_code: code} when is_binary(code) -> code
+      _ -> "USD"  # Default fallback
+    end
+
+    PublicEvent.format_entry_fee(event.entry_fee_cents, currency_code)
   end
 
   @doc """

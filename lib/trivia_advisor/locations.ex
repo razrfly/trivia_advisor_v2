@@ -226,8 +226,15 @@ defmodule TriviaAdvisor.Locations do
   - `:per_page` - Results per page (defaults to 50)
   """
   def list_cities_for_country(country_id, opts \\ []) do
-    page = Keyword.get(opts, :page, 1)
-    per_page = Keyword.get(opts, :per_page, 50)
+    page =
+      opts
+      |> Keyword.get(:page, 1)
+      |> max(1)
+
+    per_page =
+      opts
+      |> Keyword.get(:per_page, 50)
+      |> max(1)
 
     # Cache key includes pagination params for separate cache entries per page
     cache_key = "country_#{country_id}_page_#{page}_per_#{per_page}"
@@ -621,9 +628,10 @@ defmodule TriviaAdvisor.Locations do
 
     # Filter by suburb using LIKE pattern on venue_name
     # Venue names follow pattern: "{Venue Name}, {Suburb}"
+    # Match exact suburb after comma (no trailing % to avoid partial matches)
     query =
       if suburb && is_binary(suburb) do
-        pattern = "%, #{suburb}%"
+        pattern = "%, #{suburb}"
         from [te] in query, where: ilike(te.venue_name, ^pattern)
       else
         query
