@@ -15,6 +15,8 @@ defmodule TriviaAdvisor.Events.PublicEvent do
   """
   use Ecto.Schema
 
+  alias TriviaAdvisorWeb.Helpers.{LocalizationHelpers, CurrencyHelpers}
+
   @primary_key {:id, :id, autogenerate: false}
   schema "trivia_events_export" do
     # Event details (all flat, pre-extracted from occurrences.pattern)
@@ -91,38 +93,53 @@ defmodule TriviaAdvisor.Events.PublicEvent do
   def format_day_name(_), do: "Unknown"
 
   @doc """
-  Format entry fee in cents to display string.
+  Format entry fee in cents to display string with proper currency symbol.
 
   ## Examples
 
-      iex> PublicEvent.format_entry_fee(0)
+      iex> PublicEvent.format_entry_fee(0, "USD")
       "Free"
 
-      iex> PublicEvent.format_entry_fee(500)
-      "$5.00"
+      iex> PublicEvent.format_entry_fee(500, "GBP")
+      "£5.00"
 
-      iex> PublicEvent.format_entry_fee(nil)
+      iex> PublicEvent.format_entry_fee(nil, "USD")
       "Check website"
   """
-  def format_entry_fee(0), do: "Free"
-  def format_entry_fee(nil), do: "Check website"
-  def format_entry_fee(cents) when is_integer(cents) do
-    dollars = cents / 100
-    "$#{:erlang.float_to_binary(dollars, decimals: 2)}"
+  def format_entry_fee(0, _currency_code), do: "Free"
+  def format_entry_fee(nil, _currency_code), do: "Check website"
+  def format_entry_fee(cents, currency_code) when is_integer(cents) and is_binary(currency_code) do
+    CurrencyHelpers.format_currency(cents, currency_code)
+  end
+
+  # Fallback for when currency_code is not provided (backwards compatibility)
+  def format_entry_fee(cents, _) when is_integer(cents) do
+    CurrencyHelpers.format_currency(cents, "USD")
   end
 
   @doc """
-  Format start time based on country code (localized time format).
+  Format start time based on country (localized time format).
+  Uses CLDR to automatically determine 12-hour vs 24-hour format.
 
   ## Examples
 
-      iex> PublicEvent.format_time(~T[19:00:00], "US")
+      iex> PublicEvent.format_time(~T[19:00:00], %{code: "US"})
       "7:00 PM"
 
-      iex> PublicEvent.format_time(~T[19:00:00], "GB")
-      "19:00"
+      iex> PublicEvent.format_time(~T[18:30:00], %{code: "GB"})
+      "6:30 PM"
+
+      iex> PublicEvent.format_time(~T[18:30:00], %{code: "DE"})
+      "18:30"
   """
-  def format_time(nil, _country_code), do: "Time TBD"
-  def format_time(time, "US"), do: Calendar.strftime(time, "%I:%M %p")  # 7:00 PM
-  def format_time(time, _country_code), do: Calendar.strftime(time, "%H:%M")  # 19:00
+  def format_time(nil, _country), do: "Time TBD"
+  def format_time(time, country) when is_map(country) do
+    LocalizationHelpers.format_localized_time(time, country)
+  end
+
+  # Fallback for when country is just a code string (backwards compatibility)
+  def format_time(time, country_code) when is_binary(country_code) do
+    country = %{code: country_code}
+    LocalizationHelpers.format_localized_time(time, country)
+  end
 end

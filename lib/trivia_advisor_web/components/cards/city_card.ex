@@ -25,55 +25,63 @@ defmodule TriviaAdvisorWeb.Components.Cards.CityCard do
 
     ~H"""
     <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-200">
-      <.link
-        navigate={"/cities/#{@city_url_slug}"}
-        class="block group"
-      >
-        <!-- City Image from Unsplash Gallery -->
-        <%= if @city_image do %>
-          <div class="relative">
+      <div class="relative overflow-hidden">
+        <.link
+          navigate={"/cities/#{@city_url_slug}"}
+          class="block group"
+        >
+          <%= if @city_image do %>
             <img
               src={@city_image.url}
               alt={@city_image.alt}
               loading="lazy"
               class="w-full h-48 object-cover rounded-t-lg"
             />
-            <%= if @city_image[:photographer] && @city_image[:photographer_url] do %>
-              <div class="absolute bottom-0 right-0 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded-tl">
-                Photo by
-                <a
-                  href={@city_image.photographer_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="underline hover:text-gray-200"
-                  onclick="event.stopPropagation()"
-                >
-                  <%= @city_image.photographer %>
-                </a>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
-
-        <div class="p-6">
-          <!-- City Name -->
-          <h3 class="text-xl font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
-            <%= @city.name %>
-          </h3>
-
-          <!-- Country Name -->
-          <%= if @show_country do %>
-            <p class="text-gray-600 mb-3">
-              <%= @city.country.name %>
-            </p>
           <% end %>
 
-          <!-- Venue Count Badge -->
-          <%= if Map.get(@city, :venue_count) do %>
-            <div class="mb-3">
-              <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800">
+          <div class="p-6">
+            <!-- City Name -->
+            <h3 class="text-xl font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+              <%= @city.name %>
+            </h3>
+
+            <!-- Country Name -->
+            <%= if @show_country do %>
+              <p class="text-gray-600 mb-3">
+                <%= @city.country.name %>
+              </p>
+            <% end %>
+
+            <!-- Venue Count Badge -->
+            <%= if Map.get(@city, :venue_count) do %>
+              <div class="mb-3">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800">
+                  <svg
+                    class="w-4 h-4 mr-1.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                    >
+                    </path>
+                  </svg>
+                  <%= @city.venue_count %> <%= if @city.venue_count == 1,
+                    do: "Venue",
+                    else: "Venues" %>
+                </span>
+              </div>
+            <% end %>
+
+            <!-- Coordinates (if available) -->
+            <%= if @city.latitude && @city.longitude do %>
+              <div class="flex items-center text-xs text-gray-500">
                 <svg
-                  class="w-4 h-4 mr-1.5"
+                  class="w-4 h-4 mr-1"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -82,56 +90,47 @@ defmodule TriviaAdvisorWeb.Components.Cards.CityCard do
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
-                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  >
+                  </path>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                   >
                   </path>
                 </svg>
-                <%= @city.venue_count %> <%= if @city.venue_count == 1,
-                  do: "Venue",
-                  else: "Venues" %>
-              </span>
-            </div>
-          <% end %>
+                <span>
+                  <%= Float.round(Decimal.to_float(@city.latitude), 2) %>,
+                  <%= Float.round(Decimal.to_float(@city.longitude), 2) %>
+                </span>
+              </div>
+            <% end %>
 
-          <!-- Coordinates (if available) -->
-          <%= if @city.latitude && @city.longitude do %>
-            <div class="flex items-center text-xs text-gray-500">
-              <svg
-                class="w-4 h-4 mr-1"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                >
-                </path>
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                >
-                </path>
-              </svg>
-              <span>
-                <%= Float.round(Decimal.to_float(@city.latitude), 2) %>,
-                <%= Float.round(Decimal.to_float(@city.longitude), 2) %>
-              </span>
-            </div>
-          <% end %>
+            <!-- Alternate Names (if available) -->
+            <%= if @city.alternate_names && length(@city.alternate_names) > 0 do %>
+              <div class="mt-2 text-xs text-gray-400">
+                Also known as: <%= Enum.take(@city.alternate_names, 2) |> Enum.join(", ") %>
+              </div>
+            <% end %>
+          </div>
+        </.link>
 
-          <!-- Alternate Names (if available) -->
-          <%= if @city.alternate_names && length(@city.alternate_names) > 0 do %>
-            <div class="mt-2 text-xs text-gray-400">
-              Also known as: <%= Enum.take(@city.alternate_names, 2) |> Enum.join(", ") %>
-            </div>
-          <% end %>
-        </div>
-      </.link>
+        <%= if @city_image && @city_image[:photographer] && @city_image[:photographer_url] do %>
+          <a
+            href={@city_image.photographer_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="absolute bottom-0 right-0 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded-tl z-10 pointer-events-auto hover:bg-opacity-80"
+          >
+            Photo by
+            <span class="underline hover:text-gray-200">
+              <%= @city_image.photographer %>
+            </span>
+          </a>
+        <% end %>
+      </div>
     </div>
     """
   end
