@@ -243,32 +243,11 @@ defmodule TriviaAdvisorWeb.Components.Cards.VenueCard do
     }
   end
 
-  # Helper to get country map from venue for localization
-  defp get_country(venue) do
-    cond do
-      # If country_code is available, create a country map
-      Map.has_key?(venue, :country_code) && is_binary(venue.country_code) ->
-        %{code: venue.country_code}
+  # Delegate to CurrencyHelpers for country extraction
+  defp get_country(venue), do: CurrencyHelpers.get_country(venue)
 
-      # Default fallback to US
-      true ->
-        %{code: "US"}
-    end
-  end
-
-  # Helper to get currency code from venue's country
-  defp get_currency_code(venue) do
-    country = get_country(venue)
-
-    # Use Countries library to get currency code from country code
-    case Countries.get(country.code) do
-      %{currency_code: currency_code} when is_binary(currency_code) ->
-        currency_code
-
-      _ ->
-        "USD"  # Default fallback
-    end
-  end
+  # Delegate to CurrencyHelpers for currency code extraction
+  defp get_currency_code(venue), do: CurrencyHelpers.get_country_currency(venue)
 
   # Time ago helper using Timex for proper pluralization
   defp time_ago(datetime) when is_struct(datetime, NaiveDateTime) do

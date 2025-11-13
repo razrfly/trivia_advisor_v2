@@ -55,34 +55,13 @@ defmodule TriviaAdvisorWeb.Helpers.LocalizationHelpers do
         Logger.debug("Using timezone: #{datetime.time_zone} for country: #{inspect(country)}")
 
         # Determine format based on country's time format preference
-        format_options = if uses_24h_format?(country) do
+        # Use fallback formatting directly since CLDR DateTime module isn't available
+        if uses_24h_format?(country) do
           # 24-hour format
-          [format: "HH:mm"]
+          "#{String.pad_leading("#{time_struct.hour}", 2, "0")}:#{String.pad_leading("#{time_struct.minute}", 2, "0")}"
         else
           # 12-hour format
-          [format: "h:mm a"]
-        end
-
-        # Use Calendar.strftime with appropriate format since CLDR DateTime module isn't available
-        # Use fallback formatting directly instead
-        result = if uses_24h_format?(country) do
-          {:ok, "#{String.pad_leading("#{time_struct.hour}", 2, "0")}:#{String.pad_leading("#{time_struct.minute}", 2, "0")}"}
-        else
-          {:ok, fallback_format(time_struct)}
-        end
-        Logger.debug("Time formatting result: #{inspect(result)} with options: #{inspect(format_options)}")
-
-        case result do
-          {:ok, formatted} -> formatted
-          _ ->
-            # If CLDR failed, use fallback based on country preference
-            if uses_24h_format?(country) do
-              # 24-hour format fallback
-              "#{String.pad_leading("#{time_struct.hour}", 2, "0")}:#{String.pad_leading("#{time_struct.minute}", 2, "0")}"
-            else
-              # 12-hour format fallback
-              fallback_format(time_struct)
-            end
+          fallback_format(time_struct)
         end
 
       _ ->
@@ -112,8 +91,8 @@ defmodule TriviaAdvisorWeb.Helpers.LocalizationHelpers do
 
             # Check if the region is North America (mostly 12h except Mexico)
             Map.has_key?(country_data, :region) && country_data.region == "North America" ->
-              # Mexico uses 24h format
-              country_code == "MX"
+              # US and Canada use 12h, Mexico uses 24h
+              country_code not in ["US", "CA"]
 
             # Check if the main language is English (English-speaking countries prefer 12h format)
             is_language_primary?(country_data, "en") -> false
@@ -309,11 +288,6 @@ defmodule TriviaAdvisorWeb.Helpers.LocalizationHelpers do
               # Get the first timezone name
               timezone = List.first(country_data.timezones)
               if is_binary(timezone), do: timezone, else: nil
-
-            # Try to construct from country's capital city if available - many timezones follow this pattern
-            Map.has_key?(country_data, :capital) && !is_nil(country_data.capital) &&
-            Map.has_key?(country_data, :continent) && !is_nil(country_data.continent) ->
-              "#{country_data.continent}/#{country_data.capital}" |> String.replace(" ", "_")
 
             # If all else fails, return nil and let the caller use a UTC default
             true -> nil
