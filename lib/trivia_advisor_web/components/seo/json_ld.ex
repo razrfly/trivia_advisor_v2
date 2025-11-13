@@ -104,16 +104,17 @@ defmodule TriviaAdvisorWeb.Components.SEO.JsonLD do
     }
   end
 
-  defp offers_schema(%{price_info: price_info, booking_url: booking_url}) when not is_nil(price_info) do
-    %{
-      "@type" => "Offer",
-      "description" => price_info,
-      "url" => booking_url,
-      "availability" => "https://schema.org/InStock"
-    }
-  end
-
-  defp offers_schema(_), do: nil
+  # Currently unused - reserved for future event pricing features
+  # defp offers_schema(%{price_info: price_info, booking_url: booking_url}) when not is_nil(price_info) do
+  #   %{
+  #     "@type" => "Offer",
+  #     "description" => price_info,
+  #     "url" => booking_url,
+  #     "availability" => "https://schema.org/InStock"
+  #   }
+  # end
+  #
+  # defp offers_schema(_), do: nil
 
   defp maybe_add_image(schema, venue) do
     case TriviaAdvisor.Locations.Venue.primary_image(venue) do
@@ -122,20 +123,21 @@ defmodule TriviaAdvisorWeb.Components.SEO.JsonLD do
     end
   end
 
-  defp maybe_add_performers(schema, %{public_event_performers: performers}) when is_list(performers) and length(performers) > 0 do
-    performer_schemas =
-      Enum.map(performers, fn performer ->
-        %{
-          "@type" => "Person",
-          "name" => performer.name,
-          "description" => performer.bio
-        }
-      end)
-
-    Map.put(schema, "performer", performer_schemas)
-  end
-
-  defp maybe_add_performers(schema, _), do: schema
+  # Currently unused - reserved for future performer features
+  # defp maybe_add_performers(schema, %{public_event_performers: performers}) when is_list(performers) and length(performers) > 0 do
+  #   performer_schemas =
+  #     Enum.map(performers, fn performer ->
+  #       %{
+  #         "@type" => "Person",
+  #         "name" => performer.name,
+  #         "description" => performer.bio
+  #       }
+  #     end)
+  #
+  #   Map.put(schema, "performer", performer_schemas)
+  # end
+  #
+  # defp maybe_add_performers(schema, _), do: schema
 
   @doc """
   Generates LocalBusiness schema for venues.

@@ -157,16 +157,72 @@ defmodule TriviaAdvisor.Events do
   @doc """
   Gets the next occurrence of a recurring event.
 
-  Note: This is a stub function for V2. Returns nil to gracefully hide
-  the "Next Quiz Night" feature. Future implementation would calculate
-  next occurrence based on day_of_week, start_time, and frequency fields.
+  Currently only supports weekly events. Returns a map with formatted date
+  and localized time, or nil if the event is not weekly or data is incomplete.
 
   ## Examples
 
-      iex> get_next_occurrence(%PublicEvent{})
+      iex> event = %PublicEvent{frequency: "weekly", day_of_week: 7, start_time: ~T[19:30:00], country_code: "GB"}
+      iex> get_next_occurrence(event)
+      %{"date" => "Sunday, Nov 16", "start_time" => "7:30 PM"}
+
+      iex> get_next_occurrence(%PublicEvent{frequency: "biweekly"})
       nil
   """
+  def get_next_occurrence(%PublicEvent{
+        frequency: "weekly",
+        day_of_week: day_of_week,
+        start_time: start_time,
+        country_code: country_code
+      })
+      when is_integer(day_of_week) and not is_nil(start_time) and not is_nil(country_code) do
+    today = Date.utc_today()
+    today_dow = Date.day_of_week(today)
+
+    # Calculate days until next occurrence
+    days_until_next =
+      case day_of_week - today_dow do
+        diff when diff > 0 -> diff
+        diff when diff <= 0 -> diff + 7
+      end
+
+    next_date = Date.add(today, days_until_next)
+
+    # Format the date (e.g., "Sunday, Nov 16")
+    day_name = PublicEvent.format_day_name(day_of_week)
+    month_name = format_month_short(next_date.month)
+    formatted_date = "#{day_name}, #{month_name} #{next_date.day}"
+
+    # Format the time using existing localization
+    formatted_time = PublicEvent.format_time(start_time, country_code)
+
+    %{
+      "date" => formatted_date,
+      "start_time" => formatted_time
+    }
+  end
+
+  # Biweekly and monthly not yet supported
+  def get_next_occurrence(%PublicEvent{frequency: freq})
+      when freq in ["biweekly", "monthly"],
+      do: nil
+
+  # Missing required fields
   def get_next_occurrence(_event), do: nil
+
+  # Helper for month abbreviations
+  defp format_month_short(1), do: "Jan"
+  defp format_month_short(2), do: "Feb"
+  defp format_month_short(3), do: "Mar"
+  defp format_month_short(4), do: "Apr"
+  defp format_month_short(5), do: "May"
+  defp format_month_short(6), do: "Jun"
+  defp format_month_short(7), do: "Jul"
+  defp format_month_short(8), do: "Aug"
+  defp format_month_short(9), do: "Sep"
+  defp format_month_short(10), do: "Oct"
+  defp format_month_short(11), do: "Nov"
+  defp format_month_short(12), do: "Dec"
 
   @doc """
   Gets upcoming occurrences of a recurring event.
@@ -181,6 +237,87 @@ defmodule TriviaAdvisor.Events do
       nil
   """
   def get_upcoming_occurrences(_event), do: nil
+
+  @doc """
+  Gets nearby trivia venues with event details for a given venue.
+  Returns venues within radius (default 5km) with one representative event per venue,
+  including day_of_week for badges and images for display.
+
+  ## Examples
+
+      iex> get_nearby_trivia_venues(venue, 5)
+      [%{venue: %Venue{}, event: %PublicEvent{}, distance_km: 2.5}, ...]
+  """
+  def get_nearby_trivia_venues(venue, radius_km \\ 5)
+
+  def get_nearby_trivia_venues(venue, radius_km)
+      when not is_nil(venue.latitude) and not is_nil(venue.longitude) do
+    # Convert to float for PostGIS
+    lat = if is_float(venue.latitude), do: venue.latitude, else: Float.parse("#{venue.latitude}") |> elem(0)
+    lon = if is_float(venue.longitude), do: venue.longitude, else: Float.parse("#{venue.longitude}") |> elem(0)
+    radius_meters = radius_km * 1000
+
+    # Query trivia_events_export grouped by venue
+    # Select one event per venue with venue and city data
+    results = Repo.all(
+      from e in PublicEvent,
+        join: v in TriviaAdvisor.Locations.Venue, on: e.venue_id == v.id,
+        join: c in TriviaAdvisor.Locations.City, on: v.city_id == c.id,
+        join: co in TriviaAdvisor.Locations.Country, on: c.country_id == co.id,
+        where: v.id != ^venue.id,
+        where: not is_nil(v.latitude) and not is_nil(v.longitude),
+        where:
+          fragment(
+            "ST_DWithin(ST_MakePoint(?, ?)::geography, ST_MakePoint(?, ?)::geography, ?)",
+            v.longitude,
+            v.latitude,
+            ^lon,
+            ^lat,
+            ^radius_meters
+          ),
+        group_by: [v.id, c.id, co.id],
+        # Select first event for each venue (arbitrary but consistent)
+        select: %{
+          venue_id: v.id,
+          venue_name: v.name,
+          venue_slug: v.slug,
+          venue_address: v.address,
+          venue_latitude: v.latitude,
+          venue_longitude: v.longitude,
+          venue_images: v.venue_images,
+          venue_type: v.venue_type,
+          city_id: c.id,
+          city_name: c.name,
+          city_slug: c.slug,
+          city_images: c.unsplash_gallery,
+          country_name: co.name,
+          # Take any event from this venue (using MIN to get consistent result)
+          day_of_week: fragment("MIN(?)", e.day_of_week),
+          distance_km:
+            fragment(
+              "ROUND(CAST(ST_Distance(ST_MakePoint(?, ?)::geography, ST_MakePoint(?, ?)::geography) / 1000 AS NUMERIC), 1)",
+              ^lon,
+              ^lat,
+              v.longitude,
+              v.latitude
+            )
+        },
+        order_by:
+          fragment(
+            "ST_Distance(ST_MakePoint(?, ?)::geography, ST_MakePoint(?, ?)::geography)",
+            v.longitude,
+            v.latitude,
+            ^lon,
+            ^lat
+          ),
+        limit: 10
+    )
+
+    # Return list of maps
+    results
+  end
+
+  def get_nearby_trivia_venues(_venue, _radius_km), do: []
 
   # ============================================================================
   # Event Source Queries
