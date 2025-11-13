@@ -221,12 +221,9 @@ defmodule TriviaAdvisorWeb.Components.Cards.VenueCard do
     end
   end
 
-  @doc """
-  Get a random image from city's Unsplash gallery, consistent per venue ID.
-
-  Uses venue_id as seed to ensure the same venue always gets the same image
-  from the gallery, while different venues get different images for visual variety.
-  """
+  # Get a random image from city's Unsplash gallery, consistent per venue ID.
+  # Uses venue_id as seed to ensure the same venue always gets the same image
+  # from the gallery, while different venues get different images for visual variety.
   defp get_random_city_image(venue) do
     city_images = venue.city_images
     active_cat = city_images["active_category"]

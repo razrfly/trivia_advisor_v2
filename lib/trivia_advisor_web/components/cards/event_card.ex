@@ -4,6 +4,7 @@ defmodule TriviaAdvisorWeb.Components.Cards.EventCard do
   """
   use Phoenix.Component
   alias TriviaAdvisor.Events
+  alias TriviaAdvisor.Events.PublicEvent
 
   @doc """
   Renders an event card with upcoming occurrences.
@@ -11,9 +12,11 @@ defmodule TriviaAdvisorWeb.Components.Cards.EventCard do
   ## Examples
 
       <EventCard.event_card event={event} />
+      <EventCard.event_card event={event} country={country} />
   """
   attr :event, :map, required: true
   attr :show_venue, :boolean, default: false
+  attr :country, :map, default: nil
 
   def event_card(assigns) do
     ~H"""
@@ -48,9 +51,172 @@ defmodule TriviaAdvisorWeb.Components.Cards.EventCard do
         </span>
       </div>
 
+      <!-- Event Details Card -->
+      <div class="grid grid-cols-4 gap-4 my-6 p-4 bg-gray-50 rounded-lg">
+        <!-- Quiz Day -->
+        <div class="text-center">
+          <div class="flex items-center justify-center mb-2">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <div class="text-sm text-gray-500 mb-1">Quiz Day</div>
+          <div class="font-semibold text-gray-900">
+            <%= if @event.day_of_week do %>
+              <%= PublicEvent.format_day_name(@event.day_of_week) %>
+            <% else %>
+              TBD
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Start Time -->
+        <div class="text-center">
+          <div class="flex items-center justify-center mb-2">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <div class="text-sm text-gray-500 mb-1">Start Time</div>
+          <div class="font-semibold text-gray-900">
+            <%= if @event.start_time && @country do %>
+              <%= PublicEvent.format_time(@event.start_time, @country) %>
+            <% else %>
+              <%= if @event.start_time do %>
+                <%= PublicEvent.format_time(@event.start_time, %{code: "US"}) %>
+              <% else %>
+                TBD
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Entry Fee -->
+        <div class="text-center">
+          <div class="flex items-center justify-center mb-2">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <div class="text-sm text-gray-500 mb-1">Entry Fee</div>
+          <div class="font-semibold text-gray-900">
+            <%= if @event.entry_fee_cents != nil do %>
+              <%= PublicEvent.format_entry_fee(@event.entry_fee_cents, get_currency_code(@event, @country)) %>
+            <% else %>
+              Check website
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Frequency -->
+        <div class="text-center">
+          <div class="flex items-center justify-center mb-2">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+          </div>
+          <div class="text-sm text-gray-500 mb-1">Frequency</div>
+          <div class="font-semibold text-gray-900 capitalize">
+            <%= if @event.frequency do %>
+              <%= @event.frequency %>
+            <% else %>
+              TBD
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Event Description -->
+      <%= if @event.description && String.trim(@event.description) != "" do %>
+        <div class="mt-6 pt-6 border-t border-gray-200">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3 flex items-center">
+            <svg
+              class="w-5 h-5 mr-2 text-blue-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              >
+              </path>
+            </svg>
+            About This Trivia Night
+          </h3>
+          <p class="text-gray-700 leading-relaxed mb-4">
+            <%= @event.description %>
+          </p>
+
+          <!-- Source Attribution -->
+          <div class="flex flex-wrap items-center gap-2 text-sm text-gray-500">
+            <%= if @event.last_seen_at do %>
+              <span>
+                <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  >
+                  </path>
+                </svg>
+                Updated <%= PublicEvent.time_ago(@event.last_seen_at) %>
+              </span>
+            <% end %>
+
+            <%= if @event.inserted_at do %>
+              <span class="mx-2">•</span>
+              <span>
+                <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  >
+                  </path>
+                </svg>
+                Active since <%= PublicEvent.format_active_since(@event.inserted_at) %>
+              </span>
+            <% end %>
+
+            <%= if @event.source_name do %>
+              <span class="mx-2">•</span>
+              <span>
+                <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+                  >
+                  </path>
+                </svg>
+                Source:
+                <%= if source_url = PublicEvent.get_source_url(@event) do %>
+                  <a
+                    href={source_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-blue-600 hover:text-blue-800 hover:underline"
+                  >
+                    <%= @event.source_name %>
+                  </a>
+                <% else %>
+                  <%= @event.source_name %>
+                <% end %>
+              </span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
       <!-- Upcoming Occurrences -->
-      <%= if upcoming = Events.get_upcoming_occurrences(@event) do %>
-        <%= if !Enum.empty?(upcoming) do %>
+      <%= case Events.get_upcoming_occurrences(@event) do %>
+        <% upcoming when is_list(upcoming) and upcoming != [] -> %>
           <div class="mt-4 pt-4 border-t border-gray-200">
             <h4 class="font-semibold text-gray-900 mb-2 flex items-center">
               <svg
@@ -79,17 +245,18 @@ defmodule TriviaAdvisorWeb.Components.Cards.EventCard do
                   <% end %>
                 </li>
               <% end %>
-              <%= if length(upcoming) > 5 do %>
+              <%= if Enum.count(upcoming) > 5 do %>
                 <li class="text-sm text-gray-500 italic">
-                  +<%= length(upcoming) - 5 %> more upcoming <%= if length(upcoming) - 5 ==
-                                                                     1,
-                                                                   do: "date",
-                                                                   else: "dates" %>
+                  +<%= Enum.count(upcoming) - 5 %> more upcoming <%= if Enum.count(upcoming) - 5 ==
+                                                                         1,
+                                                                       do: "date",
+                                                                       else: "dates" %>
                 </li>
               <% end %>
             </ul>
           </div>
-        <% end %>
+        <% _ -> %>
+          <!-- No upcoming occurrences -->
       <% end %>
 
       <!-- Event Details Footer -->
@@ -122,5 +289,31 @@ defmodule TriviaAdvisorWeb.Components.Cards.EventCard do
       <% end %>
     </div>
     """
+  end
+
+  # Helper to get currency code from event's country
+  defp get_currency_code(_event, country) when is_map(country) and not is_nil(country) do
+    case Countries.get(country.code) do
+      %{currency_code: currency_code} when is_binary(currency_code) ->
+        currency_code
+
+      _ ->
+        "USD"
+    end
+  end
+
+  defp get_currency_code(event, _) do
+    # Fallback: try to get from event's country_code if available
+    if Map.has_key?(event, :country_code) && event.country_code do
+      case Countries.get(event.country_code) do
+        %{currency_code: currency_code} when is_binary(currency_code) ->
+          currency_code
+
+        _ ->
+          "USD"
+      end
+    else
+      "USD"
+    end
   end
 end

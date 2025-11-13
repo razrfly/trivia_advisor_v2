@@ -225,10 +225,8 @@ defmodule TriviaAdvisorWeb.CountryShowLive do
     Application.get_env(:trivia_advisor, :base_url, "https://quizadvisor.com")
   end
 
-  @doc """
-  Gets hero image for the country page from the first city's unsplash_gallery.
-  Uses the primary city (first in the sorted list) as the country representative image.
-  """
+  # Gets hero image for the country page from the first city's unsplash_gallery.
+  # Uses the primary city (first in the sorted list) as the country representative image.
   defp get_hero_image([]), do: nil
 
   defp get_hero_image([first_city | _rest]) do
@@ -268,11 +266,9 @@ defmodule TriviaAdvisorWeb.CountryShowLive do
     }
   end
 
-  @doc """
-  Generates a smart pagination range with ellipsis for large page counts.
-  Shows: [1] ... [current-1] [current] [current+1] ... [total]
-  """
-  defp pagination_range(current, total) when total <= 7 do
+  # Generates a smart pagination range with ellipsis for large page counts.
+  # Shows: [1] ... [current-1] [current] [current+1] ... [total]
+  defp pagination_range(_current, total) when total <= 7 do
     1..total |> Enum.to_list()
   end
 

@@ -5,8 +5,6 @@ defmodule TriviaAdvisorWeb.Helpers.HeroImageHelpers do
   Provides fallback logic using the city's unsplash_gallery from the database.
   """
 
-  alias TriviaAdvisorWeb.Helpers.SEOHelpers
-
   @doc """
   Gets the hero image URL for a city.
 

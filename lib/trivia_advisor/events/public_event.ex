@@ -142,4 +142,74 @@ defmodule TriviaAdvisor.Events.PublicEvent do
     country = %{code: country_code}
     LocalizationHelpers.format_localized_time(time, country)
   end
+
+  @doc """
+  Format last_seen_at timestamp to relative time (e.g., "2 days ago").
+
+  ## Examples
+
+      iex> PublicEvent.time_ago(~N[2024-01-10 12:00:00])
+      "3 days ago"
+  """
+  def time_ago(nil), do: "Unknown"
+  def time_ago(datetime) do
+    now = NaiveDateTime.utc_now()
+    diff = NaiveDateTime.diff(now, datetime, :second)
+
+    cond do
+      diff < 60 -> "just now"
+      diff < 3600 -> "#{div(diff, 60)} minutes ago"
+      diff < 86400 -> "#{div(diff, 3600)} hours ago"
+      diff < 2592000 -> "#{div(diff, 86400)} days ago"
+      diff < 31536000 -> "#{div(diff, 2592000)} months ago"
+      true -> "#{div(diff, 31536000)} years ago"
+    end
+  end
+
+  @doc """
+  Format inserted_at timestamp to readable date (e.g., "Jan 2024").
+
+  ## Examples
+
+      iex> PublicEvent.format_active_since(~N[2024-01-15 12:00:00])
+      "Jan 2024"
+  """
+  def format_active_since(nil), do: "Unknown"
+  def format_active_since(datetime) do
+    month = case datetime.month do
+      1 -> "Jan"
+      2 -> "Feb"
+      3 -> "Mar"
+      4 -> "Apr"
+      5 -> "May"
+      6 -> "Jun"
+      7 -> "Jul"
+      8 -> "Aug"
+      9 -> "Sep"
+      10 -> "Oct"
+      11 -> "Nov"
+      12 -> "Dec"
+    end
+
+    "#{month} #{datetime.year}"
+  end
+
+  @doc """
+  Get the source URL for the event.
+  For Wombie.com events, constructs URL from activity_slug.
+  Otherwise returns the source_url field.
+
+  ## Examples
+
+      iex> PublicEvent.get_source_url(%PublicEvent{source_name: "Wombie.com", activity_slug: "trivia-night"})
+      "https://wombie.com/trivia-night"
+
+      iex> PublicEvent.get_source_url(%PublicEvent{source_url: "https://example.com/event"})
+      "https://example.com/event"
+  """
+  def get_source_url(%{source_name: "Wombie.com", activity_slug: slug}) when is_binary(slug) do
+    "https://wombie.com/#{slug}"
+  end
+  def get_source_url(%{source_url: url}) when is_binary(url), do: url
+  def get_source_url(_), do: nil
 end
