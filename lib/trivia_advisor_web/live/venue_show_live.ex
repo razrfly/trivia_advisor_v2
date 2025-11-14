@@ -535,18 +535,22 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
     end
   end
 
-  # Extract images from city_images JSONB structure
-  defp get_city_images(city_images) when is_map(city_images) do
-    city_images
-    |> Map.values()
-    |> List.flatten()
-    |> Enum.take(5)
+  # Extract images from unsplash_gallery JSONB structure
+  defp get_city_images(unsplash_gallery) when is_map(unsplash_gallery) do
+    with active_cat when is_binary(active_cat) <- unsplash_gallery["active_category"],
+         categories when is_map(categories) <- unsplash_gallery["categories"],
+         category when is_map(category) <- categories[active_cat],
+         images when is_list(images) <- category["images"] do
+      Enum.take(images, 5)
+    else
+      _ -> []
+    end
   end
 
   defp get_city_images(_), do: []
 
   # Get image URL for a nearby venue with fallback logic.
-  # Tries venue_images first, then city_images.
+  # Tries venue_images first, then city_images (unsplash_gallery structure).
   defp get_nearby_venue_image(nearby_venue) do
     cond do
       # Try venue_images first
@@ -554,15 +558,17 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
           length(nearby_venue.venue_images) > 0 ->
         List.first(nearby_venue.venue_images)["url"]
 
-      # Fallback to city images
+      # Fallback to city images (unsplash_gallery structure)
       nearby_venue.city_images && is_map(nearby_venue.city_images) ->
-        nearby_venue.city_images
-        |> Map.values()
-        |> List.flatten()
-        |> List.first()
-        |> case do
-          nil -> nil
-          image -> image["url"]
+        with active_cat when is_binary(active_cat) <- nearby_venue.city_images["active_category"],
+             categories when is_map(categories) <- nearby_venue.city_images["categories"],
+             category when is_map(category) <- categories[active_cat],
+             images when is_list(images) and length(images) > 0 <- category["images"],
+             image when is_map(image) <- List.first(images),
+             url when is_binary(url) <- image["url"] do
+          url
+        else
+          _ -> nil
         end
 
       # No images available

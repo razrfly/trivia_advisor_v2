@@ -55,7 +55,7 @@ defmodule TriviaAdvisorWeb.Helpers.LocalizationHelpers do
         Logger.debug("Using timezone: #{datetime.time_zone} for country: #{inspect(country)}")
 
         # Determine format based on country's time format preference
-        # Use fallback formatting directly since CLDR DateTime module isn't available
+        # Use direct formatting for simplicity rather than CLDR
         if uses_24h_format?(country) do
           # 24-hour format
           "#{String.pad_leading("#{time_struct.hour}", 2, "0")}:#{String.pad_leading("#{time_struct.minute}", 2, "0")}"
@@ -249,7 +249,7 @@ defmodule TriviaAdvisorWeb.Helpers.LocalizationHelpers do
 
   defp normalize_time(_), do: nil
 
-  # Fallback format if CLDR fails
+  # Simple 12-hour time formatting
   defp fallback_format(%Time{} = time) do
     hour = time.hour
     am_pm = if hour >= 12, do: "PM", else: "AM"
