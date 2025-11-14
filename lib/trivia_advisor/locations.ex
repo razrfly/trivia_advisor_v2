@@ -208,6 +208,47 @@ defmodule TriviaAdvisor.Locations do
   end
 
   @doc """
+  Searches cities by name (case-insensitive partial match).
+  Returns all cities if query is nil or empty.
+
+  ## Examples
+
+      iex> search_cities("lon")
+      [%City{name: "London", ...}, %City{name: "London Colney", ...}, %City{name: "Athlone", ...}]
+
+      iex> search_cities("asdfzxcv")
+      []
+
+      iex> search_cities(nil)
+      [%City{}, ...]  # All cities
+  """
+  def search_cities(nil), do: list_all_cities()
+  def search_cities(""), do: list_all_cities()
+
+  def search_cities(query) when is_binary(query) do
+    search_pattern = "%#{query}%"
+
+    Repo.all(
+      from c in City,
+        join: te in PublicEvent, on: te.city_id == c.id,
+        where: ilike(c.name, ^search_pattern),
+        distinct: true,
+        order_by: c.name,
+        preload: [:country]
+    )
+  end
+
+  defp list_all_cities do
+    Repo.all(
+      from c in City,
+        join: te in PublicEvent, on: te.city_id == c.id,
+        distinct: true,
+        order_by: c.name,
+        preload: [:country]
+    )
+  end
+
+  @doc """
   Gets cities for a country (accepts Country struct).
   """
   def get_cities_for_country(%Country{id: country_id}) do

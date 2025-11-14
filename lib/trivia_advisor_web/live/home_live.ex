@@ -13,8 +13,8 @@ defmodule TriviaAdvisorWeb.HomeLive do
   @impl true
   def mount(_params, _session, socket) do
     # Fetch popular cities for display
-    cities = Locations.get_popular_cities(12)
-    latest_venues = Locations.get_latest_venues(10)
+    cities = Locations.get_popular_cities(6)
+    latest_venues = Locations.get_latest_venues(4)
 
     # Get stats
     venue_count = Locations.count_venues_with_trivia()
@@ -84,6 +84,24 @@ defmodule TriviaAdvisorWeb.HomeLive do
                 <div class="text-blue-100 mt-1">Countries</div>
               </div>
             </div>
+
+            <!-- Search Form -->
+            <div class="max-w-2xl mx-auto mt-8">
+              <form phx-submit="search" class="flex gap-2">
+                <input
+                  type="text"
+                  name="city_search"
+                  placeholder="Search for a city..."
+                  class="flex-1 px-4 py-3 rounded-lg bg-white border border-gray-300 text-gray-900 placeholder:text-gray-500 shadow-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+                <button
+                  type="submit"
+                  class="px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors"
+                >
+                  Search
+                </button>
+              </form>
+            </div>
           </div>
         </div>
 
@@ -96,7 +114,7 @@ defmodule TriviaAdvisorWeb.HomeLive do
             Recently added venues hosting trivia nights
           </p>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
             <%= for venue <- @latest_venues do %>
               <VenueCard.venue_card venue={venue} show_city={true} />
             <% end %>
@@ -110,7 +128,7 @@ defmodule TriviaAdvisorWeb.HomeLive do
               Explore Trivia by City
             </h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
               <%= for city <- @cities do %>
                 <CityCard.city_card city={city} base_url={@base_url} />
               <% end %>
@@ -144,6 +162,12 @@ defmodule TriviaAdvisorWeb.HomeLive do
       <Footer.site_footer />
     </div>
     """
+  end
+
+  @impl true
+  def handle_event("search", %{"city_search" => query}, socket) do
+    # Redirect to cities page with search query parameter
+    {:noreply, push_navigate(socket, to: ~p"/cities?search=#{query}")}
   end
 
   defp get_base_url do
