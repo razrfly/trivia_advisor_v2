@@ -10,24 +10,42 @@ defmodule TriviaAdvisorWeb.CitiesIndexLive do
   alias TriviaAdvisorWeb.Components.Layout.{Header, Footer}
 
   @impl true
-  def mount(_params, _session, socket) do
-    countries = Locations.list_countries()
+  def mount(params, _session, socket) do
+    search_query = Map.get(params, "search")
     base_url = get_base_url()
 
-    # Group cities by country
+    # Get cities based on search parameter
     cities_by_country =
-      countries
-      |> Enum.map(fn country ->
-        cities = Locations.list_cities_for_country(country.id)
-        {country, cities}
-      end)
-      |> Enum.filter(fn {_country, cities} -> !Enum.empty?(cities) end)
-      |> Enum.sort_by(fn {country, _cities} -> country.name end)
+      if search_query && String.trim(search_query) != "" do
+        # Search mode: filter cities by name
+        cities = Locations.search_cities(search_query)
+
+        # Group filtered cities by country
+        cities
+        |> Enum.group_by(& &1.country)
+        |> Enum.map(fn {country, cities} -> {country, cities} end)
+        |> Enum.sort_by(fn {country, _cities} -> country.name end)
+      else
+        # Normal mode: show all cities grouped by country
+        countries = Locations.list_countries()
+
+        countries
+        |> Enum.map(fn country ->
+          cities = Locations.list_cities_for_country(country.id)
+          {country, cities}
+        end)
+        |> Enum.filter(fn {_country, cities} -> !Enum.empty?(cities) end)
+        |> Enum.sort_by(fn {country, _cities} -> country.name end)
+      end
 
     socket =
       socket
-      |> assign(:page_title, "All Trivia Cities")
+      |> assign(:page_title,
+        if(search_query,
+          do: "Search: #{search_query} | Trivia Cities",
+          else: "All Trivia Cities"))
       |> assign(:cities_by_country, cities_by_country)
+      |> assign(:search_query, search_query)
       |> assign(:base_url, base_url)
 
     {:ok, socket}
@@ -72,15 +90,57 @@ defmodule TriviaAdvisorWeb.CitiesIndexLive do
         <!-- Page Header -->
         <div class="bg-white border-b">
           <div class="container mx-auto px-4 py-8">
-            <h1 class="text-4xl font-bold text-gray-900 mb-2">
-              All Trivia Cities
-            </h1>
-            <p class="text-lg text-gray-600">
-              Browse <%= Enum.sum(Enum.map(@cities_by_country, fn {_, cities} -> length(cities) end)) %> cities
-              across <%= length(@cities_by_country) %> countries hosting trivia events
-            </p>
+            <%= if @search_query do %>
+              <h1 class="text-4xl font-bold text-gray-900 mb-2">
+                Search Results for "<%= @search_query %>"
+              </h1>
+              <p class="text-lg text-gray-600">
+                Found <%= Enum.sum(Enum.map(@cities_by_country, fn {_, cities} -> length(cities) end)) %>
+                <%= if Enum.sum(Enum.map(@cities_by_country, fn {_, cities} -> length(cities) end)) == 1, do: "city", else: "cities" %>
+              </p>
+            <% else %>
+              <h1 class="text-4xl font-bold text-gray-900 mb-2">
+                All Trivia Cities
+              </h1>
+              <p class="text-lg text-gray-600">
+                Browse <%= Enum.sum(Enum.map(@cities_by_country, fn {_, cities} -> length(cities) end)) %> cities
+                across <%= length(@cities_by_country) %> countries hosting trivia events
+              </p>
+            <% end %>
           </div>
         </div>
+
+        <!-- No Results Message -->
+        <%= if @search_query && Enum.empty?(@cities_by_country) do %>
+          <div class="container mx-auto px-4 py-12 text-center">
+            <div class="max-w-md mx-auto">
+              <svg
+                class="w-24 h-24 mx-auto text-gray-400 mb-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                >
+                </path>
+              </svg>
+              <h2 class="text-2xl font-semibold text-gray-900 mb-2">No cities found</h2>
+              <p class="text-gray-600 mb-6">
+                We couldn't find any cities matching "<%= @search_query %>"
+              </p>
+              <.link
+                navigate="/cities"
+                class="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                View All Cities
+              </.link>
+            </div>
+          </div>
+        <% end %>
 
         <!-- Cities by Country -->
         <div class="container mx-auto px-4 py-12">
