@@ -146,10 +146,7 @@ defmodule TriviaAdvisor.Events.PublicEvent do
   @doc """
   Format last_seen_at timestamp to relative time (e.g., "2 days ago").
 
-  ## Examples
-
-      iex> PublicEvent.time_ago(~N[2024-01-10 12:00:00])
-      "3 days ago"
+  Properly pluralizes units (e.g., "1 day ago" vs "2 days ago").
   """
   def time_ago(nil), do: "Unknown"
   def time_ago(datetime) do
@@ -158,13 +155,17 @@ defmodule TriviaAdvisor.Events.PublicEvent do
 
     cond do
       diff < 60 -> "just now"
-      diff < 3600 -> "#{div(diff, 60)} minutes ago"
-      diff < 86400 -> "#{div(diff, 3600)} hours ago"
-      diff < 2592000 -> "#{div(diff, 86400)} days ago"
-      diff < 31536000 -> "#{div(diff, 2592000)} months ago"
-      true -> "#{div(diff, 31536000)} years ago"
+      diff < 3_600 -> pluralize(div(diff, 60), "minute")
+      diff < 86_400 -> pluralize(div(diff, 3_600), "hour")
+      diff < 2_592_000 -> pluralize(div(diff, 86_400), "day")
+      diff < 31_536_000 -> pluralize(div(diff, 2_592_000), "month")
+      true -> pluralize(div(diff, 31_536_000), "year")
     end
   end
+
+  # Pluralization helper for time_ago
+  defp pluralize(1, unit), do: "1 #{unit} ago"
+  defp pluralize(count, unit), do: "#{count} #{unit}s ago"
 
   @doc """
   Format inserted_at timestamp to readable date (e.g., "Jan 2024").
