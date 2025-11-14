@@ -136,114 +136,8 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
           </h1>
 
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Left Column: Venue Details -->
+            <!-- Left Column: Images & Contact -->
             <div class="lg:col-span-2">
-              <!-- Next Quiz Night -->
-              <%= if next_quiz = get_next_quiz_night(@events) do %>
-                <div class="mb-6 p-4 bg-blue-50 border-l-4 border-blue-600 rounded-r-lg">
-                  <h2 class="text-lg font-semibold text-blue-900 mb-2 flex items-center">
-                    <svg
-                      class="w-5 h-5 mr-2"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                      >
-                      </path>
-                    </svg>
-                    Next Quiz Night
-                  </h2>
-                  <p class="text-blue-800">
-                    <%= next_quiz["date"] %>
-                    <%= if next_quiz["start_time"] do %>
-                      at <%= next_quiz["start_time"] %>
-                    <% end %>
-                  </p>
-                </div>
-              <% end %>
-
-              <!-- Location Section -->
-              <div class="mb-6">
-                <h2 class="text-2xl font-semibold text-gray-900 mb-3 flex items-center">
-                  <svg
-                    class="w-6 h-6 mr-2 text-gray-700"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    >
-                    </path>
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    >
-                    </path>
-                  </svg>
-                  Location
-                </h2>
-
-                <%= if @venue.address do %>
-                  <p class="text-gray-700 mb-2"><%= @venue.address %></p>
-                <% end %>
-
-                <p class="text-gray-600 mb-4"><%= @city.name %>, <%= @country.name %></p>
-
-                <%= if @venue.latitude && @venue.longitude do %>
-                  <div class="mt-4">
-                    <div
-                      id="venue-map"
-                      phx-hook="MapboxVenueMap"
-                      data-lat={@venue.latitude}
-                      data-lng={@venue.longitude}
-                      data-name={@venue.name}
-                      class="w-full h-[300px] rounded-lg shadow-md"
-                    >
-                      <!-- Loading state -->
-                      <div class="flex items-center justify-center h-full bg-gray-100">
-                        <p class="text-gray-600 text-sm">Loading map...</p>
-                      </div>
-                    </div>
-                    <a
-                      href={"https://www.google.com/maps/dir/?api=1&destination=#{@venue.latitude},#{@venue.longitude}"}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="inline-flex items-center mt-3 text-blue-600 hover:text-blue-800 font-medium"
-                    >
-                      <svg
-                        class="w-4 h-4 mr-1"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
-                        >
-                        </path>
-                      </svg>
-                      Get Directions
-                    </a>
-                  </div>
-                <% end %>
-              </div>
-            </div>
-
-            <!-- Right Column: Image & Contact -->
-            <div>
               <!-- Venue Images Gallery -->
               <%= case get_venue_images(@venue, @city) do %>
                 <% [single_image] -> %>
@@ -252,24 +146,24 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
                     <img
                       src={single_image["url"]}
                       alt={single_image["alt"] || @venue.name}
-                      class="w-full h-64 object-cover rounded-lg shadow-md"
+                      class="w-full h-48 object-cover rounded-lg shadow-md"
                     />
                   </div>
                 <% [main_image | [_ | _] = rest_images] -> %>
-                  <!-- Multiple images grid: 1 large + smaller thumbnails -->
+                  <!-- Multiple images grid: 1 large + 2 smaller thumbnails -->
                   <div class="mb-6">
                     <div class="grid grid-cols-2 gap-2">
-                      <!-- Main large image (spans 2 rows) -->
-                      <div class="col-span-2 row-span-2">
+                      <!-- Main large image -->
+                      <div class="col-span-2">
                         <img
                           src={main_image["url"]}
                           alt={main_image["alt"] || @venue.name}
-                          class="w-full h-64 object-cover rounded-lg shadow-md"
+                          class="w-full h-48 object-cover rounded-lg shadow-md"
                         />
                       </div>
 
-                      <!-- Thumbnail images (up to 4) -->
-                      <%= for image <- Enum.take(rest_images, 4) do %>
+                      <!-- Thumbnail images (limited to 2) -->
+                      <%= for image <- Enum.take(rest_images, 2) do %>
                         <div class="aspect-square">
                           <img
                             src={image["url"]}
@@ -365,6 +259,156 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
                   </div>
                 </div>
               <% end %>
+            </div>
+
+            <!-- Right Column: Location & Map -->
+            <div>
+              <!-- Next Quiz Night -->
+              <%= if next_quiz = get_next_quiz_night(@events) do %>
+                <div class="mb-6 p-4 bg-blue-50 border-l-4 border-blue-600 rounded-r-lg">
+                  <h2 class="text-lg font-semibold text-blue-900 mb-2 flex items-center">
+                    <svg
+                      class="w-5 h-5 mr-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                      >
+                      </path>
+                    </svg>
+                    Next Quiz Night
+                  </h2>
+                  <p class="text-blue-800 mb-3">
+                    <%= next_quiz["date"] %>
+                    <%= if next_quiz["start_time"] do %>
+                      at <%= next_quiz["start_time"] %>
+                    <% end %>
+                  </p>
+
+                  <%= if first_event = List.first(@events) do %>
+                    <!-- Source Attribution -->
+                    <div class="flex flex-wrap items-center gap-2 text-xs text-blue-700 border-t border-blue-200 pt-3">
+                      <%= if first_event.last_seen_at do %>
+                        <span class="flex items-center">
+                          <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                            >
+                            </path>
+                          </svg>
+                          Updated <%= TriviaAdvisor.Events.PublicEvent.time_ago(first_event.last_seen_at) %>
+                        </span>
+                      <% end %>
+
+                      <%= if first_event.source_name do %>
+                        <span class="mx-1">•</span>
+                        <span class="flex items-center">
+                          <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+                            >
+                            </path>
+                          </svg>
+                          Source:
+                          <a
+                            href={if first_event.activity_slug, do: "https://wombie.com/activities/#{first_event.activity_slug}", else: "https://wombie.com"}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="text-blue-600 hover:text-blue-800 hover:underline ml-1"
+                          >
+                            <%= first_event.source_name %>
+                          </a>
+                        </span>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+
+              <!-- Location Section -->
+              <div class="mb-6">
+                <h2 class="text-2xl font-semibold text-gray-900 mb-3 flex items-center">
+                  <svg
+                    class="w-6 h-6 mr-2 text-gray-700"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    >
+                    </path>
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    >
+                    </path>
+                  </svg>
+                  Location
+                </h2>
+
+                <%= if @venue.address do %>
+                  <p class="text-gray-700 mb-2"><%= @venue.address %></p>
+                <% end %>
+
+                <p class="text-gray-600 mb-4"><%= @city.name %>, <%= @country.name %></p>
+
+                <%= if @venue.latitude && @venue.longitude do %>
+                  <div class="mt-4">
+                    <div
+                      id="venue-map"
+                      phx-hook="MapboxVenueMap"
+                      data-lat={@venue.latitude}
+                      data-lng={@venue.longitude}
+                      data-name={@venue.name}
+                      class="w-full h-[300px] rounded-lg shadow-md"
+                    >
+                      <!-- Loading state -->
+                      <div class="flex items-center justify-center h-full bg-gray-100">
+                        <p class="text-gray-600 text-sm">Loading map...</p>
+                      </div>
+                    </div>
+                    <a
+                      href={"https://www.google.com/maps/dir/?api=1&destination=#{@venue.latitude},#{@venue.longitude}"}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex items-center mt-3 text-blue-600 hover:text-blue-800 font-medium"
+                    >
+                      <svg
+                        class="w-4 h-4 mr-1"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
+                        >
+                        </path>
+                      </svg>
+                      Get Directions
+                    </a>
+                  </div>
+                <% end %>
+              </div>
             </div>
           </div>
         </div>
@@ -509,7 +553,7 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
     events
     |> Enum.map(&Events.get_next_occurrence/1)
     |> Enum.reject(&is_nil/1)
-    |> Enum.sort_by(& &1["date"])
+    |> Enum.sort_by(& &1["date_value"])  # Sort by actual date, not alphabetical string
     |> List.first()
   end
 
@@ -517,9 +561,12 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
   # Returns up to 5 images from venue_images, or falls back to city_images.
   defp get_venue_images(venue, city) do
     cond do
-      # Try venue_images first (JSONB array)
+      # Try venue_images first (JSONB array) with validation
       venue.venue_images && is_list(venue.venue_images) && length(venue.venue_images) > 0 ->
-        venue.venue_images |> Enum.take(5)
+        venue.venue_images
+        |> Enum.filter(&is_map/1)
+        |> Enum.filter(&is_binary(Map.get(&1, "url")))
+        |> Enum.take(5)
 
       # Fallback to primary_image from Locations.Venue
       primary_image = Locations.Venue.primary_image(venue) ->
@@ -541,7 +588,10 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
          categories when is_map(categories) <- unsplash_gallery["categories"],
          category when is_map(category) <- categories[active_cat],
          images when is_list(images) <- category["images"] do
-      Enum.take(images, 5)
+      images
+      |> Enum.filter(&is_map/1)
+      |> Enum.filter(&is_binary(Map.get(&1, "url")))
+      |> Enum.take(5)
     else
       _ -> []
     end
@@ -553,10 +603,15 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
   # Tries venue_images first, then city_images (unsplash_gallery structure).
   defp get_nearby_venue_image(nearby_venue) do
     cond do
-      # Try venue_images first
+      # Try venue_images first with validation
       nearby_venue.venue_images && is_list(nearby_venue.venue_images) &&
           length(nearby_venue.venue_images) > 0 ->
-        List.first(nearby_venue.venue_images)["url"]
+        first_image = List.first(nearby_venue.venue_images)
+        if is_map(first_image) && is_binary(Map.get(first_image, "url")) do
+          Map.get(first_image, "url")
+        else
+          nil
+        end
 
       # Fallback to city images (unsplash_gallery structure)
       nearby_venue.city_images && is_map(nearby_venue.city_images) ->

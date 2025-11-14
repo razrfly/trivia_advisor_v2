@@ -178,12 +178,23 @@ defmodule TriviaAdvisor.Events do
       when is_integer(day_of_week) and not is_nil(start_time) and not is_nil(country_code) do
     today = Date.utc_today()
     today_dow = Date.day_of_week(today)
+    now_utc = DateTime.utc_now()
 
     # Calculate days until next occurrence
+    # If event is today but time hasn't passed yet, use today (0 days)
+    # Otherwise, calculate days forward
+    diff = day_of_week - today_dow
+
     days_until_next =
-      case day_of_week - today_dow do
-        diff when diff > 0 -> diff
-        diff when diff <= 0 -> diff + 7
+      cond do
+        # Event is later this week
+        diff > 0 -> diff
+        # Event is today - check if time has passed
+        diff == 0 ->
+          event_time_today = Time.compare(start_time, DateTime.to_time(now_utc))
+          if event_time_today == :gt, do: 0, else: 7
+        # Event was earlier this week - schedule for next week
+        true -> diff + 7
       end
 
     next_date = Date.add(today, days_until_next)
@@ -198,7 +209,8 @@ defmodule TriviaAdvisor.Events do
 
     %{
       "date" => formatted_date,
-      "start_time" => formatted_time
+      "start_time" => formatted_time,
+      "date_value" => next_date  # For proper chronological sorting
     }
   end
 
@@ -310,7 +322,7 @@ defmodule TriviaAdvisor.Events do
             ^lon,
             ^lat
           ),
-        limit: 10
+        limit: 3
     )
 
     # Return list of maps

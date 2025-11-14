@@ -196,18 +196,14 @@ defmodule TriviaAdvisorWeb.Components.Cards.EventCard do
                   </path>
                 </svg>
                 Source:
-                <%= if source_url = PublicEvent.get_source_url(@event) do %>
-                  <a
-                    href={source_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="text-blue-600 hover:text-blue-800 hover:underline"
-                  >
-                    <%= @event.source_name %>
-                  </a>
-                <% else %>
+                <a
+                  href={if @event.activity_slug, do: "https://wombie.com/activities/#{@event.activity_slug}", else: "https://wombie.com"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-blue-600 hover:text-blue-800 hover:underline"
+                >
                   <%= @event.source_name %>
-                <% end %>
+                </a>
               </span>
             <% end %>
           </div>
