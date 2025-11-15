@@ -85,22 +85,12 @@ defmodule TriviaAdvisorWeb.HomeLive do
               </div>
             </div>
 
-            <!-- Search Form -->
+            <!-- Search with Autocomplete -->
             <div class="max-w-2xl mx-auto mt-8">
-              <form phx-submit="search" class="flex gap-2">
-                <input
-                  type="text"
-                  name="city_search"
-                  placeholder="Search for a city..."
-                  class="flex-1 px-4 py-3 rounded-lg bg-white border border-gray-300 text-gray-900 placeholder:text-gray-500 shadow-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-                <button
-                  type="submit"
-                  class="px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors"
-                >
-                  Search
-                </button>
-              </form>
+              <.live_component
+                module={TriviaAdvisorWeb.Components.UI.CityAutocomplete}
+                id="city-search-autocomplete"
+              />
             </div>
           </div>
         </div>
@@ -162,12 +152,6 @@ defmodule TriviaAdvisorWeb.HomeLive do
       <Footer.site_footer />
     </div>
     """
-  end
-
-  @impl true
-  def handle_event("search", %{"city_search" => query}, socket) do
-    # Redirect to cities page with search query parameter
-    {:noreply, push_navigate(socket, to: ~p"/cities?search=#{query}")}
   end
 
   defp get_base_url do
