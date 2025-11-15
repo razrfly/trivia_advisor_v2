@@ -11,12 +11,24 @@ defmodule TriviaAdvisorWeb.CitiesIndexLive do
 
   @impl true
   def mount(params, _session, socket) do
-    search_query = Map.get(params, "search")
+    raw_query = Map.get(params, "search")
+
+    # Normalize search query: trim whitespace, convert empty to nil for consistency
+    search_query =
+      case raw_query do
+        nil ->
+          nil
+
+        q ->
+          q = String.trim(q)
+          if q == "", do: nil, else: q
+      end
+
     base_url = get_base_url()
 
     # Get cities based on search parameter
     cities_by_country =
-      if search_query && String.trim(search_query) != "" do
+      if search_query do
         # Search mode: filter cities by name
         cities = Locations.search_cities(search_query)
 
@@ -26,16 +38,8 @@ defmodule TriviaAdvisorWeb.CitiesIndexLive do
         |> Enum.map(fn {country, cities} -> {country, cities} end)
         |> Enum.sort_by(fn {country, _cities} -> country.name end)
       else
-        # Normal mode: show all cities grouped by country
-        countries = Locations.list_countries()
-
-        countries
-        |> Enum.map(fn country ->
-          cities = Locations.list_cities_for_country(country.id)
-          {country, cities}
-        end)
-        |> Enum.filter(fn {_country, cities} -> !Enum.empty?(cities) end)
-        |> Enum.sort_by(fn {country, _cities} -> country.name end)
+        # Normal mode: batch load all cities with countries (avoids N+1)
+        Locations.list_all_cities_grouped_by_country()
       end
 
     socket =
