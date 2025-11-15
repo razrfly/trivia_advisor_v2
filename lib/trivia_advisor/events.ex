@@ -255,6 +255,9 @@ defmodule TriviaAdvisor.Events do
   Returns venues within radius (default 5km) with one representative event per venue,
   including day_of_week for badges and images for display.
 
+  Uses PostGIS spatial queries (ST_DWithin, ST_Distance) for accurate geographic calculations.
+  Results are cached for 15 minutes to improve venue show page performance.
+
   ## Examples
 
       iex> get_nearby_trivia_venues(venue, 5)
@@ -264,69 +267,74 @@ defmodule TriviaAdvisor.Events do
 
   def get_nearby_trivia_venues(venue, radius_km)
       when not is_nil(venue.latitude) and not is_nil(venue.longitude) do
-    # Convert to float for PostGIS
-    lat = if is_float(venue.latitude), do: venue.latitude, else: Float.parse("#{venue.latitude}") |> elem(0)
-    lon = if is_float(venue.longitude), do: venue.longitude, else: Float.parse("#{venue.longitude}") |> elem(0)
-    radius_meters = radius_km * 1000
+    # Cache key includes venue ID and radius for deterministic results
+    cache_key = "nearby_venues_#{venue.id}_#{radius_km}km"
 
-    # Query trivia_events_export grouped by venue
-    # Select one event per venue with venue and city data
-    results = Repo.all(
-      from e in PublicEvent,
-        join: v in TriviaAdvisor.Locations.Venue, on: e.venue_id == v.id,
-        join: c in TriviaAdvisor.Locations.City, on: v.city_id == c.id,
-        join: co in TriviaAdvisor.Locations.Country, on: c.country_id == co.id,
-        where: v.id != ^venue.id,
-        where: not is_nil(v.latitude) and not is_nil(v.longitude),
-        where:
-          fragment(
-            "ST_DWithin(ST_MakePoint(?, ?)::geography, ST_MakePoint(?, ?)::geography, ?)",
-            v.longitude,
-            v.latitude,
-            ^lon,
-            ^lat,
-            ^radius_meters
-          ),
-        group_by: [v.id, c.id, co.id],
-        # Select first event for each venue (arbitrary but consistent)
-        select: %{
-          venue_id: v.id,
-          venue_name: v.name,
-          venue_slug: v.slug,
-          venue_address: v.address,
-          venue_latitude: v.latitude,
-          venue_longitude: v.longitude,
-          venue_images: v.venue_images,
-          venue_type: v.venue_type,
-          city_id: c.id,
-          city_name: c.name,
-          city_slug: c.slug,
-          city_images: c.unsplash_gallery,
-          country_name: co.name,
-          # Take any event from this venue (using MIN to get consistent result)
-          day_of_week: fragment("MIN(?)", e.day_of_week),
-          distance_km:
+    ConCache.get_or_store(:city_cache, cache_key, fn ->
+      # Convert to float for PostGIS
+      lat = if is_float(venue.latitude), do: venue.latitude, else: Float.parse("#{venue.latitude}") |> elem(0)
+      lon = if is_float(venue.longitude), do: venue.longitude, else: Float.parse("#{venue.longitude}") |> elem(0)
+      radius_meters = radius_km * 1000
+
+      # Query trivia_events_export grouped by venue
+      # Select one event per venue with venue and city data
+      results = Repo.all(
+        from e in PublicEvent,
+          join: v in TriviaAdvisor.Locations.Venue, on: e.venue_id == v.id,
+          join: c in TriviaAdvisor.Locations.City, on: v.city_id == c.id,
+          join: co in TriviaAdvisor.Locations.Country, on: c.country_id == co.id,
+          where: v.id != ^venue.id,
+          where: not is_nil(v.latitude) and not is_nil(v.longitude),
+          where:
             fragment(
-              "ROUND(CAST(ST_Distance(ST_MakePoint(?, ?)::geography, ST_MakePoint(?, ?)::geography) / 1000 AS NUMERIC), 1)",
+              "ST_DWithin(ST_MakePoint(?, ?)::geography, ST_MakePoint(?, ?)::geography, ?)",
+              v.longitude,
+              v.latitude,
               ^lon,
               ^lat,
+              ^radius_meters
+            ),
+          group_by: [v.id, c.id, co.id],
+          # Select first event for each venue (arbitrary but consistent)
+          select: %{
+            venue_id: v.id,
+            venue_name: v.name,
+            venue_slug: v.slug,
+            venue_address: v.address,
+            venue_latitude: v.latitude,
+            venue_longitude: v.longitude,
+            venue_images: v.venue_images,
+            venue_type: v.venue_type,
+            city_id: c.id,
+            city_name: c.name,
+            city_slug: c.slug,
+            city_images: c.unsplash_gallery,
+            country_name: co.name,
+            # Take any event from this venue (using MIN to get consistent result)
+            day_of_week: fragment("MIN(?)", e.day_of_week),
+            distance_km:
+              fragment(
+                "ROUND(CAST(ST_Distance(ST_MakePoint(?, ?)::geography, ST_MakePoint(?, ?)::geography) / 1000 AS NUMERIC), 1)",
+                ^lon,
+                ^lat,
+                v.longitude,
+                v.latitude
+              )
+          },
+          order_by:
+            fragment(
+              "ST_Distance(ST_MakePoint(?, ?)::geography, ST_MakePoint(?, ?)::geography)",
               v.longitude,
-              v.latitude
-            )
-        },
-        order_by:
-          fragment(
-            "ST_Distance(ST_MakePoint(?, ?)::geography, ST_MakePoint(?, ?)::geography)",
-            v.longitude,
-            v.latitude,
-            ^lon,
-            ^lat
-          ),
-        limit: 3
-    )
+              v.latitude,
+              ^lon,
+              ^lat
+            ),
+          limit: 3
+      )
 
-    # Return list of maps
-    results
+      # Return list of maps
+      results
+    end)
   end
 
   def get_nearby_trivia_venues(_venue, _radius_km), do: []

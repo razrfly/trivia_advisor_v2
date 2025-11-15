@@ -18,7 +18,7 @@ defmodule TriviaAdvisorWeb.Components.UI.CityAutocomplete do
   end
 
   @impl true
-  def handle_event("search_input", %{"city_search" => query}, socket) do
+  def handle_event("search_input", %{"city_search" => query} = _params, socket) do
     suggestions =
       if String.length(query) >= 2 do
         Locations.search_cities(query)
@@ -41,7 +41,7 @@ defmodule TriviaAdvisorWeb.Components.UI.CityAutocomplete do
   end
 
   @impl true
-  def handle_event("submit_search", %{"city_search" => query}, socket) do
+  def handle_event("submit_search", %{"city_search" => query} = _params, socket) do
     # Fallback: navigate to cities index with search parameter
     {:noreply, push_navigate(socket, to: "/cities?search=#{query}")}
   end

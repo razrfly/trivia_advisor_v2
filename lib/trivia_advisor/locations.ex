@@ -140,15 +140,20 @@ defmodule TriviaAdvisor.Locations do
 
   @doc """
   Checks if a city slug is duplicated (appears for multiple cities).
+
+  Results are cached for 15 minutes to prevent N+1 query pattern.
+  This function is called for EVERY city link rendered on a page.
   """
   def is_duplicate_city_slug?(slug) when is_binary(slug) do
-    count = Repo.one(
-      from c in City,
-        where: c.slug == ^slug,
-        select: count(c.id)
-    )
+    ConCache.get_or_store(:city_cache, "duplicate_slug_#{slug}", fn ->
+      count = Repo.one(
+        from c in City,
+          where: c.slug == ^slug,
+          select: count(c.id)
+      )
 
-    count > 1
+      count > 1
+    end)
   end
 
   @doc """
@@ -180,6 +185,8 @@ defmodule TriviaAdvisor.Locations do
   Gets cities with discovery enabled that have trivia events (popular cities).
   Queries the trivia_events_export view for simplicity.
 
+  Results are cached for 15 minutes to improve homepage performance.
+
   ## Examples
 
       iex> get_popular_cities(10)
@@ -189,27 +196,34 @@ defmodule TriviaAdvisor.Locations do
       [%City{}, ...]
   """
   def get_popular_cities(limit \\ 20, opts \\ []) do
-    query =
-      from c in City,
-        join: te in PublicEvent, on: te.city_id == c.id,
-        where: c.discovery_enabled == true,
-        distinct: true,
-        order_by: c.name,
-        limit: ^limit,
-        preload: [:country]
+    country_id = Keyword.get(opts, :country_id)
+    cache_key = "popular_cities_#{limit}_#{country_id}"
 
-    query =
-      case Keyword.get(opts, :country_id) do
-        nil -> query
-        country_id -> where(query, [c], c.country_id == ^country_id)
-      end
+    ConCache.get_or_store(:city_cache, cache_key, fn ->
+      query =
+        from c in City,
+          join: te in PublicEvent, on: te.city_id == c.id,
+          where: c.discovery_enabled == true,
+          distinct: true,
+          order_by: c.name,
+          limit: ^limit,
+          preload: [:country]
 
-    Repo.all(query)
+      query =
+        case country_id do
+          nil -> query
+          country_id -> where(query, [c], c.country_id == ^country_id)
+        end
+
+      Repo.all(query)
+    end)
   end
 
   @doc """
   Searches cities by name (case-insensitive partial match).
   Returns all cities if query is nil or empty.
+
+  Results are cached for 15 minutes to improve autocomplete performance.
 
   ## Examples
 
@@ -226,16 +240,22 @@ defmodule TriviaAdvisor.Locations do
   def search_cities(""), do: list_all_cities()
 
   def search_cities(query) when is_binary(query) do
-    search_pattern = "%#{query}%"
+    # Normalize query for cache key (lowercase, trim)
+    normalized_query = String.downcase(String.trim(query))
+    cache_key = "city_search_#{normalized_query}"
 
-    Repo.all(
-      from c in City,
-        join: te in PublicEvent, on: te.city_id == c.id,
-        where: ilike(c.name, ^search_pattern),
-        distinct: true,
-        order_by: c.name,
-        preload: [:country]
-    )
+    ConCache.get_or_store(:city_cache, cache_key, fn ->
+      search_pattern = "%#{query}%"
+
+      Repo.all(
+        from c in City,
+          join: te in PublicEvent, on: te.city_id == c.id,
+          where: ilike(c.name, ^search_pattern),
+          distinct: true,
+          order_by: c.name,
+          preload: [:country]
+      )
+    end)
   end
 
   defp list_all_cities do
@@ -246,6 +266,41 @@ defmodule TriviaAdvisor.Locations do
         order_by: c.name,
         preload: [:country]
     )
+  end
+
+  @doc """
+  Lists all cities with trivia events, grouped by country.
+  Single query with preload to avoid N+1 pattern.
+
+  Cached for 15 minutes to improve performance on cities index page.
+
+  ## Examples
+
+      iex> list_all_cities_grouped_by_country()
+      [
+        {%Country{name: "United Kingdom"}, [%City{}, ...]},
+        {%Country{name: "United States"}, [%City{}, ...]}
+      ]
+  """
+  def list_all_cities_grouped_by_country do
+    ConCache.get_or_store(:city_cache, "all_cities_by_country", fn ->
+      # Single query: get all cities with country preloaded
+      cities =
+        Repo.all(
+          from c in City,
+            join: te in PublicEvent, on: te.city_id == c.id,
+            distinct: true,
+            order_by: c.name,
+            preload: [:country]
+        )
+
+      # Group in memory (fast since all data already loaded)
+      cities
+      |> Enum.group_by(& &1.country)
+      |> Enum.map(fn {country, cities} -> {country, cities} end)
+      |> Enum.filter(fn {_country, cities} -> !Enum.empty?(cities) end)
+      |> Enum.sort_by(fn {country, _cities} -> country.name end)
+    end)
   end
 
   @doc """
@@ -503,60 +558,66 @@ defmodule TriviaAdvisor.Locations do
   Gets the latest added venues that have trivia events.
   Returns flat maps from trivia_events_export view with event details.
 
+  Results are cached for 15 minutes to improve homepage performance.
+
   ## Examples
 
       iex> get_latest_venues(10)
       [%{venue_name: "...", day_of_week: 3, ...}, ...]
   """
   def get_latest_venues(limit \\ 20) do
-    Repo.all(
-      from te in PublicEvent,
-        distinct: te.venue_id,
-        order_by: [te.venue_id, desc: te.updated_at],
-        limit: ^limit,
-        select: %{
-          # Event details
-          event_id: te.id,
-          event_name: te.name,
-          day_of_week: te.day_of_week,
-          start_time: te.start_time,
-          timezone: te.timezone,
-          frequency: te.frequency,
-          entry_fee_cents: te.entry_fee_cents,
-          description: te.description,
-          hero_image: te.hero_image,
+    cache_key = "latest_venues_#{limit}"
 
-          # Source attribution
-          source_name: te.source_name,
-          source_url: te.source_url,
-          source_logo_url: te.source_logo_url,
-          source_website_url: te.source_website_url,
-          activity_slug: te.activity_slug,
-          last_seen_at: te.last_seen_at,
-          updated_at: te.updated_at,
+    ConCache.get_or_store(:city_cache, cache_key, fn ->
+      Repo.all(
+        from te in PublicEvent,
+          distinct: te.venue_id,
+          order_by: [te.venue_id, desc: te.updated_at],
+          limit: ^limit,
+          select: %{
+            # Event details
+            event_id: te.id,
+            event_name: te.name,
+            day_of_week: te.day_of_week,
+            start_time: te.start_time,
+            timezone: te.timezone,
+            frequency: te.frequency,
+            entry_fee_cents: te.entry_fee_cents,
+            description: te.description,
+            hero_image: te.hero_image,
 
-          # Venue details
-          venue_id: te.venue_id,
-          venue_name: te.venue_name,
-          slug: te.venue_slug,  # Map to 'slug' for VenueCard compatibility
-          venue_address: te.venue_address,
-          venue_latitude: te.venue_latitude,
-          venue_longitude: te.venue_longitude,
-          venue_images: te.venue_images,
-          venue_metadata: te.venue_metadata,  # For video_images fallback
+            # Source attribution
+            source_name: te.source_name,
+            source_url: te.source_url,
+            source_logo_url: te.source_logo_url,
+            source_website_url: te.source_website_url,
+            activity_slug: te.activity_slug,
+            last_seen_at: te.last_seen_at,
+            updated_at: te.updated_at,
 
-          # City details
-          city_id: te.city_id,
-          city_name: te.city_name,
-          city_slug: te.city_slug,
-          city_images: te.city_images,  # For city image fallback
+            # Venue details
+            venue_id: te.venue_id,
+            venue_name: te.venue_name,
+            slug: te.venue_slug,  # Map to 'slug' for VenueCard compatibility
+            venue_address: te.venue_address,
+            venue_latitude: te.venue_latitude,
+            venue_longitude: te.venue_longitude,
+            venue_images: te.venue_images,
+            venue_metadata: te.venue_metadata,  # For video_images fallback
 
-          # Country details
-          country_id: te.country_id,
-          country_name: te.country_name,
-          country_code: te.country_code
-        }
-    )
+            # City details
+            city_id: te.city_id,
+            city_name: te.city_name,
+            city_slug: te.city_slug,
+            city_images: te.city_images,  # For city image fallback
+
+            # Country details
+            country_id: te.country_id,
+            country_name: te.country_name,
+            country_code: te.country_code
+          }
+      )
+    end)
   end
 
   @doc """
@@ -686,23 +747,27 @@ defmodule TriviaAdvisor.Locations do
   Gets event counts per day of week for a city.
   Returns a map with day numbers (1-7) as keys and counts as values.
 
+  Results are cached for 15 minutes to improve city show page performance.
+
   ## Examples
 
       iex> get_day_counts_for_city(53)
       %{1 => 12, 2 => 18, 3 => 26, 4 => 15, 5 => 20, 6 => 8, 7 => 4}
   """
   def get_day_counts_for_city(city_id) do
-    # Query the view and group by day_of_week
-    results =
-      Repo.all(
-        from te in PublicEvent,
-          where: te.city_id == ^city_id,
-          group_by: te.day_of_week,
-          select: {te.day_of_week, count(te.id)}
-      )
+    ConCache.get_or_store(:city_cache, "day_counts_#{city_id}", fn ->
+      # Query the view and group by day_of_week
+      results =
+        Repo.all(
+          from te in PublicEvent,
+            where: te.city_id == ^city_id,
+            group_by: te.day_of_week,
+            select: {te.day_of_week, count(te.id)}
+        )
 
-    # Convert list of tuples to map
-    Map.new(results)
+      # Convert list of tuples to map
+      Map.new(results)
+    end)
   end
 
   @doc """
@@ -737,6 +802,8 @@ defmodule TriviaAdvisor.Locations do
   Gets list of suburbs for a city with venue counts.
   Returns a list of %{suburb: "Name", count: 5} sorted by count descending.
 
+  Results are cached for 15 minutes to improve city show page performance.
+
   ## Examples
 
       iex> get_suburbs_for_city(53)
@@ -747,22 +814,24 @@ defmodule TriviaAdvisor.Locations do
       ]
   """
   def get_suburbs_for_city(city_id) do
-    # Get all venue names for the city
-    venue_names =
-      Repo.all(
-        from te in PublicEvent,
-          where: te.city_id == ^city_id,
-          distinct: te.venue_id,
-          select: te.venue_name
-      )
+    ConCache.get_or_store(:city_cache, "suburbs_#{city_id}", fn ->
+      # Get all venue names for the city
+      venue_names =
+        Repo.all(
+          from te in PublicEvent,
+            where: te.city_id == ^city_id,
+            distinct: te.venue_id,
+            select: te.venue_name
+        )
 
-    # Extract suburbs and count occurrences
-    venue_names
-    |> Enum.map(&extract_suburb_from_venue_name/1)
-    |> Enum.reject(&is_nil/1)
-    |> Enum.frequencies()
-    |> Enum.map(fn {suburb, count} -> %{suburb: suburb, count: count} end)
-    |> Enum.sort_by(& &1.count, :desc)
+      # Extract suburbs and count occurrences
+      venue_names
+      |> Enum.map(&extract_suburb_from_venue_name/1)
+      |> Enum.reject(&is_nil/1)
+      |> Enum.frequencies()
+      |> Enum.map(fn {suburb, count} -> %{suburb: suburb, count: count} end)
+      |> Enum.sort_by(& &1.count, :desc)
+    end)
   end
 
   @doc """
@@ -786,34 +855,43 @@ defmodule TriviaAdvisor.Locations do
 
   @doc """
   Counts venues that have trivia events.
+  Results are cached for 15 minutes to improve homepage performance.
   """
   def count_venues_with_trivia do
-    Repo.one(
-      from v in Venue,
-        join: te in PublicEvent, on: te.venue_id == v.id,
-        select: count(v.id, :distinct)
-    )
+    ConCache.get_or_store(:city_cache, "stats_venue_count", fn ->
+      Repo.one(
+        from v in Venue,
+          join: te in PublicEvent, on: te.venue_id == v.id,
+          select: count(v.id, :distinct)
+      )
+    end)
   end
 
   @doc """
   Counts cities that have trivia events.
+  Results are cached for 15 minutes to improve homepage performance.
   """
   def count_cities_with_trivia do
-    Repo.one(
-      from c in City,
-        join: te in PublicEvent, on: te.city_id == c.id,
-        select: count(c.id, :distinct)
-    )
+    ConCache.get_or_store(:city_cache, "stats_city_count", fn ->
+      Repo.one(
+        from c in City,
+          join: te in PublicEvent, on: te.city_id == c.id,
+          select: count(c.id, :distinct)
+      )
+    end)
   end
 
   @doc """
   Counts countries that have trivia events.
+  Results are cached for 15 minutes to improve homepage performance.
   """
   def count_countries_with_trivia do
-    Repo.one(
-      from c in Country,
-        join: te in PublicEvent, on: te.country_id == c.id,
-        select: count(c.id, :distinct)
-    )
+    ConCache.get_or_store(:city_cache, "stats_country_count", fn ->
+      Repo.one(
+        from c in Country,
+          join: te in PublicEvent, on: te.country_id == c.id,
+          select: count(c.id, :distinct)
+      )
+    end)
   end
 end
