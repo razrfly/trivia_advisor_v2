@@ -42,8 +42,9 @@ defmodule TriviaAdvisorWeb.Components.UI.CityAutocomplete do
 
   @impl true
   def handle_event("submit_search", %{"city_search" => query} = _params, socket) do
-    # Fallback: navigate to cities index with search parameter
-    {:noreply, push_navigate(socket, to: "/cities?search=#{query}")}
+    # Fallback: navigate to cities index with encoded search parameter
+    params = URI.encode_query(%{"search" => query || ""})
+    {:noreply, push_navigate(socket, to: "/cities?#{params}")}
   end
 
   @impl true
