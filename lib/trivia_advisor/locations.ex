@@ -341,7 +341,7 @@ defmodule TriviaAdvisor.Locations do
         on: te.city_id == c.id,
         join: co in Country,
         on: c.country_id == co.id,
-        group_by: [co.id, co.name, co.slug, c.id],
+        group_by: [co.id, co.name, co.slug, c.id, c.name],
         select: %{
           country_id: co.id,
           country_name: co.name,
@@ -360,6 +360,7 @@ defmodule TriviaAdvisor.Locations do
     top_cities_query =
       from s in subquery(ranked_cities_query),
         where: s.row_num <= ^limit,
+        order_by: [asc: s.country_name, desc: s.venue_count, asc: s.city_id],
         select: %{
           country_id: s.country_id,
           country_name: s.country_name,

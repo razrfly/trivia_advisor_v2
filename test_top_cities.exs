@@ -60,18 +60,22 @@ end)
 IO.puts("✓ Old query completed in #{Float.round(old_time_ms, 2)}ms (#{Float.round(old_time_s, 2)}s)")
 IO.puts("✓ Old query returned #{old_total_cities} cities\n")
 
-# Calculate improvement
-speedup = old_time_ms / time_ms
-reduction_percent = ((old_total_cities - total_cities) / old_total_cities * 100)
-
 IO.puts("\n========================================")
 IO.puts("Results")
 IO.puts("========================================\n")
 
-IO.puts("Performance Improvement:")
-IO.puts("  • #{Float.round(speedup, 2)}x faster")
-IO.puts("  • #{Float.round(reduction_percent, 1)}% fewer cities loaded")
-IO.puts("  • Reduced from #{old_total_cities} to #{total_cities} cities")
-IO.puts("  • Saved #{Float.round(old_time_ms - time_ms, 2)}ms query time\n")
+# Calculate improvement (guard against division by zero)
+if old_total_cities == 0 do
+  IO.puts("⚠️  Database is empty - cannot calculate performance improvement")
+else
+  speedup = old_time_ms / time_ms
+  reduction_percent = ((old_total_cities - total_cities) / old_total_cities * 100)
+
+  IO.puts("Performance Improvement:")
+  IO.puts("  • #{Float.round(speedup, 2)}x faster")
+  IO.puts("  • #{Float.round(reduction_percent, 1)}% fewer cities loaded")
+  IO.puts("  • Reduced from #{old_total_cities} to #{total_cities} cities")
+  IO.puts("  • Saved #{Float.round(old_time_ms - time_ms, 2)}ms query time\n")
+end
 
 IO.puts("✓ Test completed successfully!\n")
