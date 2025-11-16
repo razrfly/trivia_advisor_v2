@@ -304,6 +304,117 @@ defmodule TriviaAdvisor.Locations do
   end
 
   @doc """
+  Lists top N cities per country, sorted by venue count (descending).
+  Returns [{country, [cities]}] where each city has :venue_count field added.
+
+  Optimized for performance with efficient window function query and caching.
+  Results are cached for 15 minutes.
+
+  ## Parameters
+  - `limit` - Number of top cities to return per country (default: 12)
+
+  ## Examples
+
+      iex> list_top_cities_by_country(12)
+      [
+        {%Country{name: "United States"}, [%City{venue_count: 45}, ...]},
+        {%Country{name: "United Kingdom"}, [%City{venue_count: 32}, ...]}
+      ]
+
+  ## Performance
+  - Uses window functions for efficient top-N-per-group query
+  - Single query with aggregation (no N+1 issues)
+  - Cached for 15 minutes
+  - Returns ~150-250 cities vs 1000+ from list_all_cities_grouped_by_country
+  """
+  def list_top_cities_by_country(limit \\ 12) when is_integer(limit) and limit > 0 do
+    ConCache.get_or_store(:city_cache, "top_cities_by_country_#{limit}", fn ->
+      fetch_top_cities_by_country(limit)
+    end)
+  end
+
+  defp fetch_top_cities_by_country(limit) do
+    # Step 1: Use window function to rank cities within each country by venue count
+    ranked_cities_query =
+      from c in City,
+        join: te in PublicEvent,
+        on: te.city_id == c.id,
+        join: co in Country,
+        on: c.country_id == co.id,
+        group_by: [co.id, co.name, co.slug, c.id],
+        select: %{
+          country_id: co.id,
+          country_name: co.name,
+          country_slug: co.slug,
+          city_id: c.id,
+          venue_count: count(te.venue_id, :distinct),
+          row_num:
+            over(
+              row_number(),
+              partition_by: co.id,
+              order_by: [desc: count(te.venue_id, :distinct), asc: c.name]
+            )
+        }
+
+    # Step 2: Filter to top N cities per country
+    top_cities_query =
+      from s in subquery(ranked_cities_query),
+        where: s.row_num <= ^limit,
+        select: %{
+          country_id: s.country_id,
+          country_name: s.country_name,
+          country_slug: s.country_slug,
+          city_id: s.city_id,
+          venue_count: s.venue_count
+        }
+
+    results = Repo.all(top_cities_query)
+
+    # Step 3: Fetch full city records with preloads
+    city_ids = Enum.map(results, & &1.city_id)
+
+    cities =
+      if Enum.empty?(city_ids) do
+        []
+      else
+        Repo.all(
+          from c in City,
+            where: c.id in ^city_ids,
+            preload: [:country]
+        )
+      end
+
+    # Step 4: Build lookup maps for efficient data merging
+    city_map = Map.new(cities, &{&1.id, &1})
+    venue_count_map = Map.new(results, &{&1.city_id, &1.venue_count})
+
+    # Step 5: Group by country and add venue counts to city structs
+    results
+    |> Enum.group_by(& &1.country_id)
+    |> Enum.map(fn {country_id, city_data} ->
+      # Build country struct from first result (all have same country data)
+      first = List.first(city_data)
+
+      country = %Country{
+        id: country_id,
+        name: first.country_name,
+        slug: first.country_slug
+      }
+
+      # Build city list with venue counts, maintaining venue count sort order
+      cities_with_counts =
+        Enum.map(city_data, fn data ->
+          city = Map.get(city_map, data.city_id)
+          venue_count = Map.get(venue_count_map, data.city_id, 0)
+          Map.put(city, :venue_count, venue_count)
+        end)
+
+      {country, cities_with_counts}
+    end)
+    |> Enum.sort_by(fn {country, _cities} -> country.name end)
+  end
+
+  @doc """
   Gets cities for a country (accepts Country struct).
   """
   def get_cities_for_country(%Country{id: country_id}) do

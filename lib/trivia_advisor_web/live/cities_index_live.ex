@@ -1,13 +1,15 @@
 defmodule TriviaAdvisorWeb.CitiesIndexLive do
   @moduledoc """
-  Cities index LiveView - displays all cities with trivia events grouped by country.
-  Provides alphabetical browsing and search functionality.
+  Cities index LiveView - displays top cities with trivia events grouped by country.
+  Shows top 12 cities per country by venue count for optimal performance.
+  Provides search functionality and links to explore all cities per country.
   """
   use TriviaAdvisorWeb, :live_view
 
   alias TriviaAdvisor.Locations
   alias TriviaAdvisorWeb.Components.SEO.{MetaTags, Breadcrumbs}
   alias TriviaAdvisorWeb.Components.Layout.{Header, Footer}
+  alias TriviaAdvisorWeb.Components.Cards.CityCard
 
   @impl true
   def mount(params, _session, socket) do
@@ -38,8 +40,9 @@ defmodule TriviaAdvisorWeb.CitiesIndexLive do
         |> Enum.map(fn {country, cities} -> {country, cities} end)
         |> Enum.sort_by(fn {country, _cities} -> country.name end)
       else
-        # Normal mode: batch load all cities with countries (avoids N+1)
-        Locations.list_all_cities_grouped_by_country()
+        # Normal mode: show top 12 cities per country for performance
+        # This reduces load from 1000+ cities to ~150-250 cities
+        Locations.list_top_cities_by_country(12)
       end
 
     socket =
@@ -47,10 +50,11 @@ defmodule TriviaAdvisorWeb.CitiesIndexLive do
       |> assign(:page_title,
         if(search_query,
           do: "Search: #{search_query} | Trivia Cities",
-          else: "All Trivia Cities"))
+          else: "Top Trivia Cities by Country"))
       |> assign(:cities_by_country, cities_by_country)
       |> assign(:search_query, search_query)
       |> assign(:base_url, base_url)
+      |> assign(:show_see_more, is_nil(search_query))
 
     {:ok, socket}
   end
@@ -58,8 +62,8 @@ defmodule TriviaAdvisorWeb.CitiesIndexLive do
   @impl true
   def render(assigns) do
     meta = %{
-      title: "All Trivia Cities | Trivia Advisor",
-      description: "Browse all cities with trivia nights, pub quizzes, and quiz events worldwide. Find trivia venues in your area.",
+      title: "Top Trivia Cities Worldwide | Trivia Advisor",
+      description: "Discover the top cities for trivia nights, pub quizzes, and quiz events worldwide. Browse cities by country and find trivia venues near you.",
       url: "#{assigns.base_url}/cities",
       type: "website",
       image: nil,
@@ -104,11 +108,10 @@ defmodule TriviaAdvisorWeb.CitiesIndexLive do
               </p>
             <% else %>
               <h1 class="text-4xl font-bold text-gray-900 mb-2">
-                All Trivia Cities
+                Top Trivia Cities by Country
               </h1>
               <p class="text-lg text-gray-600">
-                Browse <%= Enum.sum(Enum.map(@cities_by_country, fn {_, cities} -> length(cities) end)) %> cities
-                across <%= length(@cities_by_country) %> countries hosting trivia events
+                Discover the top cities for trivia in <%= length(@cities_by_country) %> countries worldwide
               </p>
             <% end %>
           </div>
@@ -150,81 +153,53 @@ defmodule TriviaAdvisorWeb.CitiesIndexLive do
         <div class="container mx-auto px-4 py-12">
           <%= for {country, cities} <- @cities_by_country do %>
             <div class="mb-12">
-              <h2 class="text-3xl font-bold text-gray-900 mb-6 flex items-center">
-                <svg
-                  class="w-8 h-8 mr-3 text-blue-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"
+              <!-- Country Header with "View All" Button -->
+              <div class="flex items-center justify-between mb-6">
+                <h2 class="text-3xl font-bold text-gray-900 flex items-center">
+                  <svg
+                    class="w-8 h-8 mr-3 text-blue-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
                   >
-                  </path>
-                </svg>
-                <%= country.name %> (<%= length(cities) %>)
-              </h2>
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"
+                    >
+                    </path>
+                  </svg>
+                  <%= country.name %>
+                </h2>
 
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                <%= for city <- Enum.sort_by(cities, & &1.name) do %>
+                <%= if @show_see_more do %>
                   <.link
-                    navigate={"/cities/#{Locations.city_url_slug(city)}"}
-                    class="block p-4 bg-white rounded-lg border border-gray-200 hover:border-blue-500 hover:shadow-md transition-all"
+                    navigate={"#{country.slug}"}
+                    class="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
                   >
-                    <div class="flex items-start justify-between">
-                      <div class="flex-1">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-1">
-                          <%= city.name %>
-                        </h3>
-                        <%= if city.latitude && city.longitude do %>
-                          <p class="text-sm text-gray-500 flex items-center">
-                            <svg
-                              class="w-4 h-4 mr-1"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                              >
-                              </path>
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                              >
-                              </path>
-                            </svg>
-                            <%= Float.round(Decimal.to_float(city.latitude), 2) %>, <%= Float.round(
-                              Decimal.to_float(city.longitude),
-                              2
-                            ) %>
-                          </p>
-                        <% end %>
-                      </div>
-                      <svg
-                        class="w-5 h-5 text-gray-400 flex-shrink-0 ml-2"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M9 5l7 7-7 7"
-                        >
-                        </path>
-                      </svg>
-                    </div>
+                    View All <%= country.name %> Cities
+                    <svg
+                      class="w-4 h-4 ml-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
                   </.link>
+                <% end %>
+              </div>
+
+              <!-- City Cards Grid -->
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <%= for city <- cities do %>
+                  <CityCard.city_card city={city} base_url={@base_url} show_country={false} />
                 <% end %>
               </div>
             </div>
