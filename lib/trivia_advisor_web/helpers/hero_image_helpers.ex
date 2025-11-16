@@ -1,8 +1,16 @@
 defmodule TriviaAdvisorWeb.Helpers.HeroImageHelpers do
   @moduledoc """
-  Helpers for generating hero image URLs for cities and other entities.
+  **DEPRECATED**: Use `TriviaAdvisorWeb.Helpers.ImageHelpers` instead.
 
-  Provides fallback logic using the city's unsplash_gallery from the database.
+  This module has been consolidated into ImageHelpers with backward compatibility
+  for both old (flat) and new (categorized) gallery structures.
+
+  Replacement functions:
+  - `city_hero_image_url/1` → `ImageHelpers.get_city_hero_image_url/1`
+  - `city_hero_image_alt/2` → `ImageHelpers.get_city_hero_image_alt/2`
+  - `city_fallback_image/0` → `ImageHelpers.city_fallback_image/0`
+
+  This module will be removed in a future release.
   """
 
   @doc """

@@ -7,7 +7,10 @@ config :trivia_advisor,
 # Configure database for development
 config :trivia_advisor, TriviaAdvisor.Repo,
   # Database URL loaded from .env via Repo.init/2
-  pool_size: 10,
+  pool_size: 20,
+  timeout: 30_000,
+  queue_target: 5_000,
+  queue_interval: 1_000,
   show_sensitive_data_on_connection_error: true
 
 # For development, we disable any cache and enable

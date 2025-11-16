@@ -276,59 +276,62 @@ defmodule TriviaAdvisor.Events do
       lon = if is_float(venue.longitude), do: venue.longitude, else: Float.parse("#{venue.longitude}") |> elem(0)
       radius_meters = radius_km * 1000
 
-      # Query trivia_events_export grouped by venue
-      # Select one event per venue with venue and city data
+      # Optimized query: use pre-flattened data from trivia_events_export view
+      # This eliminates the need to join Venue, City, and Country tables
+      # Use DISTINCT ON to get one event per venue (first by distance)
       results = Repo.all(
         from e in PublicEvent,
-          join: v in TriviaAdvisor.Locations.Venue, on: e.venue_id == v.id,
-          join: c in TriviaAdvisor.Locations.City, on: v.city_id == c.id,
-          join: co in TriviaAdvisor.Locations.Country, on: c.country_id == co.id,
-          where: v.id != ^venue.id,
-          where: not is_nil(v.latitude) and not is_nil(v.longitude),
+          where: e.venue_id != ^venue.id,
+          where: not is_nil(e.venue_latitude) and not is_nil(e.venue_longitude),
           where:
             fragment(
               "ST_DWithin(ST_MakePoint(?, ?)::geography, ST_MakePoint(?, ?)::geography, ?)",
-              v.longitude,
-              v.latitude,
+              e.venue_longitude,
+              e.venue_latitude,
               ^lon,
               ^lat,
               ^radius_meters
             ),
-          group_by: [v.id, c.id, co.id],
-          # Select first event for each venue (arbitrary but consistent)
+          # Use DISTINCT ON to get one row per venue
+          distinct: [asc: e.venue_id],
+          # Select venue data (all available in the view)
           select: %{
-            venue_id: v.id,
-            venue_name: v.name,
-            venue_slug: v.slug,
-            venue_address: v.address,
-            venue_latitude: v.latitude,
-            venue_longitude: v.longitude,
-            venue_images: v.venue_images,
-            venue_type: v.venue_type,
-            city_id: c.id,
-            city_name: c.name,
-            city_slug: c.slug,
-            city_images: c.unsplash_gallery,
-            country_name: co.name,
-            # Take any event from this venue (using MIN to get consistent result)
-            day_of_week: fragment("MIN(?)", e.day_of_week),
+            venue_id: e.venue_id,
+            venue_name: e.venue_name,
+            venue_slug: e.venue_slug,
+            venue_address: e.venue_address,
+            venue_latitude: e.venue_latitude,
+            venue_longitude: e.venue_longitude,
+            venue_images: e.venue_images,
+            # Note: venue_type not available in trivia_events_export view
+            venue_type: nil,
+            city_id: e.city_id,
+            city_name: e.city_name,
+            city_slug: e.city_slug,
+            city_images: e.city_images,
+            country_name: e.country_name,
+            # Take first event from this venue
+            day_of_week: e.day_of_week,
             distance_km:
               fragment(
                 "ROUND(CAST(ST_Distance(ST_MakePoint(?, ?)::geography, ST_MakePoint(?, ?)::geography) / 1000 AS NUMERIC), 1)",
                 ^lon,
                 ^lat,
-                v.longitude,
-                v.latitude
+                e.venue_longitude,
+                e.venue_latitude
               )
           },
-          order_by:
-            fragment(
-              "ST_Distance(ST_MakePoint(?, ?)::geography, ST_MakePoint(?, ?)::geography)",
-              v.longitude,
-              v.latitude,
-              ^lon,
-              ^lat
-            ),
+          order_by: [
+            asc: e.venue_id,
+            asc:
+              fragment(
+                "ST_Distance(ST_MakePoint(?, ?)::geography, ST_MakePoint(?, ?)::geography)",
+                e.venue_longitude,
+                e.venue_latitude,
+                ^lon,
+                ^lat
+              )
+          ],
           limit: 3
       )
 

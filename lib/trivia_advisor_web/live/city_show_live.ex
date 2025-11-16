@@ -6,10 +6,10 @@ defmodule TriviaAdvisorWeb.CityShowLive do
   use TriviaAdvisorWeb, :live_view
 
   alias TriviaAdvisor.Locations
-  alias TriviaAdvisorWeb.Helpers.{SEOHelpers, HeroImageHelpers}
+  alias TriviaAdvisorWeb.Helpers.{SEOHelpers, ImageHelpers}
   alias TriviaAdvisorWeb.JsonLd.{CitySchema, BreadcrumbListSchema}
   alias TriviaAdvisorWeb.Components.SEO.Breadcrumbs
-  alias TriviaAdvisorWeb.Components.Layout.{Header, Footer}
+  alias TriviaAdvisorWeb.Components.Layout.{Header, Footer, Hero}
   alias TriviaAdvisorWeb.Components.Cards.VenueCard
   alias TriviaAdvisorWeb.Components.UI.EmptyState
 
@@ -74,7 +74,7 @@ defmodule TriviaAdvisorWeb.CityShowLive do
       end
 
     # Get hero image
-    hero_image_url = HeroImageHelpers.city_hero_image_url(city)
+    hero_image_url = ImageHelpers.get_city_hero_image_url(city)
 
     # Generate flat URL slug for canonical path
     city_url_slug = Locations.city_url_slug(city)
@@ -160,31 +160,26 @@ defmodule TriviaAdvisorWeb.CityShowLive do
       <!-- Main Content -->
       <main class="flex-1">
         <!-- Hero Image Section -->
-        <div class="relative h-64 md:h-80 lg:h-96 bg-gray-900">
-          <img
-            src={@hero_image_url}
-            alt={HeroImageHelpers.city_hero_image_alt(@city, @country)}
-            class="w-full h-full object-cover opacity-70"
-          />
-          <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent">
-            <div class="container mx-auto px-4 h-full flex flex-col justify-end pb-8">
-              <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2">
-                Trivia Nights in <%= @city.name %>
-              </h1>
-              <p class="text-xl md:text-2xl text-gray-200">
-                <%= if @selected_weekday || @selected_suburb do %>
-                  <%= @country.name %> • <%= length(@venues) %> of <%= @total_venue_count %> <%= if @total_venue_count == 1,
-                    do: "venue",
-                    else: "venues" %>
-                <% else %>
-                  <%= @country.name %> • <%= @total_venue_count %> <%= if @total_venue_count == 1,
-                    do: "venue",
-                    else: "venues" %>
-                <% end %>
-              </p>
-            </div>
-          </div>
-        </div>
+        <Hero.hero_banner
+          image_url={@hero_image_url}
+          alt={ImageHelpers.get_city_hero_image_alt(@city, @country)}
+          height="h-64 md:h-80 lg:h-96"
+          layout="bottom"
+          gradient="from-gray-900/80 to-transparent"
+        >
+          <:title>Trivia Nights in <%= @city.name %></:title>
+          <:subtitle>
+            <%= if @selected_weekday || @selected_suburb do %>
+              <%= @country.name %> • <%= length(@venues) %> of <%= @total_venue_count %> <%= if @total_venue_count == 1,
+                do: "venue",
+                else: "venues" %>
+            <% else %>
+              <%= @country.name %> • <%= @total_venue_count %> <%= if @total_venue_count == 1,
+                do: "venue",
+                else: "venues" %>
+            <% end %>
+          </:subtitle>
+        </Hero.hero_banner>
         <!-- Breadcrumbs -->
         <div class="container mx-auto px-4 py-4 bg-white border-b">
           <Breadcrumbs.breadcrumbs items={@breadcrumbs} />
