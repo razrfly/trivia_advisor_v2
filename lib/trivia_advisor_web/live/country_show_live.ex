@@ -6,8 +6,9 @@ defmodule TriviaAdvisorWeb.CountryShowLive do
   use TriviaAdvisorWeb, :live_view
 
   alias TriviaAdvisor.Locations
+  alias TriviaAdvisorWeb.Helpers.ImageHelpers
   alias TriviaAdvisorWeb.Components.SEO.{MetaTags, Breadcrumbs}
-  alias TriviaAdvisorWeb.Components.Layout.{Header, Footer}
+  alias TriviaAdvisorWeb.Components.Layout.{Header, Footer, Hero}
   alias TriviaAdvisorWeb.Components.Cards.CityCard
   alias TriviaAdvisorWeb.Components.UI.EmptyState
 
@@ -57,7 +58,11 @@ defmodule TriviaAdvisorWeb.CountryShowLive do
   def render(assigns) do
     meta = MetaTags.country_meta_tags(assigns.country, assigns.base_url)
     breadcrumbs = Breadcrumbs.country_breadcrumbs(assigns.country, assigns.base_url)
-    hero_image = get_hero_image(assigns.cities)
+
+    hero_image = case assigns.cities do
+      [] -> nil
+      [first_city | _] -> ImageHelpers.get_city_card_image(first_city)
+    end
 
     assigns =
       assigns
@@ -81,56 +86,25 @@ defmodule TriviaAdvisorWeb.CountryShowLive do
         </div>
 
         <!-- Hero Banner with Country Image -->
-        <%= if @hero_image do %>
-          <div class="relative h-64 md:h-96 bg-gray-900">
-            <img
-              src={@hero_image.url}
-              alt={@hero_image.alt}
-              class="w-full h-full object-cover opacity-70"
-            />
-            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black opacity-60">
-            </div>
-            <div class="absolute inset-0 flex items-center justify-center">
-              <div class="text-center text-white px-4">
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 drop-shadow-lg">
-                  Trivia Nights in <%= @country.name %>
-                </h1>
-                <p class="text-xl md:text-2xl drop-shadow-lg">
-                  Explore <%= length(@cities) %> <%= if length(@cities) == 1,
-                    do: "city",
-                    else: "cities" %> with trivia events
-                </p>
-              </div>
-            </div>
-            <%= if @hero_image[:photographer] && @hero_image[:photographer_url] do %>
-              <div class="absolute bottom-2 right-2 bg-black bg-opacity-60 text-white text-xs px-3 py-1 rounded">
-                Photo by
-                <a
-                  href={@hero_image.photographer_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="underline hover:text-gray-200"
-                >
-                  <%= @hero_image.photographer %>
-                </a>
-              </div>
-            <% end %>
-          </div>
-        <% else %>
-          <!-- Fallback: Text-only header if no hero image -->
-          <div class="bg-white border-b">
-            <div class="container mx-auto px-4 py-8">
-              <h1 class="text-4xl font-bold text-gray-900 mb-2">
-                Trivia Nights in <%= @country.name %>
-              </h1>
-              <p class="text-lg text-gray-600">
-                Explore <%= length(@cities) %> <%= if length(@cities) == 1,
-                  do: "city",
-                  else: "cities" %> with trivia events
-              </p>
-            </div>
-          </div>
-        <% end %>
+        <Hero.hero_banner
+          image_url={@hero_image && @hero_image.url}
+          alt={@hero_image && @hero_image.alt}
+          height="h-64 md:h-96"
+          layout="center"
+          gradient="from-transparent via-transparent to-black"
+          gradient_opacity="opacity-60"
+          photographer={@hero_image && @hero_image[:photographer]}
+          photographer_url={@hero_image && @hero_image[:photographer_url]}
+          fallback_title={"Trivia Nights in #{@country.name}"}
+          fallback_subtitle={"Explore #{length(@cities)} #{if length(@cities) == 1, do: "city", else: "cities"} with trivia events"}
+        >
+          <:title>Trivia Nights in <%= @country.name %></:title>
+          <:subtitle>
+            Explore <%= length(@cities) %> <%= if length(@cities) == 1,
+              do: "city",
+              else: "cities" %> with trivia events
+          </:subtitle>
+        </Hero.hero_banner>
 
         <!-- Cities Grid -->
         <div class="container mx-auto px-4 py-12">
@@ -223,47 +197,6 @@ defmodule TriviaAdvisorWeb.CountryShowLive do
 
   defp get_base_url do
     Application.get_env(:trivia_advisor, :base_url, "https://quizadvisor.com")
-  end
-
-  # Gets hero image for the country page from the first city's unsplash_gallery.
-  # Uses the primary city (first in the sorted list) as the country representative image.
-  defp get_hero_image([]), do: nil
-
-  defp get_hero_image([first_city | _rest]) do
-    unsplash_gallery = Map.get(first_city, :unsplash_gallery)
-
-    if has_unsplash_images?(unsplash_gallery) do
-      extract_hero_image(unsplash_gallery, first_city.name)
-    else
-      nil
-    end
-  end
-
-  defp has_unsplash_images?(gallery) when is_map(gallery) do
-    active_cat = gallery["active_category"]
-    categories = gallery["categories"]
-
-    is_binary(active_cat) &&
-      is_map(categories) &&
-      is_map(categories[active_cat]) &&
-      is_list(categories[active_cat]["images"]) &&
-      length(categories[active_cat]["images"]) > 0 &&
-      get_in(categories, [active_cat, "images", Access.at(0), "url"])
-  end
-
-  defp has_unsplash_images?(_), do: false
-
-  defp extract_hero_image(gallery, city_name) do
-    active_cat = gallery["active_category"]
-    images = gallery["categories"][active_cat]["images"]
-    image = List.first(images)
-
-    %{
-      url: image["url"],
-      alt: image["alt"] || "#{city_name} cityscape",
-      photographer: image["photographer"],
-      photographer_url: image["photographer_url"]
-    }
   end
 
   # Generates a smart pagination range with ellipsis for large page counts.

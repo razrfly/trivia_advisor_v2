@@ -6,11 +6,11 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
   use TriviaAdvisorWeb, :live_view
 
   alias TriviaAdvisor.{Locations, Events}
-  alias TriviaAdvisorWeb.Helpers.SEOHelpers
+  alias TriviaAdvisorWeb.Helpers.{SEOHelpers, ImageHelpers}
   alias TriviaAdvisorWeb.JsonLd.{VenueSchema, BreadcrumbListSchema}
   alias TriviaAdvisorWeb.Components.SEO.{MetaTags, Breadcrumbs}
   alias TriviaAdvisorWeb.Components.Layout.{Header, Footer}
-  alias TriviaAdvisorWeb.Components.Cards.EventCard
+  alias TriviaAdvisorWeb.Components.Cards.{EventCard, VenueCard}
   alias TriviaAdvisorWeb.Components.UI.EmptyState
 
   @impl true
@@ -139,7 +139,7 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
             <!-- Left Column: Images & Contact -->
             <div class="lg:col-span-2">
               <!-- Venue Images Gallery -->
-              <%= case get_venue_images(@venue, @city) do %>
+              <%= case ImageHelpers.get_venue_gallery_images(@venue, @city) do %>
                 <% [single_image] -> %>
                   <!-- Single image layout -->
                   <div class="mb-6">
@@ -468,68 +468,11 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <%= for nearby_venue <- @nearby_venues do %>
-                <a
-                  href={"/venues/#{nearby_venue.venue_slug}"}
-                  class="block bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow border border-gray-200 hover:border-blue-500"
-                >
-                  <!-- Venue Image -->
-                  <%= if image_url = get_nearby_venue_image(nearby_venue) do %>
-                    <div class="h-48 overflow-hidden bg-gray-200">
-                      <img
-                        src={image_url}
-                        alt={nearby_venue.venue_name}
-                        class="w-full h-full object-cover"
-                      />
-                    </div>
-                  <% end %>
-
-                  <div class="p-6">
-                    <div class="flex items-start justify-between mb-3">
-                      <h3 class="text-lg font-semibold text-gray-900 flex-1">
-                        <%= nearby_venue.venue_name %>
-                      </h3>
-                      <%= if nearby_venue.distance_km do %>
-                        <span class="ml-3 px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full flex-shrink-0">
-                          <%= Decimal.to_string(nearby_venue.distance_km) %> km
-                        </span>
-                      <% end %>
-                    </div>
-
-                    <%= if nearby_venue.venue_address do %>
-                      <p class="text-sm text-gray-600 mb-2">
-                        <%= nearby_venue.venue_address %>
-                      </p>
-                    <% end %>
-
-                    <p class="text-sm text-gray-500 mb-3">
-                      <%= nearby_venue.city_name %><%= if nearby_venue.city_name != @city.name do %>, <%= nearby_venue.country_name %><% end %>
-                    </p>
-
-                    <div class="flex flex-wrap gap-2 mt-3">
-                      <!-- Day Badge -->
-                      <%= if nearby_venue.day_of_week do %>
-                        <span class="inline-flex items-center px-3 py-1 bg-purple-100 text-purple-800 text-xs font-medium rounded-full">
-                          <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                            >
-                            </path>
-                          </svg>
-                          <%= TriviaAdvisor.Events.PublicEvent.format_day_name(nearby_venue.day_of_week) %>s
-                        </span>
-                      <% end %>
-
-                      <%= if nearby_venue.venue_type do %>
-                        <span class="inline-block px-3 py-1 bg-gray-200 text-gray-700 text-xs font-medium rounded-full">
-                          <%= nearby_venue.venue_type %>
-                        </span>
-                      <% end %>
-                    </div>
-                  </div>
-                </a>
+                <VenueCard.venue_card
+                  venue={nearby_venue}
+                  show_city={nearby_venue.city_name != @city.name}
+                  show_distance={true}
+                />
               <% end %>
             </div>
           </div>
@@ -550,85 +493,22 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
   defp get_next_quiz_night([]), do: nil
 
   defp get_next_quiz_night(events) do
+    # Optimized: use reduce to find minimum in single pass instead of map + sort
     events
-    |> Enum.map(&Events.get_next_occurrence/1)
-    |> Enum.reject(&is_nil/1)
-    |> Enum.sort_by(& &1["date_value"])  # Sort by actual date, not alphabetical string
-    |> List.first()
-  end
-
-  # Get venue images with fallback logic.
-  # Returns up to 5 images from venue_images, or falls back to city_images.
-  defp get_venue_images(venue, city) do
-    cond do
-      # Try venue_images first (JSONB array) with validation
-      venue.venue_images && is_list(venue.venue_images) && length(venue.venue_images) > 0 ->
-        venue.venue_images
-        |> Enum.filter(&is_map/1)
-        |> Enum.filter(&is_binary(Map.get(&1, "url")))
-        |> Enum.take(5)
-
-      # Fallback to primary_image from Locations.Venue
-      primary_image = Locations.Venue.primary_image(venue) ->
-        [primary_image]
-
-      # Fallback to city images
-      city.unsplash_gallery && is_map(city.unsplash_gallery) ->
-        get_city_images(city.unsplash_gallery)
-
-      # No images available
-      true ->
-        []
-    end
-  end
-
-  # Extract images from unsplash_gallery JSONB structure
-  defp get_city_images(unsplash_gallery) when is_map(unsplash_gallery) do
-    with active_cat when is_binary(active_cat) <- unsplash_gallery["active_category"],
-         categories when is_map(categories) <- unsplash_gallery["categories"],
-         category when is_map(category) <- categories[active_cat],
-         images when is_list(images) <- category["images"] do
-      images
-      |> Enum.filter(&is_map/1)
-      |> Enum.filter(&is_binary(Map.get(&1, "url")))
-      |> Enum.take(5)
-    else
-      _ -> []
-    end
-  end
-
-  defp get_city_images(_), do: []
-
-  # Get image URL for a nearby venue with fallback logic.
-  # Tries venue_images first, then city_images (unsplash_gallery structure).
-  defp get_nearby_venue_image(nearby_venue) do
-    cond do
-      # Try venue_images first with validation
-      nearby_venue.venue_images && is_list(nearby_venue.venue_images) &&
-          length(nearby_venue.venue_images) > 0 ->
-        first_image = List.first(nearby_venue.venue_images)
-        if is_map(first_image) && is_binary(Map.get(first_image, "url")) do
-          Map.get(first_image, "url")
-        else
-          nil
-        end
-
-      # Fallback to city images (unsplash_gallery structure)
-      nearby_venue.city_images && is_map(nearby_venue.city_images) ->
-        with active_cat when is_binary(active_cat) <- nearby_venue.city_images["active_category"],
-             categories when is_map(categories) <- nearby_venue.city_images["categories"],
-             category when is_map(category) <- categories[active_cat],
-             images when is_list(images) and length(images) > 0 <- category["images"],
-             image when is_map(image) <- List.first(images),
-             url when is_binary(url) <- image["url"] do
-          url
-        else
-          _ -> nil
-        end
-
-      # No images available
-      true ->
-        nil
-    end
+    |> Enum.reduce(nil, fn event, acc ->
+      case Events.get_next_occurrence(event) do
+        nil -> acc
+        occurrence ->
+          case acc do
+            nil -> occurrence
+            existing ->
+              if Date.compare(occurrence["date_value"], existing["date_value"]) == :lt do
+                occurrence
+              else
+                existing
+              end
+          end
+      end
+    end)
   end
 end
