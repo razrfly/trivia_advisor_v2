@@ -11,7 +11,9 @@ config :trivia_advisor, TriviaAdvisor.Repo,
   timeout: 30_000,
   queue_target: 5_000,
   queue_interval: 1_000,
-  show_sensitive_data_on_connection_error: true
+  show_sensitive_data_on_connection_error: true,
+  # Disable prepared statements for PgBouncer compatibility
+  prepare: :unnamed
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

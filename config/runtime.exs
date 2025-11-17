@@ -55,7 +55,9 @@ if config_env() == :prod do
   config :trivia_advisor, TriviaAdvisor.Repo,
     url: database_url,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-    socket_options: maybe_ipv6
+    socket_options: maybe_ipv6,
+    # Disable prepared statements for PgBouncer compatibility
+    prepare: :unnamed
 
   config :trivia_advisor, TriviaAdvisorWeb.Endpoint,
     url: [host: host, port: 443, scheme: "https"],
