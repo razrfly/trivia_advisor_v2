@@ -8,9 +8,7 @@ import Config
 config :trivia_advisor, TriviaAdvisorWeb.Endpoint,
   cache_static_manifest: "priv/static/cache_manifest.json",
   # Force SSL in production with HSTS
-  force_ssl: [hsts: true, rewrite_on: [:x_forwarded_proto]],
-  # Enable gzip compression
-  http: [compress: true]
+  force_ssl: [hsts: true, rewrite_on: [:x_forwarded_proto]]
 
 # Configures Swoosh API Client
 config :swoosh, api_client: Swoosh.ApiClient.Req
