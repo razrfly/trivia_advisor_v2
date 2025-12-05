@@ -1,5 +1,20 @@
 # Trivia Advisor V2 - Project Instructions
 
+## CRITICAL: Security Rules
+
+**NEVER expose credentials in any form:**
+- ❌ DO NOT include passwords, API keys, or secrets in bash commands
+- ❌ DO NOT echo/print environment variables containing secrets
+- ❌ DO NOT include credentials in code comments or documentation
+- ❌ DO NOT use `fly secrets list` output that shows actual values
+- ✅ Use environment variables referenced by name only (e.g., `$DATABASE_PASSWORD`)
+- ✅ Use `.env` files that are gitignored
+- ✅ Reference `fly secrets set` without showing actual values
+
+Credentials exposed in conversation history, logs, or commits can be scraped and compromised.
+
+---
+
 ## Project Overview
 
 **Trivia Advisor V2** is a fresh Phoenix 1.7+ rebuild focused on providing a read-only view of trivia events from the Eventasaurus database. This is a clean-slate implementation migrating only the valuable 15-20% of working components from the legacy codebase.
