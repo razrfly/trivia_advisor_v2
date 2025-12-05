@@ -21,7 +21,8 @@ defmodule TriviaAdvisor.MixProject do
   def application do
     [
       mod: {TriviaAdvisor.Application, []},
-      extra_applications: [:logger, :runtime_tools, :os_mon]
+      # :castore ensures the CA certificate bundle is available in releases for SSL verification
+      extra_applications: [:logger, :runtime_tools, :os_mon, :castore]
     ]
   end
 
@@ -67,6 +68,8 @@ defmodule TriviaAdvisor.MixProject do
       {:ecto_sql, "~> 3.12"},
       {:postgrex, "~> 0.19"},
       {:geo_postgis, "~> 3.6"},
+      # SSL certificate verification for PlanetScale
+      {:castore, "~> 1.0"},
       # Utilities
       {:countries, "~> 1.6"},
       {:timex, "~> 3.7"},

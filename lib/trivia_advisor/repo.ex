@@ -1,20 +1,34 @@
 defmodule TriviaAdvisor.Repo do
+  @moduledoc """
+  Read-only Ecto Repo for Trivia Advisor.
+
+  Connects to PlanetScale read replicas using the |replica username suffix.
+  This application is completely read-only - all data comes from the
+  Eventasaurus database.
+
+  ## Configuration
+
+  In production (runtime.exs):
+  - Uses hostname-based config (NOT URL-based) for proper SSL handling
+  - Connects to PlanetScale replicas via |replica username suffix
+  - Uses direct connection (port 5432) for replica routing
+
+  In development (dev.exs):
+  - Also connects to PlanetScale replicas (shared database)
+  - Same SSL configuration as production
+
+  ## Why Read-Only?
+
+  This application only displays trivia event data from the shared
+  Eventasaurus database. All writes happen in the main Eventasaurus
+  application. Using read replicas:
+  - Reduces load on the primary database
+  - Provides better read performance
+  - Acceptable replication lag for display purposes
+  """
+
   use Ecto.Repo,
     otp_app: :trivia_advisor,
-    adapter: Ecto.Adapters.Postgres
-
-  @doc """
-  Dynamically loads the repository url from the
-  SUPABASE_DATABASE_URL environment variable.
-  """
-  def init(_type, config) do
-    case System.get_env("SUPABASE_DATABASE_URL") do
-      nil ->
-        raise "SUPABASE_DATABASE_URL environment variable is not set!"
-
-      url ->
-        config = Keyword.put(config, :url, url)
-        {:ok, config}
-    end
-  end
+    adapter: Ecto.Adapters.Postgres,
+    read_only: true
 end

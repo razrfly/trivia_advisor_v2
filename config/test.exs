@@ -7,6 +7,23 @@ config :trivia_advisor, TriviaAdvisorWeb.Endpoint,
   secret_key_base: "urtjtIlJprIfZLgZaA0VMRjFIO8Gu6Wf7x6p03QLpOG9YEV4+TrGKc4hI+B2PJzD",
   server: false
 
+# =============================================================================
+# Test Database Configuration
+# =============================================================================
+#
+# In test environment, we connect to the same local eventasaurus_dev database
+# that development uses. Since this is a read-only application, we don't need
+# Ecto sandbox mode for transaction isolation - we're just reading data.
+#
+# PlanetScale is only used in production (configured in runtime.exs).
+
+config :trivia_advisor, TriviaAdvisor.Repo,
+  username: "postgres",
+  password: "postgres",
+  hostname: "localhost",
+  database: "eventasaurus_dev",
+  pool_size: 5
+
 # In test we don't send emails
 config :trivia_advisor, TriviaAdvisor.Mailer, adapter: Swoosh.Adapters.Test
 
