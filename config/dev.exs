@@ -4,16 +4,32 @@ import Config
 config :trivia_advisor,
   base_url: "http://localhost:4003"
 
-# Configure database for development
+# =============================================================================
+# Database Configuration for Development
+# =============================================================================
+#
+# In development, connect to the local Eventasaurus database.
+# This is the same database that Eventasaurus uses in dev mode.
+#
+# To set up: Make sure you have Eventasaurus's local database running
+# (createdb eventasaurus_dev && run Eventasaurus migrations)
+#
+# PlanetScale is only used in production (runtime.exs) because:
+# 1. PlanetScale has IP restrictions (only Fly.io IPs allowed)
+# 2. Local development uses the shared local Eventasaurus database
+#
+# Note: This is a read-only connection to the same database Eventasaurus writes to
+
 config :trivia_advisor, TriviaAdvisor.Repo,
-  # Database URL loaded from .env via Repo.init/2
-  pool_size: 20,
+  username: "postgres",
+  password: "postgres",
+  hostname: "localhost",
+  database: "eventasaurus_dev",
+  pool_size: 10,
   timeout: 30_000,
   queue_target: 5_000,
   queue_interval: 1_000,
-  show_sensitive_data_on_connection_error: true,
-  # Disable prepared statements for PgBouncer compatibility
-  prepare: :unnamed
+  show_sensitive_data_on_connection_error: true
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

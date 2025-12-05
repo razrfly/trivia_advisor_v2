@@ -5,7 +5,6 @@ import Config
 # system starts, so it is typically used to load production configuration
 # and secrets from environment variables or elsewhere. Do not define
 # any compile-time configuration in here, as it won't be applied.
-# The block below contains prod specific runtime configuration.
 
 # ## Using releases
 #
@@ -20,7 +19,69 @@ if System.get_env("PHX_SERVER") do
   config :trivia_advisor, TriviaAdvisorWeb.Endpoint, server: true
 end
 
+# =============================================================================
+# Production Configuration
+# =============================================================================
+#
+# In production, we connect to PlanetScale read replicas for the shared
+# Eventasaurus database. Since Trivia Advisor is completely read-only,
+# we use PgBouncer (port 6432) for efficient connection pooling.
+#
+# In development/test, we use the local eventasaurus_dev database
+# (configured in dev.exs/test.exs) because:
+# 1. PlanetScale has IP restrictions (only Fly.io IPs allowed)
+# 2. Local development uses the same database Eventasaurus writes to
+#
+# See: https://planetscale.com/docs/postgres/scaling/replicas
+
 if config_env() == :prod do
+  # Validate required PlanetScale environment variables
+  ps_host = System.fetch_env!("PLANETSCALE_DATABASE_HOST")
+  ps_db = System.fetch_env!("PLANETSCALE_DATABASE")
+  ps_user = System.fetch_env!("PLANETSCALE_DATABASE_USERNAME")
+  ps_pass = System.fetch_env!("PLANETSCALE_DATABASE_PASSWORD")
+
+  # Use PgBouncer port (6432) for connection pooling
+  # Note: PgBouncer does NOT support |replica routing, so we connect to primary
+  # For a read-only app like Trivia Advisor, this is fine - we're just reading data
+  ps_port =
+    case Integer.parse(System.get_env("PLANETSCALE_PG_BOUNCER_PORT") || "6432") do
+      {port, _} when port > 0 and port <= 65535 -> port
+      _ -> 6432
+    end
+
+  # Force IPv4 for reliable Fly.io connectivity to PlanetScale
+  # This MUST be applied via hostname-based config, not URL-based
+  socket_opts = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: [:inet]
+
+  # PlanetScale SSL: Standard SSL verification using CAStore
+  # This configuration is proven working from the Eventasaurus project
+  planetscale_ssl_opts = [
+    verify: :verify_peer,
+    cacertfile: CAStore.file_path(),
+    server_name_indication: String.to_charlist(ps_host),
+    customize_hostname_check: [
+      match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
+    ]
+  ]
+
+  config :trivia_advisor, TriviaAdvisor.Repo,
+    username: ps_user,
+    password: ps_pass,
+    hostname: ps_host,
+    port: ps_port,
+    database: ps_db,
+    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "5"),
+    socket_options: socket_opts,
+    queue_target: 5000,
+    queue_interval: 30000,
+    connect_timeout: 30_000,
+    handshake_timeout: 30_000,
+    ssl: true,
+    ssl_opts: planetscale_ssl_opts,
+    # Disable prepared statements for PgBouncer compatibility
+    prepare: :unnamed
+
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you
   # want to use a different value for prod and you most likely don't want
@@ -41,20 +102,6 @@ if config_env() == :prod do
     base_url: System.get_env("BASE_URL") || "https://#{host}"
 
   config :trivia_advisor, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
-
-  # Database configuration
-  database_url =
-    System.get_env("DATABASE_URL") || System.get_env("SUPABASE_DATABASE_URL") ||
-      raise """
-      environment variable DATABASE_URL or SUPABASE_DATABASE_URL is missing.
-      For example: ecto://USER:PASS@HOST/DATABASE
-      """
-
-  config :trivia_advisor, TriviaAdvisor.Repo,
-    url: database_url,
-    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-    # Disable prepared statements for PgBouncer compatibility
-    prepare: :unnamed
 
   config :trivia_advisor, TriviaAdvisorWeb.Endpoint,
     url: [host: host, port: 443, scheme: "https"],
