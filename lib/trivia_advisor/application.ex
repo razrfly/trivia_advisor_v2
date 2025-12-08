@@ -12,11 +12,23 @@ defmodule TriviaAdvisor.Application do
       TriviaAdvisor.Repo,
       {DNSCluster, query: Application.get_env(:trivia_advisor, :dns_cluster_query) || :ignore},
       # ConCache for query result caching with 15-minute TTL
-      {ConCache, [
-        name: :city_cache,
-        ttl_check_interval: :timer.minutes(1),
-        global_ttl: :timer.minutes(15)
-      ]},
+      Supervisor.child_spec(
+        {ConCache, [
+          name: :city_cache,
+          ttl_check_interval: :timer.minutes(1),
+          global_ttl: :timer.minutes(15)
+        ]},
+        id: :city_cache
+      ),
+      # ConCache for sitemap caching with 6-hour TTL (regenerates 4x daily)
+      Supervisor.child_spec(
+        {ConCache, [
+          name: :sitemap_cache,
+          ttl_check_interval: :timer.minutes(5),
+          global_ttl: :timer.hours(6)
+        ]},
+        id: :sitemap_cache
+      ),
       {Phoenix.PubSub, name: TriviaAdvisor.PubSub},
       # Start a worker by calling: TriviaAdvisor.Worker.start_link(arg)
       # {TriviaAdvisor.Worker, arg},

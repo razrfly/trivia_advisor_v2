@@ -18,11 +18,14 @@ defmodule TriviaAdvisorWeb.LatestEventsLive do
 
     # Fetch latest venues (more than homepage shows)
     latest_venues = Locations.get_latest_venues(@default_limit)
+    has_venues = length(latest_venues) > 0
 
     socket =
       socket
       |> assign(:page_title, "Latest Trivia Events")
-      |> assign(:latest_venues, latest_venues)
+      |> stream_configure(:latest_venues, dom_id: &"venue-#{&1.venue_id}")
+      |> stream(:latest_venues, latest_venues)
+      |> assign(:has_venues, has_venues)
       |> assign(:base_url, base_url)
 
     {:ok, socket}
@@ -78,7 +81,7 @@ defmodule TriviaAdvisorWeb.LatestEventsLive do
 
         <!-- Venues Grid -->
         <div class="container mx-auto px-4 py-12">
-          <%= if Enum.empty?(@latest_venues) do %>
+          <%= if not @has_venues do %>
             <!-- Empty State -->
             <div class="text-center py-12">
               <svg
@@ -107,10 +110,10 @@ defmodule TriviaAdvisorWeb.LatestEventsLive do
             </div>
           <% else %>
             <!-- Venue Cards Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-              <%= for venue <- @latest_venues do %>
+            <div id="latest-venues" phx-update="stream" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+              <div :for={{dom_id, venue} <- @streams.latest_venues} id={dom_id}>
                 <VenueCard.venue_card venue={venue} show_city={true} />
-              <% end %>
+              </div>
             </div>
           <% end %>
         </div>

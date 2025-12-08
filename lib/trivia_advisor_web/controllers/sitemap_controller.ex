@@ -7,12 +7,14 @@ defmodule TriviaAdvisorWeb.SitemapController do
 
   @doc """
   Serves the sitemap.xml file.
+  Uses ConCache to serve cached XML (6-hour TTL).
   """
   def sitemap(conn, _params) do
-    sitemap_xml = TriviaAdvisor.Sitemap.to_xml()
+    sitemap_xml = TriviaAdvisor.Sitemap.get_cached_xml()
 
     conn
     |> put_resp_content_type("application/xml")
+    |> put_resp_header("cache-control", "public, max-age=3600")
     |> send_resp(200, sitemap_xml)
   end
 

@@ -113,7 +113,14 @@ if config_env() == :prod do
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
       port: port
     ],
-    secret_key_base: secret_key_base
+    secret_key_base: secret_key_base,
+    # Allow WebSocket connections from the configured host and www subdomain
+    # This is critical for LiveView to work - without it, the WebSocket upgrade
+    # fails silently and pages appear to never finish loading
+    check_origin: [
+      "https://#{host}",
+      "https://www.#{host}"
+    ]
 
   # ## SSL Support
   #
