@@ -29,6 +29,9 @@ defmodule TriviaAdvisorWeb.Router do
     # Search
     live "/search", SearchLive, :index
 
+    # Latest events page
+    live "/events/latest", LatestEventsLive, :index
+
     # SEO files (sitemap and robots.txt)
     get "/sitemap.xml", SitemapController, :sitemap
     get "/robots.txt", SitemapController, :robots

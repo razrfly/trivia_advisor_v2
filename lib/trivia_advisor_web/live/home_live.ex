@@ -97,9 +97,30 @@ defmodule TriviaAdvisorWeb.HomeLive do
 
         <!-- Latest Venues Section -->
         <div class="container mx-auto px-4 py-12">
-          <h2 class="text-3xl font-bold mb-2 text-gray-900">
-            Latest Trivia Venues
-          </h2>
+          <div class="flex items-center justify-between mb-2">
+            <h2 class="text-3xl font-bold text-gray-900">
+              Latest Trivia Venues
+            </h2>
+            <.link
+              navigate="/events/latest"
+              class="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
+            >
+              View All
+              <svg
+                class="w-4 h-4 ml-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </.link>
+          </div>
           <p class="text-gray-600 mb-8">
             Recently added venues hosting trivia nights
           </p>
