@@ -2,7 +2,6 @@ defmodule TriviaAdvisor.Repo do
   @moduledoc """
   Read-only Ecto Repo for Trivia Advisor.
 
-  Connects to PlanetScale read replicas using the |replica username suffix.
   This application is completely read-only - all data comes from the
   Eventasaurus database.
 
@@ -10,21 +9,18 @@ defmodule TriviaAdvisor.Repo do
 
   In production (runtime.exs):
   - Uses hostname-based config (NOT URL-based) for proper SSL handling
-  - Connects to PlanetScale replicas via |replica username suffix
-  - Uses direct connection (port 5432) for replica routing
+  - Connects to PlanetScale via PgBouncer (port 6432)
+  - SSL verification using CAStore
 
   In development (dev.exs):
-  - Also connects to PlanetScale replicas (shared database)
-  - Same SSL configuration as production
+  - Connects to local eventasaurus_dev database (same as Eventasaurus)
+  - No SSL required for local development
 
   ## Why Read-Only?
 
   This application only displays trivia event data from the shared
   Eventasaurus database. All writes happen in the main Eventasaurus
-  application. Using read replicas:
-  - Reduces load on the primary database
-  - Provides better read performance
-  - Acceptable replication lag for display purposes
+  application.
   """
 
   use Ecto.Repo,

@@ -55,7 +55,7 @@ if config_env() == :prod do
   socket_opts = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: [:inet]
 
   # PlanetScale SSL: Standard SSL verification using CAStore
-  # This configuration is proven working from the Eventasaurus project
+  # (proven working configuration from Eventasaurus project)
   planetscale_ssl_opts = [
     verify: :verify_peer,
     cacertfile: CAStore.file_path(),
