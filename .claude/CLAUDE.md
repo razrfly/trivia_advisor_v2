@@ -1,5 +1,16 @@
 # Trivia Advisor V2 - Project Instructions
 
+## CRITICAL: Git/GitHub Rules
+
+**NEVER perform any git or GitHub operations under any circumstances:**
+- ❌ DO NOT run git add, git commit, git push, git reset, or any git commands
+- ❌ DO NOT create pull requests or manage GitHub in any way
+- ❌ DO NOT use gh CLI commands
+- ❌ DO NOT offer to commit changes
+- The user manages all git/GitHub operations manually
+
+---
+
 ## CRITICAL: Security Rules
 
 **NEVER expose credentials in any form:**
