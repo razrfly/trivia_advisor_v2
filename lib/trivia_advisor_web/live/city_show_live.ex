@@ -51,13 +51,14 @@ defmodule TriviaAdvisorWeb.CityShowLive do
   defp load_city_page(city, country, socket) do
     base_url = get_base_url()
 
-    # Load venues to get count for SEO
-    venues = Locations.list_venues_for_city(city.id, [])
+    # Load venues using geo-proximity search (city struct has lat/lon)
+    # This catches suburbs within the city's metro area (default 25km radius)
+    venues = Locations.list_venues_for_city(city, [])
     venue_count = length(venues)
 
-    # Get day counts and suburbs for filter UI
-    day_counts = Locations.get_day_counts_for_city(city.id)
-    suburbs = Locations.get_suburbs_for_city(city.id)
+    # Get day counts and suburbs for filter UI using geo-proximity
+    day_counts = Locations.get_day_counts_for_city(city)
+    suburbs = Locations.get_suburbs_for_city(city)
 
     # Generate JSON-LD structured data
     city_json_ld = CitySchema.generate(city, %{venue_count: venue_count})
@@ -120,7 +121,7 @@ defmodule TriviaAdvisorWeb.CityShowLive do
   end
 
   defp load_venues(socket) do
-    city_id = socket.assigns.city.id
+    city = socket.assigns.city
     weekday = socket.assigns[:selected_weekday]
     suburb = socket.assigns[:selected_suburb]
 
@@ -129,7 +130,8 @@ defmodule TriviaAdvisorWeb.CityShowLive do
       |> maybe_add_opt(:weekday, weekday)
       |> maybe_add_opt(:suburb, suburb)
 
-    venues = Locations.list_venues_for_city(city_id, opts)
+    # Use city struct for geo-proximity search
+    venues = Locations.list_venues_for_city(city, opts)
 
     assign(socket, :venues, venues)
   end

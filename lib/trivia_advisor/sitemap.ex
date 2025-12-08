@@ -81,13 +81,19 @@ defmodule TriviaAdvisor.Sitemap do
 
   @doc """
   Generates venue page URLs (flat structure: /venues/{slug}).
+  Only includes venues that have trivia events (from trivia_events_export view).
+  This ensures the sitemap matches what's actually visible on the site.
   """
   def venue_urls(base_url) do
+    # Query trivia_events_export to get only venues with events
+    # Use DISTINCT to avoid duplicate venue entries
     query =
-      from v in TriviaAdvisor.Locations.Venue,
+      from te in TriviaAdvisor.Events.PublicEvent,
+        where: not is_nil(te.venue_slug),
+        distinct: te.venue_id,
         select: %{
-          venue_slug: v.slug,
-          updated_at: v.updated_at
+          venue_slug: te.venue_slug,
+          updated_at: te.updated_at
         }
 
     Repo.all(query)
@@ -117,7 +123,12 @@ defmodule TriviaAdvisor.Sitemap do
   end
 
   defp venue_count do
-    Repo.aggregate(TriviaAdvisor.Locations.Venue, :count)
+    # Count unique venues from trivia_events_export (venues with events)
+    Repo.one(
+      from te in TriviaAdvisor.Events.PublicEvent,
+        where: not is_nil(te.venue_slug),
+        select: count(te.venue_id, :distinct)
+    )
   end
 
   @doc """

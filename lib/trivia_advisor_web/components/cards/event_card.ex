@@ -256,11 +256,11 @@ defmodule TriviaAdvisorWeb.Components.Cards.EventCard do
       <% end %>
 
       <!-- Event Details Footer -->
-      <%= if @event.source_url do %>
+      <%= if @event.activity_slug do %>
         <div class="mt-4 pt-4 border-t border-gray-200 flex items-center justify-end">
-          <!-- Source Link -->
+          <!-- Mombi Link -->
           <a
-            href={@event.source_url}
+            href={"https://wombie.com/activities/#{@event.activity_slug}"}
             target="_blank"
             rel="noopener noreferrer"
             class="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
