@@ -24,9 +24,11 @@ config :trivia_advisor,
 if File.exists?(".env") do
   for line <- File.read!(".env") |> String.split("\n"),
       line != "",
-      not String.starts_with?(line, "#"),
-      [key, value] = String.split(line, "=", parts: 2) do
-    System.put_env(String.trim(key), String.trim(value))
+      not String.starts_with?(line, "#") do
+    case String.split(line, "=", parts: 2) do
+      [key, value] -> System.put_env(String.trim(key), String.trim(value))
+      _ -> :ok  # Skip malformed lines
+    end
   end
 end
 

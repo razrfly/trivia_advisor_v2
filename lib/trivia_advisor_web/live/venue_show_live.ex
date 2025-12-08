@@ -48,7 +48,8 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
       load_venue_page(venue, city, country, socket)
     else
       _ ->
-        # Venue not found - try smart matching
+        # Any failure (invalid country/city/venue or mismatched IDs) - try smart matching
+        # This provides a helpful user experience regardless of which part of the URL was wrong
         handle_missing_venue(venue_slug, socket)
     end
   end
@@ -57,7 +58,8 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
   defp handle_missing_venue(missing_slug, socket) do
     case VenueMatcher.find_similar(missing_slug) do
       {:redirect, venue, _confidence} ->
-        # High confidence match - 301 redirect
+        # High confidence match - redirect to correct venue
+        # Note: LiveView redirect is client-side; for SEO 301, would need Plug-level handling
         {:ok,
          socket
          |> redirect(to: "/venues/#{venue.slug}")}
