@@ -2,10 +2,44 @@ defmodule TriviaAdvisor.Sitemap do
   @moduledoc """
   Sitemap generation for Trivia Advisor.
   Generates XML sitemaps with flat URL structure for production URL matching.
+
+  Uses ConCache to cache the generated XML for 6 hours to avoid
+  expensive database queries on every request.
   """
 
   alias TriviaAdvisor.{Locations, Repo}
   import Ecto.Query
+  require Logger
+
+  @cache_key :sitemap_xml
+
+  @doc """
+  Returns the cached sitemap XML, generating it if not cached.
+  This is the main entry point for serving sitemaps.
+  """
+  def get_cached_xml do
+    ConCache.get_or_store(:sitemap_cache, @cache_key, fn ->
+      Logger.info("Sitemap cache miss - generating sitemap XML...")
+      start_time = System.monotonic_time(:millisecond)
+
+      xml = to_xml()
+
+      duration = System.monotonic_time(:millisecond) - start_time
+      url_count = url_count()
+      Logger.info("Sitemap generated: #{url_count} URLs in #{duration}ms")
+
+      xml
+    end)
+  end
+
+  @doc """
+  Invalidates the sitemap cache, forcing regeneration on next request.
+  """
+  def invalidate_cache do
+    ConCache.delete(:sitemap_cache, @cache_key)
+    Logger.info("Sitemap cache invalidated")
+    :ok
+  end
 
   @doc """
   Generates the complete sitemap with all URLs.
