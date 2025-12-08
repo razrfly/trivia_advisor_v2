@@ -2,10 +2,15 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
   @moduledoc """
   Venue page LiveView - displays venue details and trivia events.
   Supports both flat (/venues/{slug}) and hierarchical patterns for backward compatibility.
+
+  Also handles smart 404s with fuzzy matching:
+  - High confidence match (≥90%): 301 redirect to correct venue
+  - Medium confidence matches (≥70%): Show "Did you mean?" suggestions
+  - No matches: Show standard 404 page
   """
   use TriviaAdvisorWeb, :live_view
 
-  alias TriviaAdvisor.{Locations, Events}
+  alias TriviaAdvisor.{Locations, Events, VenueMatcher}
   alias TriviaAdvisorWeb.Helpers.{SEOHelpers, ImageHelpers}
   alias TriviaAdvisorWeb.JsonLd.{VenueSchema, BreadcrumbListSchema}
   alias TriviaAdvisorWeb.Components.SEO.{MetaTags, Breadcrumbs}
@@ -23,11 +28,8 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
         load_venue_page(venue, city, country, socket)
 
       _ ->
-        # Venue not found or missing associations
-        {:ok,
-         socket
-         |> put_flash(:error, "Venue not found")
-         |> redirect(to: "/")}
+        # Venue not found - try smart matching
+        handle_missing_venue(venue_slug, socket)
     end
   end
 
@@ -46,11 +48,67 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
       load_venue_page(venue, city, country, socket)
     else
       _ ->
+        # Venue not found - try smart matching
+        handle_missing_venue(venue_slug, socket)
+    end
+  end
+
+  # Handle missing venue with smart fuzzy matching
+  defp handle_missing_venue(missing_slug, socket) do
+    case VenueMatcher.find_similar(missing_slug) do
+      {:redirect, venue, _confidence} ->
+        # High confidence match - 301 redirect
         {:ok,
          socket
-         |> put_flash(:error, "Venue not found")
-         |> redirect(to: "/")}
+         |> redirect(to: "/venues/#{venue.slug}")}
+
+      {:suggestions, suggestions} ->
+        # Medium confidence - show suggestions page
+        load_suggestions_page(missing_slug, suggestions, socket)
+
+      :no_match ->
+        # No matches - show 404 page
+        load_not_found_page(missing_slug, socket)
     end
+  end
+
+  # Load suggestions page when multiple possible matches found
+  defp load_suggestions_page(missing_slug, suggestions, socket) do
+    base_url = get_base_url()
+
+    socket =
+      socket
+      |> assign(:page_mode, :suggestions)
+      |> assign(:missing_slug, missing_slug)
+      |> assign(:suggestions, suggestions)
+      |> assign(:base_url, base_url)
+      |> SEOHelpers.assign_meta_tags(
+        title: "Venue Not Found - Did You Mean?",
+        description: "The venue '#{missing_slug}' was not found. Here are similar venues you might be looking for.",
+        type: "website",
+        canonical_path: "/venues/#{missing_slug}"
+      )
+
+    {:ok, socket}
+  end
+
+  # Load 404 page when no matches found
+  defp load_not_found_page(missing_slug, socket) do
+    base_url = get_base_url()
+
+    socket =
+      socket
+      |> assign(:page_mode, :not_found)
+      |> assign(:missing_slug, missing_slug)
+      |> assign(:base_url, base_url)
+      |> SEOHelpers.assign_meta_tags(
+        title: "Venue Not Found",
+        description: "The venue '#{missing_slug}' could not be found. This venue may have closed or been removed.",
+        type: "website",
+        canonical_path: "/venues/#{missing_slug}"
+      )
+
+    {:ok, socket}
   end
 
   # Common helper to load venue page data (used by both flat and hierarchical routes)
@@ -79,6 +137,7 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
 
     socket =
       socket
+      |> assign(:page_mode, :venue)
       |> assign(:country, country)
       |> assign(:city, city)
       |> assign(:venue, venue)
@@ -97,7 +156,163 @@ defmodule TriviaAdvisorWeb.VenueShowLive do
   end
 
   @impl true
+  def render(%{page_mode: :suggestions} = assigns) do
+    render_suggestions_page(assigns)
+  end
+
+  def render(%{page_mode: :not_found} = assigns) do
+    render_not_found_page(assigns)
+  end
+
+  def render(%{page_mode: :venue} = assigns) do
+    render_venue_page(assigns)
+  end
+
+  # Fallback for backwards compatibility
   def render(assigns) do
+    render_venue_page(assigns)
+  end
+
+  # Render the suggestions page ("Did you mean?")
+  defp render_suggestions_page(assigns) do
+    ~H"""
+    <div class="flex flex-col min-h-screen bg-gray-50">
+      <!-- Header -->
+      <Header.site_header current_path={"/venues/#{@missing_slug}"} />
+
+      <!-- Main Content -->
+      <main class="flex-1">
+        <div class="max-w-4xl mx-auto px-4 py-16">
+          <div class="text-center mb-12">
+            <div class="text-6xl mb-6">🔍</div>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">
+              Venue Not Found
+            </h1>
+            <p class="text-xl text-gray-600">
+              We couldn't find "<span class="font-mono bg-gray-100 px-2 py-1 rounded"><%= @missing_slug %></span>", but we found similar venues:
+            </p>
+          </div>
+
+          <div class="space-y-4 mb-12">
+            <%= for {venue, confidence} <- @suggestions do %>
+              <.link navigate={~p"/venues/#{venue.slug}"}
+                    class="block p-6 bg-white rounded-lg shadow hover:shadow-lg transition border border-gray-200 hover:border-blue-300">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <h3 class="text-xl font-semibold text-gray-900">
+                      <%= venue.name %>
+                    </h3>
+                    <p class="text-gray-600 mt-1">
+                      <%= if venue.city do %>
+                        <%= venue.city.name %><%= if venue.city.country do %>, <%= venue.city.country.name %><% end %>
+                      <% end %>
+                    </p>
+                    <p class="text-sm text-gray-500 mt-2 font-mono">
+                      /venues/<%= venue.slug %>
+                    </p>
+                  </div>
+                  <div class="text-right flex-shrink-0 ml-4">
+                    <span class={"inline-flex items-center px-3 py-1 rounded-full text-sm font-medium #{confidence_badge_class(confidence)}"}>
+                      <%= Float.round(confidence * 100, 0) |> trunc() %>% match
+                    </span>
+                  </div>
+                </div>
+              </.link>
+            <% end %>
+          </div>
+
+          <div class="text-center">
+            <p class="text-gray-600 mb-4">
+              Can't find what you're looking for?
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+              <.link navigate={~p"/search"}
+                    class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                Search All Venues
+              </.link>
+              <.link navigate={~p"/"}
+                    class="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                Go Home
+              </.link>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <Footer.site_footer />
+    </div>
+    """
+  end
+
+  # Render the 404 page (no matches found)
+  defp render_not_found_page(assigns) do
+    ~H"""
+    <div class="flex flex-col min-h-screen bg-gray-50">
+      <!-- Header -->
+      <Header.site_header current_path={"/venues/#{@missing_slug}"} />
+
+      <!-- Main Content -->
+      <main class="flex-1">
+        <div class="max-w-4xl mx-auto px-4 py-16">
+          <div class="text-center">
+            <div class="text-6xl mb-6">🎯</div>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">
+              Venue Not Found
+            </h1>
+            <p class="text-xl text-gray-600 mb-8">
+              The venue "<span class="font-mono bg-gray-100 px-2 py-1 rounded"><%= @missing_slug %></span>" could not be found.
+            </p>
+            <p class="text-gray-500 mb-8">
+              This venue may have closed, been removed, or the URL may be incorrect.
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-4">
+              <.link navigate={~p"/search"}
+                    class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                Search Venues
+              </.link>
+              <.link navigate={~p"/cities"}
+                    class="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+                Browse Cities
+              </.link>
+              <.link navigate={~p"/"}
+                    class="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                Go Home
+              </.link>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <Footer.site_footer />
+    </div>
+    """
+  end
+
+  # Helper for confidence badge styling
+  defp confidence_badge_class(confidence) when confidence >= 0.90, do: "bg-green-100 text-green-800"
+  defp confidence_badge_class(confidence) when confidence >= 0.80, do: "bg-blue-100 text-blue-800"
+  defp confidence_badge_class(_confidence), do: "bg-yellow-100 text-yellow-800"
+
+  # Render the regular venue page
+  defp render_venue_page(assigns) do
     meta = MetaTags.venue_meta_tags(assigns.venue, assigns.city, assigns.country, assigns.base_url)
 
     breadcrumbs =

@@ -8,28 +8,82 @@ config :trivia_advisor,
 # Database Configuration for Development
 # =============================================================================
 #
-# In development, connect to the local Eventasaurus database.
-# This is the same database that Eventasaurus uses in dev mode.
+# Since Trivia Advisor is completely read-only, we connect directly to the
+# production PlanetScale database in dev mode. This makes development testing
+# much more realistic and eliminates the need for a local database setup.
 #
-# To set up: Make sure you have Eventasaurus's local database running
-# (createdb eventasaurus_dev && run Eventasaurus migrations)
+# Required environment variables (in .env file):
+#   PLANETSCALE_DATABASE_HOST
+#   PLANETSCALE_DATABASE
+#   PLANETSCALE_DATABASE_USERNAME
+#   PLANETSCALE_DATABASE_PASSWORD
 #
-# PlanetScale is only used in production (runtime.exs) because:
-# 1. PlanetScale has IP restrictions (only Fly.io IPs allowed)
-# 2. Local development uses the shared local Eventasaurus database
-#
-# Note: This is a read-only connection to the same database Eventasaurus writes to
+# Note: Your IP must be allowed in PlanetScale's access controls.
+
+# Load environment from .env file for development
+if File.exists?(".env") do
+  for line <- File.read!(".env") |> String.split("\n"),
+      line != "",
+      not String.starts_with?(line, "#"),
+      [key, value] = String.split(line, "=", parts: 2) do
+    System.put_env(String.trim(key), String.trim(value))
+  end
+end
+
+ps_host = System.get_env("PLANETSCALE_DATABASE_HOST") || "localhost"
+ps_db = System.get_env("PLANETSCALE_DATABASE") || "eventasaurus_dev"
+ps_user = System.get_env("PLANETSCALE_DATABASE_USERNAME") || "postgres"
+ps_pass = System.get_env("PLANETSCALE_DATABASE_PASSWORD") || "postgres"
+ps_port = String.to_integer(System.get_env("PLANETSCALE_PG_BOUNCER_PORT") || "6432")
+
+# SSL configuration for PlanetScale (when using remote database)
+# Note: CAStore.file_path() isn't available at config time, so we use
+# the system CA bundle path directly for dev mode
+ssl_config =
+  if ps_host != "localhost" do
+    # Use system CA bundle on macOS
+    cacert_path =
+      cond do
+        File.exists?("/etc/ssl/cert.pem") -> "/etc/ssl/cert.pem"
+        File.exists?("/etc/ssl/certs/ca-certificates.crt") -> "/etc/ssl/certs/ca-certificates.crt"
+        true -> nil
+      end
+
+    if cacert_path do
+      [
+        ssl: true,
+        ssl_opts: [
+          verify: :verify_peer,
+          cacertfile: cacert_path,
+          server_name_indication: String.to_charlist(ps_host),
+          customize_hostname_check: [
+            match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
+          ]
+        ]
+      ]
+    else
+      # Fallback: SSL without strict verification (dev only)
+      [ssl: true, ssl_opts: [verify: :verify_none]]
+    end
+  else
+    []
+  end
 
 config :trivia_advisor, TriviaAdvisor.Repo,
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
-  database: "eventasaurus_dev",
-  pool_size: 10,
-  timeout: 30_000,
-  queue_target: 5_000,
-  queue_interval: 1_000,
-  show_sensitive_data_on_connection_error: true
+  [
+    username: ps_user,
+    password: ps_pass,
+    hostname: ps_host,
+    port: ps_port,
+    database: ps_db,
+    pool_size: 5,
+    timeout: 30_000,
+    queue_target: 5_000,
+    queue_interval: 1_000,
+    show_sensitive_data_on_connection_error: true,
+    # Disable prepared statements for PgBouncer compatibility
+    prepare: :unnamed
+  ] ++ ssl_config
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
