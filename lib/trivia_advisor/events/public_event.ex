@@ -196,21 +196,31 @@ defmodule TriviaAdvisor.Events.PublicEvent do
   end
 
   @doc """
-  Get the source URL for the event.
-  For Wombie.com events, constructs URL from activity_slug.
-  Otherwise returns the source_url field.
+  Get the Wombie URL for the event using activity_slug.
+  Returns nil if no activity_slug is available.
 
   ## Examples
 
-      iex> PublicEvent.get_source_url(%PublicEvent{source_name: "Wombie.com", activity_slug: "trivia-night"})
-      "https://wombie.com/trivia-night"
+      iex> PublicEvent.get_wombie_url(%PublicEvent{activity_slug: "trivia-night-at-pub-251210"})
+      "https://wombie.com/activities/trivia-night-at-pub-251210"
+
+      iex> PublicEvent.get_wombie_url(%PublicEvent{activity_slug: nil})
+      nil
+  """
+  def get_wombie_url(%{activity_slug: slug}) when is_binary(slug) do
+    "https://wombie.com/activities/#{slug}"
+  end
+  def get_wombie_url(_), do: nil
+
+  @doc """
+  Get the source URL for the event (legacy source website).
+  Returns the original source_url field for attribution purposes.
+
+  ## Examples
 
       iex> PublicEvent.get_source_url(%PublicEvent{source_url: "https://example.com/event"})
       "https://example.com/event"
   """
-  def get_source_url(%{source_name: "Wombie.com", activity_slug: slug}) when is_binary(slug) do
-    "https://wombie.com/#{slug}"
-  end
   def get_source_url(%{source_url: url}) when is_binary(url), do: url
   def get_source_url(_), do: nil
 end

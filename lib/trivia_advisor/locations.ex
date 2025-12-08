@@ -9,6 +9,10 @@ defmodule TriviaAdvisor.Locations do
   alias TriviaAdvisor.Locations.{Country, City, Venue}
   alias TriviaAdvisor.Events.PublicEvent
 
+  # Default radius in km for city venue geo-proximity queries
+  # This catches all venues in suburbs within the city's metropolitan area
+  @default_city_radius_km 25
+
   # ============================================================================
   # Country Queries
   # ============================================================================
@@ -741,23 +745,66 @@ defmodule TriviaAdvisor.Locations do
 
   @doc """
   Lists all venues for a city that have trivia events, with full event details.
-  Queries the trivia_events_export view which provides all fields pre-flattened.
+  Uses geo-proximity search (PostGIS) to find venues within the city's radius,
+  catching suburbs and neighboring areas that belong to the same metro area.
+
+  Accepts either a City struct (recommended) or a city_id (backward compatible).
+  When given a City struct with coordinates, uses radius-based search.
+  When given just an ID or a city without coordinates, falls back to exact city_id match.
 
   Returns event/venue data as maps (not Venue structs) with all fields from the view.
   All event data is pre-extracted from JSONB - no fragment queries needed!
 
   ## Options
   - `:weekday` - Filter by day of week (1=Monday, 7=Sunday). Default: nil (no filter)
+  - `:suburb` - Filter by suburb name. Default: nil (no filter)
+  - `:radius_km` - Search radius in kilometers. Default: #{@default_city_radius_km}km
 
   ## Examples
 
-      iex> list_venues_for_city(123)
-      [%{venue_name: "...", day_of_week: 1, start_time: ~T[19:00:00], ...}, ...]
+      iex> list_venues_for_city(%City{id: 123, latitude: 51.5074, longitude: -0.1278})
+      [%{venue_name: "...", day_of_week: 1, distance_km: 2.5, ...}, ...]
 
       iex> list_venues_for_city(123, weekday: 3)
-      [%{...}, ...]  # Only events on Wednesday
+      [%{...}, ...]  # Only events on Wednesday (fallback to exact city_id match)
   """
-  def list_venues_for_city(city_id, opts \\ []) do
+  def list_venues_for_city(city_or_id, opts \\ [])
+
+  # When given a City struct with coordinates, use geo-proximity search
+  def list_venues_for_city(%City{id: city_id, latitude: lat, longitude: lon} = _city, opts)
+      when not is_nil(lat) and not is_nil(lon) do
+    weekday = Keyword.get(opts, :weekday)
+    suburb = Keyword.get(opts, :suburb)
+    radius_km = Keyword.get(opts, :radius_km, @default_city_radius_km)
+
+    # Cache key includes city_id, radius, weekday, and suburb filters
+    cache_key =
+      cond do
+        weekday && suburb ->
+          "city_#{city_id}_geo_#{radius_km}km_day_#{weekday}_suburb_#{suburb}"
+
+        weekday ->
+          "city_#{city_id}_geo_#{radius_km}km_day_#{weekday}"
+
+        suburb ->
+          "city_#{city_id}_geo_#{radius_km}km_suburb_#{suburb}"
+
+        true ->
+          "city_#{city_id}_geo_#{radius_km}km_all"
+      end
+
+    ConCache.get_or_store(:city_cache, cache_key, fn ->
+      fetch_venues_by_geo_proximity(lat, lon, radius_km, weekday, suburb)
+    end)
+  end
+
+  # Fallback: City struct without coordinates - use exact match
+  def list_venues_for_city(%City{id: city_id}, opts) do
+    list_venues_for_city(city_id, opts)
+  end
+
+  # Backward compatible: When given just a city_id, use exact match
+  def list_venues_for_city(city_id, opts) when is_integer(city_id) do
     weekday = Keyword.get(opts, :weekday)
     suburb = Keyword.get(opts, :suburb)
 
@@ -778,11 +825,94 @@ defmodule TriviaAdvisor.Locations do
       end
 
     ConCache.get_or_store(:city_cache, cache_key, fn ->
-      fetch_venues_for_city(city_id, weekday, suburb)
+      fetch_venues_for_city_exact(city_id, weekday, suburb)
     end)
   end
 
-  defp fetch_venues_for_city(city_id, weekday, suburb) do
+  # Geo-proximity query using PostGIS
+  # Finds all venues within radius_km of the city center coordinates
+  defp fetch_venues_by_geo_proximity(city_lat, city_lon, radius_km, weekday, suburb) do
+    # Convert Decimal to float for PostGIS
+    lat = if is_struct(city_lat, Decimal), do: Decimal.to_float(city_lat), else: city_lat
+    lon = if is_struct(city_lon, Decimal), do: Decimal.to_float(city_lon), else: city_lon
+    radius_meters = radius_km * 1000
+
+    # Base query with geo-proximity filter and distance calculation
+    query =
+      from te in PublicEvent,
+        where: not is_nil(te.venue_latitude) and not is_nil(te.venue_longitude),
+        where:
+          fragment(
+            "ST_DWithin(ST_MakePoint(?, ?)::geography, ST_MakePoint(?, ?)::geography, ?)",
+            te.venue_longitude,
+            te.venue_latitude,
+            ^lon,
+            ^lat,
+            ^radius_meters
+          ),
+        order_by: te.venue_name,
+        select: %{
+          # Event details (all pre-extracted, no JSONB parsing!)
+          event_id: te.id,
+          event_name: te.name,
+          day_of_week: te.day_of_week,
+          start_time: te.start_time,
+          timezone: te.timezone,
+          frequency: te.frequency,
+          entry_fee_cents: te.entry_fee_cents,
+          description: te.description,
+          hero_image: te.hero_image,
+
+          # Source attribution
+          source_name: te.source_name,
+          source_url: te.source_url,
+          source_logo_url: te.source_logo_url,
+          source_website_url: te.source_website_url,
+          activity_slug: te.activity_slug,
+          last_seen_at: te.last_seen_at,
+          updated_at: te.updated_at,
+
+          # Venue details (all flat)
+          venue_id: te.venue_id,
+          venue_name: te.venue_name,
+          slug: te.venue_slug,
+          venue_address: te.venue_address,
+          venue_latitude: te.venue_latitude,
+          venue_longitude: te.venue_longitude,
+          venue_images: te.venue_images,
+          venue_metadata: te.venue_metadata,
+
+          # Location info
+          city_id: te.city_id,
+          city_name: te.city_name,
+          city_slug: te.city_slug,
+          city_latitude: te.city_latitude,
+          city_longitude: te.city_longitude,
+          city_images: te.city_images,
+          country_id: te.country_id,
+          country_name: te.country_name,
+          country_code: te.country_code,
+
+          # Distance from city center (in km, rounded to 1 decimal)
+          distance_km:
+            fragment(
+              "ROUND(CAST(ST_Distance(ST_MakePoint(?, ?)::geography, ST_MakePoint(?, ?)::geography) / 1000 AS NUMERIC), 1)",
+              ^lon,
+              ^lat,
+              te.venue_longitude,
+              te.venue_latitude
+            )
+        }
+
+    # Apply optional filters
+    query = apply_weekday_filter(query, weekday)
+    query = apply_suburb_filter(query, suburb)
+
+    Repo.all(query)
+  end
+
+  # Exact city_id match (legacy behavior, used as fallback)
+  defp fetch_venues_for_city_exact(city_id, weekday, suburb) do
     # Query trivia_events_export view directly for all flat fields
     query =
       from te in PublicEvent,
@@ -829,44 +959,85 @@ defmodule TriviaAdvisor.Locations do
           city_images: te.city_images,  # For city image fallback
           country_id: te.country_id,
           country_name: te.country_name,
-          country_code: te.country_code
+          country_code: te.country_code,
+
+          # No distance_km for exact match (would need city coordinates)
+          distance_km: nil
         }
 
-    # Filter by weekday using flat day_of_week field (simple integer comparison!)
-    query =
-      if weekday && weekday in 1..7 do
-        from [te] in query, where: te.day_of_week == ^weekday
-      else
-        query
-      end
+    # Apply optional filters
+    query = apply_weekday_filter(query, weekday)
+    query = apply_suburb_filter(query, suburb)
 
-    # Filter by suburb using LIKE pattern on venue_name
-    # Venue names follow pattern: "{Venue Name}, {Suburb}"
-    # Match exact suburb after comma (no trailing % to avoid partial matches)
-    query =
-      if suburb && is_binary(suburb) do
-        pattern = "%, #{suburb}"
-        from [te] in query, where: ilike(te.venue_name, ^pattern)
-      else
-        query
-      end
-
-    # Return list of events with all venue/event details merged
     Repo.all(query)
   end
+
+  # Filter helpers (shared between geo and exact queries)
+  defp apply_weekday_filter(query, weekday) when weekday in 1..7 do
+    from [te] in query, where: te.day_of_week == ^weekday
+  end
+
+  defp apply_weekday_filter(query, _weekday), do: query
+
+  defp apply_suburb_filter(query, suburb) when is_binary(suburb) and suburb != "" do
+    pattern = "%, #{suburb}"
+    from [te] in query, where: ilike(te.venue_name, ^pattern)
+  end
+
+  defp apply_suburb_filter(query, _suburb), do: query
 
   @doc """
   Gets event counts per day of week for a city.
   Returns a map with day numbers (1-7) as keys and counts as values.
 
+  Accepts either a City struct (uses geo-proximity) or a city_id (exact match).
   Results are cached for 15 minutes to improve city show page performance.
 
   ## Examples
 
-      iex> get_day_counts_for_city(53)
+      iex> get_day_counts_for_city(%City{id: 53, latitude: 51.5, longitude: -0.1})
       %{1 => 12, 2 => 18, 3 => 26, 4 => 15, 5 => 20, 6 => 8, 7 => 4}
   """
-  def get_day_counts_for_city(city_id) do
+  def get_day_counts_for_city(city_or_id, opts \\ [])
+
+  # When given a City struct with coordinates, use geo-proximity
+  def get_day_counts_for_city(%City{id: city_id, latitude: lat, longitude: lon}, opts)
+      when not is_nil(lat) and not is_nil(lon) do
+    radius_km = Keyword.get(opts, :radius_km, @default_city_radius_km)
+
+    ConCache.get_or_store(:city_cache, "day_counts_geo_#{city_id}_#{radius_km}km", fn ->
+      # Convert Decimal to float for PostGIS
+      lat_f = if is_struct(lat, Decimal), do: Decimal.to_float(lat), else: lat
+      lon_f = if is_struct(lon, Decimal), do: Decimal.to_float(lon), else: lon
+      radius_meters = radius_km * 1000
+
+      results =
+        Repo.all(
+          from te in PublicEvent,
+            where: not is_nil(te.venue_latitude) and not is_nil(te.venue_longitude),
+            where:
+              fragment(
+                "ST_DWithin(ST_MakePoint(?, ?)::geography, ST_MakePoint(?, ?)::geography, ?)",
+                te.venue_longitude,
+                te.venue_latitude,
+                ^lon_f,
+                ^lat_f,
+                ^radius_meters
+              ),
+            group_by: te.day_of_week,
+            select: {te.day_of_week, count(te.id)}
+        )
+
+      Map.new(results)
+    end)
+  end
+
+  # Fallback: City struct without coordinates or just city_id
+  def get_day_counts_for_city(%City{id: city_id}, _opts) do
+    get_day_counts_for_city(city_id, [])
+  end
+
+  def get_day_counts_for_city(city_id, _opts) when is_integer(city_id) do
     ConCache.get_or_store(:city_cache, "day_counts_#{city_id}", fn ->
       # Query the view and group by day_of_week
       results =
@@ -914,18 +1085,65 @@ defmodule TriviaAdvisor.Locations do
   Gets list of suburbs for a city with venue counts.
   Returns a list of %{suburb: "Name", count: 5} sorted by count descending.
 
+  Accepts either a City struct (uses geo-proximity) or a city_id (exact match).
   Results are cached for 15 minutes to improve city show page performance.
 
   ## Examples
 
-      iex> get_suburbs_for_city(53)
+      iex> get_suburbs_for_city(%City{id: 53, latitude: 51.5, longitude: -0.1})
       [
         %{suburb: "Camden", count: 8},
         %{suburb: "Shoreditch", count: 6},
         %{suburb: "Brixton", count: 4}
       ]
   """
-  def get_suburbs_for_city(city_id) do
+  def get_suburbs_for_city(city_or_id, opts \\ [])
+
+  # When given a City struct with coordinates, use geo-proximity
+  def get_suburbs_for_city(%City{id: city_id, latitude: lat, longitude: lon}, opts)
+      when not is_nil(lat) and not is_nil(lon) do
+    radius_km = Keyword.get(opts, :radius_km, @default_city_radius_km)
+
+    ConCache.get_or_store(:city_cache, "suburbs_geo_#{city_id}_#{radius_km}km", fn ->
+      # Convert Decimal to float for PostGIS
+      lat_f = if is_struct(lat, Decimal), do: Decimal.to_float(lat), else: lat
+      lon_f = if is_struct(lon, Decimal), do: Decimal.to_float(lon), else: lon
+      radius_meters = radius_km * 1000
+
+      # Get all venue names within the radius
+      venue_names =
+        Repo.all(
+          from te in PublicEvent,
+            where: not is_nil(te.venue_latitude) and not is_nil(te.venue_longitude),
+            where:
+              fragment(
+                "ST_DWithin(ST_MakePoint(?, ?)::geography, ST_MakePoint(?, ?)::geography, ?)",
+                te.venue_longitude,
+                te.venue_latitude,
+                ^lon_f,
+                ^lat_f,
+                ^radius_meters
+              ),
+            distinct: te.venue_id,
+            select: te.venue_name
+        )
+
+      # Extract suburbs and count occurrences
+      venue_names
+      |> Enum.map(&extract_suburb_from_venue_name/1)
+      |> Enum.reject(&is_nil/1)
+      |> Enum.frequencies()
+      |> Enum.map(fn {suburb, count} -> %{suburb: suburb, count: count} end)
+      |> Enum.sort_by(& &1.count, :desc)
+    end)
+  end
+
+  # Fallback: City struct without coordinates or just city_id
+  def get_suburbs_for_city(%City{id: city_id}, _opts) do
+    get_suburbs_for_city(city_id, [])
+  end
+
+  def get_suburbs_for_city(city_id, _opts) when is_integer(city_id) do
     ConCache.get_or_store(:city_cache, "suburbs_#{city_id}", fn ->
       # Get all venue names for the city
       venue_names =
