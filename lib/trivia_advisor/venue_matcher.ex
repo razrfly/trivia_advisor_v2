@@ -214,9 +214,11 @@ defmodule TriviaAdvisor.VenueMatcher do
 
     # 2. Venue slug starts with the search term (+25%)
     # This is a strong signal that we found the right venue with a suffix
+    # Note: Last condition uses explicit parentheses for clarity
+    # This means: starts_with_hyphen OR starts_with_hyphen_normalized OR (starts_with AND not_equal)
     score = if String.starts_with?(venue_slug, normalized_slug <> "-") or
                String.starts_with?(venue_normalized, normalized_slug <> "-") or
-               String.starts_with?(venue_slug, normalized_slug) and venue_slug != normalized_slug do
+               (String.starts_with?(venue_slug, normalized_slug) and venue_slug != normalized_slug) do
       score + 0.25
     else
       score
