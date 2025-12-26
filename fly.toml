@@ -10,7 +10,7 @@ kill_signal = 'SIGTERM'
 [build]
 
 [env]
-  PHX_HOST = 'beta.quizadvisor.com'
+  PHX_HOST = 'quizadvisor.com'
   PORT = '8080'
   PHX_SERVER = 'true'
 

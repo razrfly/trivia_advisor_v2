@@ -46,11 +46,33 @@ defmodule TriviaAdvisor.Locations.Venue do
   @doc """
   Extracts primary image from venue_images JSONB array.
   Returns the first image with highest quality_score or first image.
+
+  Prefers cached R2/CDN URL if available, falling back to original ImageKit URL.
   """
-  def primary_image(%__MODULE__{venue_images: images}) when is_list(images) and length(images) > 0 do
-    images
-    |> Enum.sort_by(& Map.get(&1, "quality_score", 0), :desc)
-    |> List.first()
+  def primary_image(%__MODULE__{slug: slug, venue_images: images} = _venue)
+      when is_list(images) and length(images) > 0 do
+    # Sort by quality score and get best image
+    best_image =
+      images
+      |> Enum.sort_by(&Map.get(&1, "quality_score", 0), :desc)
+      |> List.first()
+
+    # Try to get cached R2 URL for the primary image (position 0)
+    cached_url =
+      if slug do
+        TriviaAdvisor.CachedImages.get_venue_image_url(slug, 0)
+      else
+        nil
+      end
+
+    # Return image map with cached URL if available
+    case cached_url do
+      url when is_binary(url) ->
+        Map.put(best_image, "url", url)
+
+      nil ->
+        best_image
+    end
   end
 
   def primary_image(_), do: nil

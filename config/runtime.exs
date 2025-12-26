@@ -117,9 +117,11 @@ if config_env() == :prod do
     # Allow WebSocket connections from the configured host and www subdomain
     # This is critical for LiveView to work - without it, the WebSocket upgrade
     # fails silently and pages appear to never finish loading
+    # Using protocol-agnostic format (//) to handle both HTTP and HTTPS
+    # This is important because some proxies may send HTTP origin headers
     check_origin: [
-      "https://#{host}",
-      "https://www.#{host}"
+      "//#{host}",
+      "//www.#{host}"
     ]
 
   # ## SSL Support
