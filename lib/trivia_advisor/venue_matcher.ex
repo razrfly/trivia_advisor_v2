@@ -191,6 +191,7 @@ defmodule TriviaAdvisor.VenueMatcher do
   Calculates confidence score for a venue match.
 
   Scoring components:
+  - Perfect prefix match (search is exact prefix of venue): +50% (very strong signal)
   - Exact normalized match: +40%
   - Venue starts with search term: +25% (strong signal for partial matches)
   - Jaro-Winkler distance (weighted): +20%
@@ -205,6 +206,18 @@ defmodule TriviaAdvisor.VenueMatcher do
 
     score = 0.0
 
+    # 0. PERFECT PREFIX MATCH (+50%)
+    # When the search term is an exact prefix of the venue slug (followed by hyphen),
+    # this is an extremely strong signal. Example: "drzwi-zwane-koniem" -> "drzwi-zwane-koniem-6-222"
+    # This handles partial slugs, truncated URLs, and ID-suffixed venues
+    is_perfect_prefix = String.starts_with?(venue_slug, normalized_slug <> "-") or
+                        String.starts_with?(venue_slug, original_slug <> "-")
+    score = if is_perfect_prefix do
+      score + 0.50
+    else
+      score
+    end
+
     # 1. Exact normalized match (+40%)
     score = if venue_normalized == normalized_slug or venue_slug == normalized_slug do
       score + 0.40
@@ -214,11 +227,13 @@ defmodule TriviaAdvisor.VenueMatcher do
 
     # 2. Venue slug starts with the search term (+25%)
     # This is a strong signal that we found the right venue with a suffix
+    # Skip if already counted in perfect prefix match
     # Note: Last condition uses explicit parentheses for clarity
     # This means: starts_with_hyphen OR starts_with_hyphen_normalized OR (starts_with AND not_equal)
-    score = if String.starts_with?(venue_slug, normalized_slug <> "-") or
+    score = if not is_perfect_prefix and
+               (String.starts_with?(venue_slug, normalized_slug <> "-") or
                String.starts_with?(venue_normalized, normalized_slug <> "-") or
-               (String.starts_with?(venue_slug, normalized_slug) and venue_slug != normalized_slug) do
+               (String.starts_with?(venue_slug, normalized_slug) and venue_slug != normalized_slug)) do
       score + 0.25
     else
       score

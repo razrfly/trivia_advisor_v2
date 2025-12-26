@@ -4,16 +4,25 @@ defmodule TriviaAdvisorWeb.Helpers.ImageHelpers do
 
   Provides consistent image fallback logic across venue cards, city cards,
   and other components that display images with various sources.
+
+  Image sources are prioritized as follows:
+  1. Cached R2/CDN URLs (from cached_images table via get_venue_image_url SQL function)
+  2. Original venue_images JSONB (ImageKit URLs)
+  3. Video thumbnail images from venue_metadata
+  4. City Unsplash gallery images
   """
+
+  alias TriviaAdvisor.CachedImages
 
   @doc """
   Gets the best available image for a venue card with fallback chain.
   Returns a map with url and alt text, or nil if no images available.
 
   Fallback order:
-  1. venue_images (uploaded venue photos)
-  2. venue_metadata["video_images"] (video thumbnails)
-  3. city_images (Unsplash city gallery)
+  1. Cached R2/CDN URL (via get_venue_image_url SQL function)
+  2. Original venue_images JSONB (ImageKit URLs)
+  3. venue_metadata["video_images"] (video thumbnails)
+  4. city_images (Unsplash city gallery)
 
   ## Examples
 
@@ -21,21 +30,40 @@ defmodule TriviaAdvisorWeb.Helpers.ImageHelpers do
       %{url: "https://...", alt: "Venue name"}
   """
   def get_venue_card_image(venue) do
+    venue_slug = get_venue_slug(venue)
+    venue_images = Map.get(venue, :venue_images)
+    venue_name = Map.get(venue, :venue_name) || "Venue photo"
+
+    # Try cached R2 URL first if we have a slug
+    cached_url =
+      if venue_slug do
+        CachedImages.get_venue_image_with_fallback(venue_slug, venue_images, 0)
+      else
+        nil
+      end
+
     cond do
-      # Try venue_images first
+      # Use cached/fallback URL if available
+      cached_url ->
+        %{
+          url: cached_url,
+          alt: get_image_alt(venue_images, 0) || venue_name
+        }
+
+      # Try original venue_images if no cached URL available
       has_venue_images?(venue) ->
         image = List.first(venue.venue_images)
         %{
           url: image["url"],
-          alt: image["alt"] || Map.get(venue, :venue_name) || "Venue photo"
+          alt: image["alt"] || venue_name
         }
 
-      # Try video_images second
+      # Try video_images
       has_video_images?(venue) ->
         image = venue.venue_metadata["video_images"] |> List.first()
         %{
           url: image["url"],
-          alt: "#{Map.get(venue, :venue_name) || "Venue"} video thumbnail"
+          alt: "#{venue_name} video thumbnail"
         }
 
       # Fall back to city_images (Unsplash gallery - different image per venue)
@@ -47,6 +75,21 @@ defmodule TriviaAdvisorWeb.Helpers.ImageHelpers do
         nil
     end
   end
+
+  # Get venue slug from various possible field names
+  defp get_venue_slug(venue) do
+    Map.get(venue, :venue_slug) || Map.get(venue, :slug)
+  end
+
+  # Get alt text from venue_images JSONB at position
+  defp get_image_alt(venue_images, position) when is_list(venue_images) do
+    case Enum.at(venue_images, position) do
+      %{"alt" => alt} when is_binary(alt) -> alt
+      _ -> nil
+    end
+  end
+
+  defp get_image_alt(_, _), do: nil
 
   @doc """
   Gets the image for a city card from the unsplash_gallery field.
@@ -116,9 +159,10 @@ defmodule TriviaAdvisorWeb.Helpers.ImageHelpers do
   Returns a list of up to 5 images from venue_images, or falls back to city_images.
 
   Fallback order:
-  1. venue_images (uploaded venue photos - up to 5)
-  2. primary_image from Locations.Venue (single image)
-  3. city_images from Unsplash gallery (up to 5)
+  1. Cached R2/CDN URLs (via get_venue_image_url SQL function) with venue_images fallback
+  2. Original venue_images (uploaded venue photos - up to 5)
+  3. primary_image from Locations.Venue (single image)
+  4. city_images from Unsplash gallery (up to 5)
 
   ## Examples
 
@@ -126,13 +170,27 @@ defmodule TriviaAdvisorWeb.Helpers.ImageHelpers do
       [%{"url" => "https://...", "alt" => "..."}]
   """
   def get_venue_gallery_images(venue, city) do
+    venue_slug = get_venue_slug(venue)
+    venue_images = Map.get(venue, :venue_images)
+
     cond do
-      # Try venue_images first (JSONB array) with validation
+      # Try venue_images with cached R2 URL preference
       has_venue_images?(venue) ->
-        venue.venue_images
-        |> Enum.filter(&is_map/1)
-        |> Enum.filter(&is_binary(Map.get(&1, "url")))
+        venue_images
+        |> Enum.with_index()
+        |> Enum.filter(fn {img, _idx} -> is_map(img) && is_binary(Map.get(img, "url")) end)
         |> Enum.take(5)
+        |> Enum.map(fn {img, idx} ->
+          # Try cached R2 URL first, fall back to original
+          url =
+            if venue_slug do
+              CachedImages.get_venue_image_with_fallback(venue_slug, venue_images, idx)
+            else
+              img["url"]
+            end
+
+          %{"url" => url, "alt" => img["alt"]}
+        end)
 
       # Fallback to primary_image from Locations.Venue
       primary_image = get_primary_image(venue) ->
