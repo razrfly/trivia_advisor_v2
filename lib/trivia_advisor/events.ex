@@ -302,7 +302,6 @@ defmodule TriviaAdvisor.Events do
             venue_address: e.venue_address,
             venue_latitude: e.venue_latitude,
             venue_longitude: e.venue_longitude,
-            venue_images: e.venue_images,
             # Note: venue_type not available in trivia_events_export view
             venue_type: nil,
             city_id: e.city_id,

@@ -52,7 +52,8 @@ defmodule TriviaAdvisor.Events.PublicEvent do
     field :venue_postcode, :string          # Postal code
     field :venue_place_id, :string          # Google Place ID
     field :venue_metadata, :map             # Additional venue metadata (JSONB object)
-    field :venue_images, {:array, :map}     # Venue images array (JSONB array)
+    field :venue_images, {:array, :map}     # Cached venue images from cached_images table
+    field :venue_image_count, :integer      # Count of cached images (for gallery optimization)
 
     # City information (for grouping/filtering, distance calculations)
     field :city_id, :integer

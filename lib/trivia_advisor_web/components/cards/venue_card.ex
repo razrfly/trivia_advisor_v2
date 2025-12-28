@@ -39,7 +39,7 @@ defmodule TriviaAdvisorWeb.Components.Cards.VenueCard do
         navigate={"/venues/#{@venue.slug}"}
         class="block group"
       >
-        <!-- Venue Image with 3-level fallback (venue_images → video_images → city_images) -->
+        <!-- Venue Image with 3-level fallback (cached_images → video_images → city_images) -->
         <% image = ImageHelpers.get_venue_card_image(@venue) %>
         <%= if image do %>
           <div class="mb-4">

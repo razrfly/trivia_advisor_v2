@@ -718,7 +718,6 @@ defmodule TriviaAdvisor.Locations do
             venue_address: te.venue_address,
             venue_latitude: te.venue_latitude,
             venue_longitude: te.venue_longitude,
-            venue_images: te.venue_images,
             venue_metadata: te.venue_metadata,  # For video_images fallback
 
             # City details
@@ -879,7 +878,6 @@ defmodule TriviaAdvisor.Locations do
           venue_address: te.venue_address,
           venue_latitude: te.venue_latitude,
           venue_longitude: te.venue_longitude,
-          venue_images: te.venue_images,
           venue_metadata: te.venue_metadata,
 
           # Location info
@@ -947,7 +945,6 @@ defmodule TriviaAdvisor.Locations do
           venue_address: te.venue_address,
           venue_latitude: te.venue_latitude,
           venue_longitude: te.venue_longitude,
-          venue_images: te.venue_images,
           venue_metadata: te.venue_metadata,  # For video_images fallback
 
           # Location info (for distance calculations)
