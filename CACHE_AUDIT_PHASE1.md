@@ -51,7 +51,7 @@ Added caching to previously uncached `events.ex` functions:
 |----------|-------------------|---------------|
 | `get_events_for_venue/1` | `events_for_venue_{venue_id}` | `events.ex:35-42` |
 | `get_events_for_weekday/2` | `events_weekday_{day}_limit_{limit}` | `events.ex:60-67` |
-| `get_events_by_type/2` | `events_by_type_limit_{limit}` | `events.ex:85-91` |
+| `get_events_by_type/2` | ~~Removed~~ (dead code, view pre-filters to trivia) | N/A |
 | `get_event/1` | `event_{id}` | `events.ex:110-115` |
 
 ### Geo Cache Key Analysis
@@ -148,7 +148,7 @@ All 21 `ConCache.get_or_store` calls use `:city_cache`.
 |----------|---------|------------|-------------------|
 | `get_events_for_venue/1` | ~~NO~~ → **YES (Phase 3)** | **Full schema** | **YES** |
 | `get_events_for_weekday/2` | ~~NO~~ → **YES (Phase 3)** | **Full schema** | **YES** |
-| `get_events_by_type/2` | ~~NO~~ → **YES (Phase 3)** | **Full schema** | **YES** |
+| `get_events_by_type/2` | ~~Removed~~ (dead code) | N/A | N/A |
 | `get_event/1` | ~~NO~~ → **YES (Phase 3)** | **Full schema** | **YES** |
 | `get_nearby_trivia_venues/2` | Yes | Explicit select (no venue_images) | No |
 

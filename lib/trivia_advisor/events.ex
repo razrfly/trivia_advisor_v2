@@ -68,30 +68,6 @@ defmodule TriviaAdvisor.Events do
   end
 
   @doc """
-  Gets trivia events from trivia_events_export view.
-  The view already filters to trivia-only, so type parameter is ignored.
-
-  Results are cached for 24 hours (matches materialized view refresh cycle).
-  See: https://github.com/razrfly/eventasaurus/issues/3026
-
-  ## Examples
-
-      iex> get_events_by_type("trivia")
-      [%PublicEvent{}, ...]
-  """
-  def get_events_by_type(_event_type, opts \\ []) do
-    limit = Keyword.get(opts, :limit, 50)
-
-    ConCache.get_or_store(:city_cache, "events_by_type_limit_#{limit}", fn ->
-      Repo.all(
-        from e in PublicEvent,
-          order_by: e.name,
-          limit: ^limit
-      )
-    end)
-  end
-
-  @doc """
   Gets a single trivia event by ID from trivia_events_export view.
   Returns nil if the event is not in the view.
 
