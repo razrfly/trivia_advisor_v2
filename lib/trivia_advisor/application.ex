@@ -11,21 +11,23 @@ defmodule TriviaAdvisor.Application do
       TriviaAdvisorWeb.Telemetry,
       TriviaAdvisor.Repo,
       {DNSCluster, query: Application.get_env(:trivia_advisor, :dns_cluster_query) || :ignore},
-      # ConCache for query result caching with 15-minute TTL
+      # ConCache for query result caching with 24-hour TTL
+      # Rationale: trivia_events_export materialized view refreshes daily at 5 AM UTC
+      # See: https://github.com/razrfly/eventasaurus/issues/3026
       Supervisor.child_spec(
         {ConCache, [
           name: :city_cache,
-          ttl_check_interval: :timer.minutes(1),
-          global_ttl: :timer.minutes(15)
+          ttl_check_interval: :timer.minutes(5),
+          global_ttl: :timer.hours(24)
         ]},
         id: :city_cache
       ),
-      # ConCache for sitemap caching with 6-hour TTL (regenerates 4x daily)
+      # ConCache for sitemap caching with 24-hour TTL (matches data refresh cycle)
       Supervisor.child_spec(
         {ConCache, [
           name: :sitemap_cache,
           ttl_check_interval: :timer.minutes(5),
-          global_ttl: :timer.hours(6)
+          global_ttl: :timer.hours(24)
         ]},
         id: :sitemap_cache
       ),

@@ -21,6 +21,9 @@ defmodule TriviaAdvisor.Events do
   @doc """
   Gets all trivia events for a venue from the trivia_events_export view.
 
+  Results are cached for 24 hours (matches materialized view refresh cycle).
+  See: https://github.com/razrfly/eventasaurus/issues/3026
+
   ## Examples
 
       iex> get_events_for_venue(123)
@@ -30,16 +33,21 @@ defmodule TriviaAdvisor.Events do
       []
   """
   def get_events_for_venue(venue_id) when is_integer(venue_id) do
-    Repo.all(
-      from e in PublicEvent,
-        where: e.venue_id == ^venue_id,
-        order_by: e.name
-    )
+    ConCache.get_or_store(:city_cache, "events_for_venue_#{venue_id}", fn ->
+      Repo.all(
+        from e in PublicEvent,
+          where: e.venue_id == ^venue_id,
+          order_by: e.name
+      )
+    end)
   end
 
   @doc """
   Gets trivia events for a specific day of the week.
   Day: 1 = Monday, 2 = Tuesday, ..., 7 = Sunday (ISO 8601).
+
+  Results are cached for 24 hours (matches materialized view refresh cycle).
+  See: https://github.com/razrfly/eventasaurus/issues/3026
 
   ## Examples
 
@@ -49,17 +57,22 @@ defmodule TriviaAdvisor.Events do
   def get_events_for_weekday(weekday, opts \\ []) when weekday in 1..7 do
     limit = Keyword.get(opts, :limit, 50)
 
-    Repo.all(
-      from e in PublicEvent,
-        where: e.day_of_week == ^weekday,
-        order_by: e.name,
-        limit: ^limit
-    )
+    ConCache.get_or_store(:city_cache, "events_weekday_#{weekday}_limit_#{limit}", fn ->
+      Repo.all(
+        from e in PublicEvent,
+          where: e.day_of_week == ^weekday,
+          order_by: e.name,
+          limit: ^limit
+      )
+    end)
   end
 
   @doc """
   Gets trivia events from trivia_events_export view.
   The view already filters to trivia-only, so type parameter is ignored.
+
+  Results are cached for 24 hours (matches materialized view refresh cycle).
+  See: https://github.com/razrfly/eventasaurus/issues/3026
 
   ## Examples
 
@@ -69,16 +82,21 @@ defmodule TriviaAdvisor.Events do
   def get_events_by_type(_event_type, opts \\ []) do
     limit = Keyword.get(opts, :limit, 50)
 
-    Repo.all(
-      from e in PublicEvent,
-        order_by: e.name,
-        limit: ^limit
-    )
+    ConCache.get_or_store(:city_cache, "events_by_type_limit_#{limit}", fn ->
+      Repo.all(
+        from e in PublicEvent,
+          order_by: e.name,
+          limit: ^limit
+      )
+    end)
   end
 
   @doc """
   Gets a single trivia event by ID from trivia_events_export view.
   Returns nil if the event is not in the view.
+
+  Results are cached for 24 hours (matches materialized view refresh cycle).
+  See: https://github.com/razrfly/eventasaurus/issues/3026
 
   ## Examples
 
@@ -89,10 +107,12 @@ defmodule TriviaAdvisor.Events do
       nil
   """
   def get_event(id) when is_integer(id) do
-    Repo.one(
-      from e in PublicEvent,
-        where: e.id == ^id
-    )
+    ConCache.get_or_store(:city_cache, "event_#{id}", fn ->
+      Repo.one(
+        from e in PublicEvent,
+          where: e.id == ^id
+      )
+    end)
   end
 
   # ============================================================================
@@ -256,7 +276,8 @@ defmodule TriviaAdvisor.Events do
   including day_of_week for badges and images for display.
 
   Uses PostGIS spatial queries (ST_DWithin, ST_Distance) for accurate geographic calculations.
-  Results are cached for 15 minutes to improve venue show page performance.
+  Results are cached for 24 hours (matches materialized view refresh cycle).
+  See: https://github.com/razrfly/eventasaurus/issues/3026
 
   ## Examples
 
