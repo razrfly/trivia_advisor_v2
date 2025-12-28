@@ -3,8 +3,7 @@ defmodule TriviaAdvisor.CachedImages do
   Helper module for retrieving cached R2 image URLs.
 
   Uses SQL functions to fetch images from the cached_images table,
-  which stores R2/CDN URLs for venue images. Falls back to the original
-  ImageKit URLs stored in venues.venue_images JSONB if no cached version exists.
+  which stores R2/CDN URLs for venue images.
 
   SQL Functions available:
   - get_entity_image_url(entity_type TEXT, entity_id INTEGER, position INTEGER)
@@ -56,66 +55,38 @@ defmodule TriviaAdvisor.CachedImages do
   end
 
   @doc """
-  Gets a venue image URL with fallback to the original venue_images JSONB.
+  Gets a venue image URL from the cached_images table.
   This is the primary function to use for displaying venue images.
-
-  Tries cached R2 URL first, falls back to original ImageKit URL if not cached.
 
   ## Examples
 
-      iex> get_venue_image_with_fallback("beer-merchants-tap", venue_images, 0)
-      "https://cdn.quizadvisor.com/venues/beer-merchants-tap/image-0.jpg"  # or original URL
+      iex> get_venue_image_with_fallback("beer-merchants-tap", 0)
+      "https://cdn.quizadvisor.com/venues/beer-merchants-tap/image-0.jpg"
 
   ## Parameters
     - venue_slug: The venue's URL slug
-    - venue_images: The venue_images JSONB array (list of maps with "url" key)
     - position: The image position/index (default 0 for primary image)
   """
-  def get_venue_image_with_fallback(venue_slug, venue_images, position \\ 0) do
-    # Try cached R2 URL first
-    case get_venue_image_url(venue_slug, position) do
-      url when is_binary(url) ->
-        url
-
-      nil ->
-        # Fall back to original venue_images JSONB
-        get_venue_image_from_jsonb(venue_images, position)
-    end
+  def get_venue_image_with_fallback(venue_slug, _venue_images \\ nil, position \\ 0) do
+    get_venue_image_url(venue_slug, position)
   end
 
   @doc """
-  Gets a venue image map (url + alt) with fallback to original venue_images JSONB.
+  Gets a venue image map (url + alt) from cached_images.
   Returns a map with :url and :alt keys, or nil if no image available.
 
   ## Examples
 
-      iex> get_venue_image_map_with_fallback("beer-merchants-tap", venue_images, "Beer Merchants Tap")
+      iex> get_venue_image_map_with_fallback("beer-merchants-tap", nil, "Beer Merchants Tap")
       %{url: "https://...", alt: "Beer Merchants Tap"}
   """
-  def get_venue_image_map_with_fallback(venue_slug, venue_images, venue_name, position \\ 0) do
-    case get_venue_image_with_fallback(venue_slug, venue_images, position) do
+  def get_venue_image_map_with_fallback(venue_slug, _venue_images \\ nil, venue_name, position \\ 0) do
+    case get_venue_image_url(venue_slug, position) do
       nil ->
         nil
 
       url ->
-        # Get alt text from original venue_images if available
-        alt =
-          case Enum.at(venue_images || [], position) do
-            %{"alt" => alt} when is_binary(alt) -> alt
-            _ -> venue_name || "Venue photo"
-          end
-
-        %{url: url, alt: alt}
+        %{url: url, alt: venue_name || "Venue photo"}
     end
   end
-
-  # Private helper to extract URL from venue_images JSONB array
-  defp get_venue_image_from_jsonb(venue_images, position) when is_list(venue_images) do
-    case Enum.at(venue_images, position) do
-      %{"url" => url} when is_binary(url) -> url
-      _ -> nil
-    end
-  end
-
-  defp get_venue_image_from_jsonb(_, _), do: nil
 end
