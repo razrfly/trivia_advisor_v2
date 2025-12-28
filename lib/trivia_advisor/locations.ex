@@ -719,6 +719,7 @@ defmodule TriviaAdvisor.Locations do
             venue_latitude: te.venue_latitude,
             venue_longitude: te.venue_longitude,
             venue_metadata: te.venue_metadata,  # For video_images fallback
+            venue_images: te.venue_images,  # Consolidated: same columns as full schema queries
 
             # City details
             city_id: te.city_id,
@@ -879,6 +880,7 @@ defmodule TriviaAdvisor.Locations do
           venue_latitude: te.venue_latitude,
           venue_longitude: te.venue_longitude,
           venue_metadata: te.venue_metadata,
+          venue_images: te.venue_images,  # Consolidated: same columns as full schema queries
 
           # Location info
           city_id: te.city_id,
@@ -946,6 +948,7 @@ defmodule TriviaAdvisor.Locations do
           venue_latitude: te.venue_latitude,
           venue_longitude: te.venue_longitude,
           venue_metadata: te.venue_metadata,  # For video_images fallback
+          venue_images: te.venue_images,  # Consolidated: same columns as full schema queries
 
           # Location info (for distance calculations)
           city_id: te.city_id,
