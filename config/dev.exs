@@ -41,9 +41,10 @@ if File.exists?(".env") do
 end
 
 # Check for DATABASE_URL, fallback to local database
+# Note: Empty string is truthy in Elixir, so we check for both nil and ""
 database_url = System.get_env("DATABASE_URL")
 
-if database_url do
+if database_url not in [nil, ""] do
   config :trivia_advisor, TriviaAdvisor.Repo,
     url: database_url,
     pool_size: 5,
