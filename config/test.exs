@@ -15,7 +15,7 @@ config :trivia_advisor, TriviaAdvisorWeb.Endpoint,
 # that development uses. Since this is a read-only application, we don't need
 # Ecto sandbox mode for transaction isolation - we're just reading data.
 #
-# PlanetScale is only used in production (configured in runtime.exs).
+# Fly Managed Postgres is used in production (configured in runtime.exs).
 
 config :trivia_advisor, TriviaAdvisor.Repo,
   username: "postgres",

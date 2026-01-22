@@ -8,17 +8,22 @@ config :trivia_advisor,
 # Database Configuration for Development
 # =============================================================================
 #
-# Since Trivia Advisor is completely read-only, we connect directly to the
-# production PlanetScale database in dev mode. This makes development testing
-# much more realistic and eliminates the need for a local database setup.
+# Trivia Advisor is a read-only application that connects to the Eventasaurus
+# database (now on Fly Managed Postgres).
 #
-# Required environment variables (in .env file):
-#   PLANETSCALE_DATABASE_HOST
-#   PLANETSCALE_DATABASE
-#   PLANETSCALE_DATABASE_USERNAME
-#   PLANETSCALE_DATABASE_PASSWORD
+# In development, you have two options:
 #
-# Note: Your IP must be allowed in PlanetScale's access controls.
+# Option A: Use local eventasaurus_dev database (default)
+#   - No DATABASE_URL needed in .env
+#   - Requires local Postgres with eventasaurus_dev database
+#
+# Option B: Use DATABASE_URL from .env
+#   - Set DATABASE_URL in .env file
+#   - Can point to local database or use Fly proxy for remote access
+#
+# For Fly proxy to remote database:
+#   fly proxy 15432:5432 -a eventasaurus-db
+#   Then set: DATABASE_URL=postgres://user:pass@localhost:15432/eventasaurus
 
 # Load environment from .env file for development
 if File.exists?(".env") do
@@ -26,66 +31,35 @@ if File.exists?(".env") do
       line != "",
       not String.starts_with?(line, "#") do
     case String.split(line, "=", parts: 2) do
-      [key, value] -> System.put_env(String.trim(key), String.trim(value))
-      _ -> :ok  # Skip malformed lines
+      [key, value] ->
+        key = String.trim(key)
+        value = value |> String.trim() |> String.trim("\"")
+        System.put_env(key, value)
+      _ -> :ok
     end
   end
 end
 
-ps_host = System.get_env("PLANETSCALE_DATABASE_HOST") || "localhost"
-ps_db = System.get_env("PLANETSCALE_DATABASE") || "eventasaurus_dev"
-ps_user = System.get_env("PLANETSCALE_DATABASE_USERNAME") || "postgres"
-ps_pass = System.get_env("PLANETSCALE_DATABASE_PASSWORD") || "postgres"
-ps_port = String.to_integer(System.get_env("PLANETSCALE_PG_BOUNCER_PORT") || "6432")
+# Check for DATABASE_URL, fallback to local database
+database_url = System.get_env("DATABASE_URL")
 
-# SSL configuration for PlanetScale (when using remote database)
-# Note: CAStore.file_path() isn't available at config time, so we use
-# the system CA bundle path directly for dev mode
-ssl_config =
-  if ps_host != "localhost" do
-    # Use system CA bundle on macOS
-    cacert_path =
-      cond do
-        File.exists?("/etc/ssl/cert.pem") -> "/etc/ssl/cert.pem"
-        File.exists?("/etc/ssl/certs/ca-certificates.crt") -> "/etc/ssl/certs/ca-certificates.crt"
-        true -> nil
-      end
-
-    if cacert_path do
-      [
-        ssl: true,
-        ssl_opts: [
-          verify: :verify_peer,
-          cacertfile: cacert_path,
-          server_name_indication: String.to_charlist(ps_host),
-          customize_hostname_check: [
-            match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
-          ]
-        ]
-      ]
-    else
-      # Fallback: SSL without strict verification (dev only)
-      [ssl: true, ssl_opts: [verify: :verify_none]]
-    end
-  else
-    []
-  end
-
-config :trivia_advisor, TriviaAdvisor.Repo,
-  [
-    username: ps_user,
-    password: ps_pass,
-    hostname: ps_host,
-    port: ps_port,
-    database: ps_db,
+if database_url do
+  config :trivia_advisor, TriviaAdvisor.Repo,
+    url: database_url,
     pool_size: 5,
-    timeout: 30_000,
-    queue_target: 5_000,
-    queue_interval: 1_000,
-    show_sensitive_data_on_connection_error: true,
-    # Disable prepared statements for PgBouncer compatibility
-    prepare: :unnamed
-  ] ++ ssl_config
+    stacktrace: true,
+    show_sensitive_data_on_connection_error: true
+else
+  # Local development database (same as Eventasaurus dev)
+  config :trivia_advisor, TriviaAdvisor.Repo,
+    username: "postgres",
+    password: "postgres",
+    hostname: "localhost",
+    database: "eventasaurus_dev",
+    pool_size: 5,
+    stacktrace: true,
+    show_sensitive_data_on_connection_error: true
+end
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

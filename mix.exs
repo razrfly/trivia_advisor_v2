@@ -68,7 +68,7 @@ defmodule TriviaAdvisor.MixProject do
       {:ecto_sql, "~> 3.12"},
       {:postgrex, "~> 0.19"},
       {:geo_postgis, "~> 3.6"},
-      # SSL certificate verification for PlanetScale
+      # SSL certificate verification for secure database connections
       {:castore, "~> 1.0"},
       # Utilities
       {:countries, "~> 1.6"},

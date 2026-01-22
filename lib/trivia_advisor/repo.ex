@@ -8,12 +8,13 @@ defmodule TriviaAdvisor.Repo do
   ## Configuration
 
   In production (runtime.exs):
-  - Uses hostname-based config (NOT URL-based) for proper SSL handling
-  - Connects to PlanetScale via PgBouncer (port 6432)
-  - SSL verification using CAStore
+  - Connects to Fly Managed Postgres using DATABASE_URL
+  - Uses IPv6 for Fly.io internal network (.flympg.net domains)
+  - PgBouncer compatibility with `prepare: :unnamed`
 
   In development (dev.exs):
-  - Connects to local eventasaurus_dev database (same as Eventasaurus)
+  - Supports DATABASE_URL from .env file
+  - Falls back to local eventasaurus_dev database if no DATABASE_URL
   - No SSL required for local development
 
   ## Why Read-Only?
