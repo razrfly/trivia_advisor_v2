@@ -23,64 +23,35 @@ end
 # Production Configuration
 # =============================================================================
 #
-# In production, we connect to PlanetScale read replicas for the shared
+# In production, we connect to Fly Managed Postgres for the shared
 # Eventasaurus database. Since Trivia Advisor is completely read-only,
-# we use PgBouncer (port 6432) for efficient connection pooling.
+# we use the pooled connection for efficient connection management.
 #
-# In development/test, we use the local eventasaurus_dev database
-# (configured in dev.exs/test.exs) because:
-# 1. PlanetScale has IP restrictions (only Fly.io IPs allowed)
-# 2. Local development uses the same database Eventasaurus writes to
-#
-# See: https://planetscale.com/docs/postgres/scaling/replicas
+# CRITICAL: Fly Managed Postgres requires special DNS and IPv6 configuration.
+# See: https://fly.io/docs/postgres/
 
 if config_env() == :prod do
-  # Validate required PlanetScale environment variables
-  ps_host = System.fetch_env!("PLANETSCALE_DATABASE_HOST")
-  ps_db = System.fetch_env!("PLANETSCALE_DATABASE")
-  ps_user = System.fetch_env!("PLANETSCALE_DATABASE_USERNAME")
-  ps_pass = System.fetch_env!("PLANETSCALE_DATABASE_PASSWORD")
+  # Configure Erlang's inet resolver to use Fly's internal DNS server
+  # This is required for Fly Managed Postgres .flympg.net domains
+  # Erlang's built-in inet_res resolver doesn't read /etc/resolv.conf by default
+  # and fails with nxdomain on Fly.io's internal DNS
+  #
+  # Fly's internal DNS server at fdaa::3 can resolve .flympg.net domains
+  # Parse the IPv6 address into a tuple for :inet_db
+  fly_dns_server = {0xFDAA, 0, 0, 0, 0, 0, 0, 3}
 
-  # Use PgBouncer port (6432) for connection pooling
-  # Note: PgBouncer does NOT support |replica routing, so we connect to primary
-  # For a read-only app like Trivia Advisor, this is fine - we're just reading data
-  ps_port =
-    case Integer.parse(System.get_env("PLANETSCALE_PG_BOUNCER_PORT") || "6432") do
-      {port, _} when port > 0 and port <= 65535 -> port
-      _ -> 6432
-    end
+  # Configure Erlang's inet to use Fly's DNS server
+  # This affects all DNS resolution including Postgrex hostname lookups
+  :inet_db.set_lookup([:dns, :file, :native])
+  :inet_db.add_ns(fly_dns_server)
 
-  # Force IPv4 for reliable Fly.io connectivity to PlanetScale
-  # This MUST be applied via hostname-based config, not URL-based
-  socket_opts = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: [:inet]
-
-  # PlanetScale SSL: Standard SSL verification using CAStore
-  # (proven working configuration from Eventasaurus project)
-  planetscale_ssl_opts = [
-    verify: :verify_peer,
-    cacertfile: CAStore.file_path(),
-    server_name_indication: String.to_charlist(ps_host),
-    customize_hostname_check: [
-      match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
-    ]
-  ]
-
-  config :trivia_advisor, TriviaAdvisor.Repo,
-    username: ps_user,
-    password: ps_pass,
-    hostname: ps_host,
-    port: ps_port,
-    database: ps_db,
-    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "5"),
-    socket_options: socket_opts,
-    queue_target: 5000,
-    queue_interval: 30000,
-    connect_timeout: 30_000,
-    handshake_timeout: 30_000,
-    ssl: true,
-    ssl_opts: planetscale_ssl_opts,
-    # Disable prepared statements for PgBouncer compatibility
-    prepare: :unnamed
+  # Validate required environment variables
+  database_url =
+    System.get_env("DATABASE_URL") ||
+      raise """
+      environment variable DATABASE_URL is missing.
+      This should be the connection string for Fly Managed Postgres.
+      """
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you
@@ -102,6 +73,22 @@ if config_env() == :prod do
     base_url: System.get_env("BASE_URL") || "https://#{host}"
 
   config :trivia_advisor, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
+
+  # Configure Fly Managed Postgres database connection
+  #
+  # Connection Architecture:
+  # - DATABASE_URL: Connection string from Fly Managed Postgres
+  # - Uses IPv6 for Fly internal network (.flympg.net resolves to IPv6)
+  # - prepare: :unnamed for PgBouncer compatibility (if using pooler)
+  config :trivia_advisor, TriviaAdvisor.Repo,
+    url: database_url,
+    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "5"),
+    queue_target: 5000,
+    queue_interval: 30000,
+    # Disable prepared statements for PgBouncer Transaction mode compatibility
+    prepare: :unnamed,
+    # Force IPv6 for Fly.io internal network (.flympg.net resolves to IPv6)
+    socket_options: [:inet6]
 
   config :trivia_advisor, TriviaAdvisorWeb.Endpoint,
     url: [host: host, port: 443, scheme: "https"],
